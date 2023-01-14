@@ -1,0 +1,315 @@
+body{
+    color: #555;
+    font-family: Cairo, Arial, Helvetica, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+    /* border: 3px dashed rgba(255, 0, 0, 0.974); */
+}
+/* .pagebackground{
+    background-image: url("images/Animals-background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center bottom;
+    border: 1px solid rgba(255, 255, 255, 0.446);
+    height: 100vh;
+    place-content: center;
+    position: relative;
+    isolation: isolate;
+} */
+
+/* .pagebackground::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    inset: 0;
+    background: rgba(255, 255, 255);
+    opacity: 0.8;
+} */
+
+.maskcontainer1{
+    position: relative;
+    justify-content: center;
+    height: 100vh;
+    /* border: 1px solid #00ff33; */
+}
+
+/* .splatter{
+    margin: 0 auto;
+    width: 1150px;
+
+    background: url('images/splatter-9steps.png')center bottom;
+    background-repeat: no-repeat;
+    border: 1px solid #0038e2;
+    background-color: #eeeeee00;
+    z-index: -1;
+    opacity: 0.5;
+    isolation: isolate;
+    inset: inherit;
+    mix-blend-mode: multiply;
+    
+    animation: splat 2000ms steps(9) forwards; ; 
+}
+.splatter img{
+    position: absolute;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: -1;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    transition: visibility 0s 3s, opacity 3s linear;
+    animation: splat 2000ms steps(9) forwards; ; 
+}
+
+  @keyframes splat {
+    0% {
+        left: 0;
+        
+      
+    }
+    100% {
+        left: -9000px;
+    }
+  }
+ */
+
+.backgroundwrapper{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    text-align: center;
+    align-items: center;
+    vertical-align: bottom;
+    z-index: 100;
+    /* border: 1px solid #0022ff; */
+}
+.backgroundimg{
+    position: relative;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    justify-self: center;
+    
+    /* opacity: 0;
+    transition: visibility 0s 3s, opacity 3s linear;
+    transition-delay: 1s; */
+    animation: fadeIn 3s forwards;
+    -webkit-animation: fadeIn 3s forwards;
+    animation-delay: 1s;
+    z-index: 1;
+    opacity: 1;
+}
+
+@keyframes fadeIn{
+0%{opacity: 1;}
+100%{opacity: 0;}
+}
+
+@-webkit-keyframes fadeIn{
+    0%{opacity: 1;}
+    100%{opacity: 0;}
+    }
+
+
+
+
+
+#brand{
+    margin: 20px auto;
+}
+
+h1{
+    font-size: 2.5em;
+}
+
+.introtext{
+    line-height: 0.8em;
+    margin-bottom: 5px;
+}
+
+span{
+    font-size: 0.7em;
+}
+
+.mainblock{
+    width: 100%;
+    background-color: #e1e1e1;
+    padding: 0.1em 0 1em 0;
+    margin-top: 1em;
+    margin-bottom: 0px;
+}
+.mainblockinfo{
+    width: 440px;
+    margin: 0 auto;
+}
+
+.mainblockinfo span{
+    font-size: 1em;
+}
+
+.counters{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: -15px;
+}
+
+#deathcount, #fishdeathcount, #deathcount-country, #fishdeathcount-country,
+#deathcount-arg, #fishdeathcount-arg, #deathcount-bra, #fishdeathcount-bra,
+#deathcount-can, #fishdeathcount-can, #deathcount-chi, #fishdeathcount-chi,
+#deathcount-ecu, #fishdeathcount-ecu, #deathcount-mex, #fishdeathcount-mex,
+#deathcount-spa, #fishdeathcount-spa, #deathcount-usa, #fishdeathcount-usa
+{
+    font-size: 2em;
+    color: rgb(217, 129, 53);
+    margin-bottom: 0;
+}
+
+.container{
+    margin: 0 auto;
+}
+
+#countrydeathcount, #countrydeathcount-arg, #countrydeathcount-bra,
+#countrydeathcount-can, #countrydeathcount-chi, #countrydeathcount-ecu, 
+#countrydeathcount-mex, #countrydeathcount-spa, #countrydeathcount-usa
+ {
+    display: none;
+}
+
+
+.countrydropdown{
+    margin-top: 20px;
+}
+.animalbuttons{
+    border: none;
+    display: flex;
+    flex-wrap: nowrap;
+    /* display: grid;
+    grid-template-columns: repeat ( 6, 200px);  */
+    /* repeat(6, 1fr); */
+    grid-auto-flow: column;
+    margin: 0.4em auto;
+    justify-content: center;
+}
+
+.animalbuttons button{
+    border-radius: 50%;
+    margin: -1em 0.5em 0.5em 0.5em;
+    /* border: 1px dashed orange; */
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0.8em 0.4em;
+    vertical-align: bottom;
+    text-align: center;
+    scale: 65%;
+    position: relative;
+}
+
+.animalbuttons button .tooltip{
+    position: absolute;
+    left:0;
+    right:0;
+    bottom: -16px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align: center;
+    font-size: 1.6em;
+    pointer-events: none;
+    color: #454545;
+    opacity: 0;
+}
+
+.animalbuttons button:hover .tooltip{
+    opacity: 1;
+}
+
+.animalbuttons button:hover{
+    opacity: 0.7;
+}
+
+@media screen and (max-width:730px) {
+    .animalbuttons{
+        flex-wrap: wrap;
+        border-color: none;
+    }
+    .animalbuttons button{
+        flex: 28%;
+        resize: none;
+    }
+}
+
+#data-el{
+    margin: auto;
+    /* border: 2px solid blue; */
+    width: fit-content;
+    word-break: keep-all;
+    padding: 0 1em 0.3em 0.5em;
+    background-color: #ffffff87;
+}
+.list{
+    width: fit-content;
+    display: grid;
+    grid-template-columns: 0.9fr 1fr;
+    padding: 0;
+    text-align: left;
+    align-items: baseline;
+    list-style-position: inside;
+    white-space: nowrap;
+}
+
+.list div{
+    text-align: right;
+    font-size: 1.5em;
+    color: rgb(217, 129, 53);
+    line-height: 0.5em;
+    padding: 0;
+}
+
+fn {
+    font-size: 0.7em;
+    vertical-align: 0.5em;
+}
+
+footer {
+    font-size: 0.7em;
+    line-height: 1em;
+    background-color: #ffffff7a;
+     }
+
+    /* animation: fadeIn 3s forwards;
+    -webkit-animation: fadeIn 3s forwards;
+    animation-delay: 1s;
+    z-index: 1;
+    opacity: 0;
+}
+
+@keyframes fadeIn{
+0%{opacity: 0;}
+100%{opacity: 1;}
+}
+
+@-webkit-keyframes fadeIn{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+    } */
+
+
+footer div a{
+    color: rgb(217, 129, 53);
+    text-decoration: none;
+}
+footer div a:visited{
+    color: rgb(217, 129, 53);
+    text-decoration: none;
+}
+

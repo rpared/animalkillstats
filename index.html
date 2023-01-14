@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ENG">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Slaughter Count</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="index.js" defer></script>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+    <div class="maskcontainer1">
+        <div class="splatter">
+<header>
+    <div id="brand"><img src="images/AnimalKill-Brand.png" alt="Animal Kill Stats"></div>
+    <div class="introtext">Animals killed for food (needlessly).
+         <br> <span>Does not include hunting, dairy or egg production.</span>
+    </div>
+</header>
+    <div class="mainblock">
+        <div class="mainblockinfo">
+            <p>Since you loaded this page:</p>
+            <div class="counters">
+                <div id="deathcount" >0 </div>
+                <div id="fishdeathcount" >0</div>
+            </div>
+            <div class="counters">
+                <div>Land animals (aprox.)<fn>1</fn></div>
+                <div>Fish in TONS (aprox.)<fn>2</fn></div>
+            </div>
+        </div>
+    </div>
+    
+<main class="container" >
+    
+    <div class="countrydropdown" >
+        <form name="countryform">
+            <label for="country">Choose a country: </label>
+            <select name="countrylist" id="countrylist" onchange="getSelectedCountry()">
+                <option value="World">Worldwide</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Canada">Canada</option>
+                <option value="China">China</option>
+                <option value="Ecuador">Ecuador</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Spain">Spain</option>
+                <option value="Usa">United States</option>
+            </select>
+        </form>
+    <div id="countrydeathcount-arg" >
+        <div class="mainblockinfo">
+            <p>Since you loaded this page in Argentina:</p>
+            <div class="counters">
+                <div id="deathcount-arg" >0</div>
+                <div id="fishdeathcount-arg" >0</div></div>
+            <div class="counters">
+                <div>Land animals (aprox.)<fn>1</fn></div>
+                <div>Fish in TONS (aprox.)<fn>2</fn></div></div>
+        </div>
+    </div>
+    <div id="countrydeathcount-bra" >
+        <div class="mainblockinfo">
+            <p>Since you loaded this page in Brazil:</p>
+            <div class="counters">
+                <div id="deathcount-bra" >0</div>
+                <div id="fishdeathcount-bra" >0</div></div>
+            <div class="counters">
+                <div>Land animals (aprox.)<fn>1</fn></div>
+                <div>Fish in TONS (aprox.)<fn>2</fn></div></div>
+        </div>
+    </div>
+     <div id="countrydeathcount-can" >
+        <div class="mainblockinfo">
+            <p>Since you loaded this page in Canada:</p>
+            <div class="counters">
+                <div id="deathcount-can" >0</div>
+                <div id="fishdeathcount-can" >0</div></div>
+            <div class="counters">
+                <div>Land animals (aprox.)<fn>1</fn></div>
+                <div>Fish in TONS (aprox.)<fn>2</fn></div></div>
+            </div>
+    </div>
+     <div id="countrydeathcount-chi" >
+        <div class="mainblockinfo">
+            <p>Since you loaded this page in China:</p>
+            <div class="counters">
+                <div id="deathcount-chi" >0</div>
+                <div id="fishdeathcount-chi" >0</div></div>
+            <div class="counters">
+                <div>Land animals (aprox.)<fn>1</fn></div>
+                <div>Fish in TONS (aprox.)<fn>2</fn></div></div>
+            </div>
+    </div>
+     <div id="countrydeathcount-ecu" >
+        <div class="mainblockinfo">
+            <p>Since you loaded this page in Ecuador:</p>
+            <div class="counters">
+                <div id="deathcount-ecu" >0</div>
+                <div id="fishdeathcount-ecu" >0</div></div>
+            <div class="counters">
+                <div>Land animals (aprox.)<fn>1</fn></div>
+                <div>Fish in TONS (aprox.)<fn>2</fn></div></div>
+        </div>
+    </div>
+    <div id="countrydeathcount-mex" >
+        <div class="mainblockinfo">
+            <p>Since you loaded this page in Mexico:</p>
+            <div class="counters">
+                <div id="deathcount-mex" >0</div>
+                <div id="fishdeathcount-mex" >0</div></div>
+            <div class="counters">
+                <div>Land animals (aprox.)<fn>1</fn></div>
+                <div>Fish in TONS (aprox.)<fn>2</fn></div></div>
+        </div>
+    </div>
+    <div id="countrydeathcount-spa" >
+        <div class="mainblockinfo">
+            <p>Since you loaded this page in Spain:</p>
+            <div class="counters">
+                <div id="deathcount-spa" >0</div>
+                <div id="fishdeathcount-spa" >0</div></div>
+            <div class="counters">
+                <div>Land animals (aprox.)<fn>1</fn></div>
+                <div>Fish in TONS (aprox.)<fn>2</fn></div></div>
+        </div>
+    </div>       
+    <div id="countrydeathcount-usa" >
+        <div class="mainblockinfo">
+            <p>Since you loaded this page in the United States:</p>
+            <div class="counters">
+                <div id="deathcount-usa" >0</div>
+                <div id="fishdeathcount-usa" >0</div></div>
+            <div class="counters">
+                <div>Land animals (aprox.)<fn>1</fn></div>
+                <div>Fish in TONS (aprox.)<fn>2</fn></div></div>
+        </div>
+    
+    </div>
+
+    <div class="animalbuttons" >
+        <button id="cowbtn" onclick="cows(), orangeButtons()"> <img src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div></button>
+        <button id="pigsbtn" onclick="pigs(), orangeButtons()"><img src="images/pig-icon.png" alt="Pigs"><div class="tooltip">Pigs</div> </button>
+        <button id="sheepbtn" onclick="sheep(), orangeButtons()"><img src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div></button>
+        <button id="chickenbtn" onclick="chicken(), orangeButtons()"><img src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div></button>
+        <button id="turkeybtn" onclick="turkey(), orangeButtons()"><img src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div></button>
+        <button id="fishbtn" onclick="fish(), orangeButtons()"><img src="images/fish-icon.png" alt="Fish"><div class="tooltip">Fish</div></button>
+    </div>
+    <div id="data-el">
+        <br>
+    </div>
+    <br><br>
+
+    
+
+    <footer>
+    <p> <fn>1</fn>Land animals data is 2020 by FAO (latest available in Jan 2023).<br>
+        <fn>2</fn>Fish data is 2019 by FAO.
+        Fish and seafood production is measured in TONS as the sum of seafood from wild catch and fish farming (aquaculture). <br>
+        *2020 consumtion was significantly less than 2019 due to covid lockdowns. <br>
+        *China data is estimated by FAO.<br>
+        Sources: <br>
+        https://faunalytics.org/global-animal-slaughter-statistics-charts-2022-update/ <br>
+        http://www.fao.org/faostat/en/#data <br>
+        https://ourworldindata.org/grapher/animals-slaughtered-for-meat <br>
+        <div class="about"> <a href="https://roger.costra.ec" target="_blank" > - Roger Paredes 2023 -</a></div></p>
+    </footer>
+
+    
+    
+</main>
+
+    
+</div>
+    <div class="backgroundwrapper">
+    <img class="backgroundimg" src="images/Animals-background1.png" alt="Animals">
+    </div>
+</div>
+</body>
+
+
+</html>
