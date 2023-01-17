@@ -1,5 +1,3 @@
-
-
 //Death count in main block per second
 let fishDeathCountCountry = document.getElementById("fishdeathcount-country");
 let CountryText = document.getElementById("Countrytext");
@@ -10,14 +8,71 @@ let deaths = 0;
 let fishDeaths = 0;
 let deathCountWorld;
 let fishDeathCountWorld; 
+
 function counter(){
     deathCountWorld =  deaths+=2355;
     deathCount.textContent = deathCountWorld.toLocaleString();
-    fishDeathCountWorld = fishDeaths+=5;
+    fishDeathCountWorld = fishDeaths+=5.4;
     fishDeathCount.textContent = fishDeathCountWorld.toLocaleString();
 }
-
 setInterval(counter,1000);
+
+//Collapsible button
+let mainBlockPerAnimal = document.getElementById("mainblockperanimal");
+let collapseArrowBtn = document.querySelector("#arrow");
+let collapse = false;
+
+function collapseanimals(){
+if (collapse == false){
+mainBlockPerAnimal.style.display = "inline";
+collapse = true;
+collapseArrowBtn.style.rotate = "180deg";
+}
+else if (collapse == true) {
+mainBlockPerAnimal.style.display = "none";
+collapse = false;
+collapseArrowBtn.style.rotate = "0deg";
+}
+}
+
+//Death count in main block per Animal per second
+let deathCountCowsEl = document.getElementById("deathcount-cows");
+let deathCountCows = 0;
+let deathCountCowsWorld;
+let deathCountPigsEl = document.getElementById("deathcount-pigs")
+let deathCountPigs = 0;
+let deathCountPigsWorld;
+let deathCountSheepEl = document.getElementById("deathcount-sheep");
+let deathCountSheep = 0;
+let deathCountSheepWorld;
+let deathCountChickenEl = document.getElementById("deathcount-chicken");
+let deathCountChicken = 0;
+let deathCountChickenWorld;
+let deathCountTurkeyEl = document.getElementById("deathcount-turkey");
+let deathCountTurkey = 0;
+let deathCountTurkeyWorld;
+let deathCountFishEl = document.getElementById("deathcount-fish");
+let deathCountFish = 0;
+let deathCountFishWorld;
+
+
+
+
+function counterPerAnimal(){
+deathCountCowsWorld = deathCountCows += 9;
+deathCountCowsEl.textContent = deathCountCowsWorld.toLocaleString();
+deathCountPigsWorld = deathCountPigs += 48;
+deathCountPigsEl.textContent = deathCountPigsWorld.toLocaleString();
+deathCountSheepWorld = deathCountSheep += 18.7;
+deathCountSheepEl.textContent = deathCountSheepWorld.toLocaleString(undefined, {maximumFractionDigits:0});
+deathCountChickenWorld = deathCountChicken += 2244;
+deathCountChickenEl.textContent = deathCountChickenWorld.toLocaleString();
+deathCountTurkeyWorld = deathCountTurkey += 19.6;
+deathCountTurkeyEl.textContent = deathCountTurkeyWorld.toLocaleString(undefined, {maximumFractionDigits:0});
+deathCountFishWorld = deathCountFish += 5.4;
+deathCountFishEl.textContent = deathCountFishWorld.toLocaleString() + " t";
+}
+setInterval(counterPerAnimal,1000);
 
 //Death count per country per second
 //Div display
