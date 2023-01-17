@@ -8,27 +8,48 @@ body{
     position: relative;
     /* border: 3px dashed rgba(255, 0, 0, 0.974); */
 }
-/* .pagebackground{
-    background-image: url("images/Animals-background.png");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center bottom;
-    border: 1px solid rgba(255, 255, 255, 0.446);
-    height: 100vh;
-    place-content: center;
-    position: relative;
-    isolation: isolate;
-} */
 
-/* .pagebackground::after{
-    content: '';
-    position: absolute;
-    bottom: 0;
-    z-index: -1;
-    inset: 0;
-    background: rgba(255, 255, 255);
-    opacity: 0.8;
-} */
+.upperinfo{
+    display: flex;
+    margin: 0 auto;
+    font-size: 0.7em;
+    width: 70%;
+    max-width: 1000px;
+    /* border: 1px solid red; */
+}
+.upperinfo p{
+    margin: 0 0 2px 0;
+    text-align: left;
+    width: 95%;
+}
+.upperinfo button{
+    margin: 0 0 2px 0;
+    padding: 0 1.2em 0 0;
+    height: 0.8em;
+    font-size: 1em;
+    color: #555;
+    font-family: Cairo, Arial, Helvetica, sans-serif;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.upperinfo button:hover{
+    color: rgb(217, 129, 53);
+}
+.upperinfo a{
+    text-decoration: none;
+    color: #555;
+}
+.upperinfo a:hover{
+    color: rgb(217, 129, 53);
+}
+
+#upperline{
+    /* border-top: 1px solid #cdcdcd; */
+    width: 70%;
+    max-width: 1000px;
+    margin: -5px auto -5px auto;
+}
 
 .maskcontainer1{
     position: relative;
@@ -36,46 +57,6 @@ body{
     height: 100vh;
     /* border: 1px solid #00ff33; */
 }
-
-/* .splatter{
-    margin: 0 auto;
-    width: 1150px;
-
-    background: url('images/splatter-9steps.png')center bottom;
-    background-repeat: no-repeat;
-    border: 1px solid #0038e2;
-    background-color: #eeeeee00;
-    z-index: -1;
-    opacity: 0.5;
-    isolation: isolate;
-    inset: inherit;
-    mix-blend-mode: multiply;
-    
-    animation: splat 2000ms steps(9) forwards; ; 
-}
-.splatter img{
-    position: absolute;
-    bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
-    z-index: -1;
-    opacity: 0.5;
-    mix-blend-mode: multiply;
-    transition: visibility 0s 3s, opacity 3s linear;
-    animation: splat 2000ms steps(9) forwards; ; 
-}
-
-  @keyframes splat {
-    0% {
-        left: 0;
-        
-      
-    }
-    100% {
-        left: -9000px;
-    }
-  }
- */
 
 .backgroundwrapper{
     position: fixed;
@@ -99,7 +80,6 @@ body{
     margin-left: auto;
     margin-right: auto;
     justify-self: center;
-    
     /* opacity: 0;
     transition: visibility 0s 3s, opacity 3s linear;
     transition-delay: 1s; */
@@ -120,10 +100,6 @@ body{
     100%{opacity: 0;}
     }
 
-
-
-
-
 #brand{
     margin: 20px auto;
 }
@@ -143,7 +119,7 @@ span{
 
 .mainblock{
     width: 100%;
-    background-color: #e1e1e1;
+    background-color: #cbcbcb7f;
     padding: 0.1em 0 1em 0;
     margin-top: 1em;
     margin-bottom: 0px;
@@ -163,6 +139,97 @@ span{
     margin-top: -15px;
 }
 
+/*Main Gray block per Animal*/
+
+#collapseline{
+    border-top: 1px solid #a7a7a7;
+    width: 70%;
+    max-width: 1000px;
+    margin: 6px auto -16px auto;
+}
+
+#collapse{
+    display: flex;
+    align-content: center;
+    text-align: center;
+    border: none;
+    background-color: none;
+    background: none;
+    font-size: 0.9em;
+    font-family: Cairo, Arial, Helvetica, sans-serif;
+    color: #555;
+    cursor: pointer;
+}
+#collapse p{
+    margin-top: -6px;
+    vertical-align: top;
+    display: inline;
+}
+#collapse img{
+    margin-left: 0.5em;
+    margin-top: 1px;
+    scale: 95%;
+    height: fit-content;
+
+}
+#collapse:hover{
+    filter: invert(74%) sepia(20%) saturate(6848%) hue-rotate(338deg) brightness(91%) contrast(86%);
+}
+
+#mainblockperanimal {
+display: none;
+}
+
+.animalstats{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* border: 1px solid red; */
+}
+.animalstats div{
+    display: grid;
+    grid-template-rows: 3fr;
+    width: 9em;
+    /* border: 1px solid rgb(0, 102, 255); */
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+.animalstats div img{
+    justify-self: center;
+    vertical-align: middle;
+    margin: 0;
+    scale: 60%;
+    /* border: 1px solid rgb(138, 138, 138); */
+}
+
+.animalstats div p{
+    margin: -1em 0 0 0;
+}
+
+@media screen and (max-width:900px) {
+    .animalstats{
+        flex-wrap: wrap;
+        border-color: none;
+    }
+    .animalstats div{
+        flex-basis: 30%;
+        resize: none;
+    }
+}
+
+
+#countrylist{
+    color: rgb(57, 57, 57);
+    font-family: Cairo, Arial, Helvetica, sans-serif;
+    font-size: 0.9em;
+    font-weight: 600;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #b1b1b1;
+    box-shadow: 1px 1px 4px rgb(174, 174, 174) inset;
+}
+
 #deathcount, #fishdeathcount, #deathcount-country, #fishdeathcount-country,
 #deathcount-arg, #fishdeathcount-arg, #deathcount-bra, #fishdeathcount-bra,
 #deathcount-can, #fishdeathcount-can, #deathcount-chi, #fishdeathcount-chi,
@@ -172,6 +239,17 @@ span{
     font-size: 2em;
     color: rgb(217, 129, 53);
     margin-bottom: 0;
+}
+
+#deathcount-cows, #deathcount-pigs, #deathcount-sheep, #deathcount-chicken,
+#deathcount-turkey, #deathcount-fish {
+    font-size: 1.4em;
+    color: rgb(217, 129, 53);
+    padding: 0;
+    max-width: fit-content;
+    justify-self: center;
+    margin: -0.4em 0;
+
 }
 
 .container{
@@ -184,7 +262,6 @@ span{
  {
     display: none;
 }
-
 
 .countrydropdown{
     margin-top: 20px;
@@ -254,7 +331,7 @@ span{
     width: fit-content;
     word-break: keep-all;
     padding: 0 1em 0.3em 0.5em;
-    background-color: #ffffff87;
+    background-color: none;
 }
 .list{
     width: fit-content;
@@ -285,6 +362,23 @@ footer {
     line-height: 1em;
     background-color: #ffffff7a;
      }
+
+    /* animation: fadeIn 3s forwards;
+    -webkit-animation: fadeIn 3s forwards;
+    animation-delay: 1s;
+    z-index: 1;
+    opacity: 0;
+}
+
+@keyframes fadeIn{
+0%{opacity: 0;}
+100%{opacity: 1;}
+}
+
+@-webkit-keyframes fadeIn{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+    } */
 
 
 footer div a{
