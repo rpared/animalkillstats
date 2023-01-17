@@ -123,6 +123,7 @@ span{
     padding: 0.1em 0 1em 0;
     margin-top: 1em;
     margin-bottom: 0px;
+    box-shadow: 0 -1px 3px #cbcbcb7f inset;
 }
 .mainblockinfo{
     width: 440px;
@@ -137,6 +138,9 @@ span{
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-top: -15px;
+}
+.counters span{
+font-size: 0.8em;
 }
 
 /*Main Gray block per Animal*/
@@ -279,10 +283,10 @@ display: none;
 }
 
 .animalbuttons button{
-    border-radius: 50%;
+    border-radius: 45%;
     margin: -1em 0.5em 0.5em 0.5em;
-    /* border: 1px dashed orange; */
     border: none;
+    /* border: 1px dashed rgb(255, 0, 0); */
     background-color: transparent;
     cursor: pointer;
     padding: 0.8em 0.4em;
@@ -294,6 +298,8 @@ display: none;
 
 .animalbuttons button .tooltip{
     position: absolute;
+    flex-wrap: nowrap;
+    white-space: nowrap;
     left:0;
     right:0;
     bottom: -16px;
@@ -359,26 +365,9 @@ fn {
 
 footer {
     font-size: 0.7em;
-    line-height: 1em;
+    line-height: 1.2em;
     background-color: #ffffff7a;
      }
-
-    /* animation: fadeIn 3s forwards;
-    -webkit-animation: fadeIn 3s forwards;
-    animation-delay: 1s;
-    z-index: 1;
-    opacity: 0;
-}
-
-@keyframes fadeIn{
-0%{opacity: 0;}
-100%{opacity: 1;}
-}
-
-@-webkit-keyframes fadeIn{
-    0%{opacity: 0;}
-    100%{opacity: 1;}
-    } */
 
 
 footer div a{
