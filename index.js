@@ -728,7 +728,7 @@ let turkeyDataUsa = `<ul class="list" >
 <li>Per second: </li> <div>${(turkeyDataUsaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataWorldYear = 171094560;
-let fishDataWorld = `(Measured in TONS)<fn>2</fn> <ul class="list" >
+let fishDataWorld = `(Measured in Tons)<fn>2</fn> <ul class="list" >
 <li>Yearly: </li> <div>${fishDataWorldYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(fishDataWorldYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Daily: </li> <div>${(fishDataWorldYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -737,7 +737,7 @@ let fishDataWorld = `(Measured in TONS)<fn>2</fn> <ul class="list" >
 <li>Per second: </li> <div>${(fishDataWorldYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:1})}</div>
 </ul>`;
 let fishDataArgentinaYear = 838630;
-let fishDataArgentina = `(Measured in TONS)<fn>2</fn> <ul class="list" >
+let fishDataArgentina = `(Measured in Tons)<fn>2</fn> <ul class="list" >
 <li>Yearly: </li> <div>${fishDataArgentinaYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(fishDataArgentinaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Daily: </li> <div>${(fishDataArgentinaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -746,7 +746,7 @@ let fishDataArgentina = `(Measured in TONS)<fn>2</fn> <ul class="list" >
 <li>Per second: </li> <div>${(fishDataArgentinaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataBrazilYear = 1299120;
-let fishDataBrazil = `(Measured in TONS)<fn>2</fn> <ul class="list" >
+let fishDataBrazil = `(Measured in Tons)<fn>2</fn> <ul class="list" >
 <li>Yearly: </li> <div>${fishDataBrazilYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(fishDataBrazilYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Daily: </li> <div>${(fishDataBrazilYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -755,7 +755,7 @@ let fishDataBrazil = `(Measured in TONS)<fn>2</fn> <ul class="list" >
 <li>Per second: </li> <div>${(fishDataBrazilYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataCanadaYear = 1026450;
-let fishDataCanada = `(Measured in TONS)<fn>2</fn> <ul class="list" >
+let fishDataCanada = `(Measured in Tons)<fn>2</fn> <ul class="list" >
 <li>Yearly: </li> <div>${fishDataCanadaYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(fishDataCanadaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Daily: </li> <div>${(fishDataCanadaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -764,7 +764,7 @@ let fishDataCanada = `(Measured in TONS)<fn>2</fn> <ul class="list" >
 <li>Per second: </li> <div>${(fishDataCanadaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataChinaYear = 63360572;
-let fishDataChina = `(Measured in TONS)<fn>2</fn> <ul class="list" >
+let fishDataChina = `(Measured in Tons)<fn>2</fn> <ul class="list" >
 <li>Yearly: </li> <div>${fishDataChinaYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(fishDataChinaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Daily: </li> <div>${(fishDataChinaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -773,7 +773,7 @@ let fishDataChina = `(Measured in TONS)<fn>2</fn> <ul class="list" >
 <li>Per second: </li> <div>${(fishDataChinaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataEcuadorYear = 1112710;
-let fishDataEcuador = `(Measured in TONS)<fn>2</fn> <ul class="list" >
+let fishDataEcuador = `(Measured in Tons)<fn>2</fn> <ul class="list" >
 <li>Yearly: </li> <div>${fishDataEcuadorYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(fishDataEcuadorYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Daily: </li> <div>${(fishDataEcuadorYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -782,7 +782,7 @@ let fishDataEcuador = `(Measured in TONS)<fn>2</fn> <ul class="list" >
 <li>Per second: </li> <div>${(fishDataEcuadorYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataMexicoYear = 1871950;
-let fishDataMexico = `(Measured in TONS)<fn>2</fn> <ul class="list" >
+let fishDataMexico = `(Measured in Tons)<fn>2</fn> <ul class="list" >
 <li>Yearly: </li> <div>${fishDataMexicoYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(fishDataMexicoYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Daily: </li> <div>${(fishDataMexicoYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -791,7 +791,7 @@ let fishDataMexico = `(Measured in TONS)<fn>2</fn> <ul class="list" >
 <li>Per second: </li> <div>${(fishDataMexicoYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataSpainYear = 1264820;
-let fishDataSpain = `(Measured in TONS)<fn>2</fn> <ul class="list" >
+let fishDataSpain = `(Measured in Tons)<fn>2</fn> <ul class="list" >
 <li>Yearly: </li> <div>${fishDataSpainYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(fishDataSpainYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Daily: </li> <div>${(fishDataSpainYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -800,7 +800,7 @@ let fishDataSpain = `(Measured in TONS)<fn>2</fn> <ul class="list" >
 <li>Per second: </li> <div>${(fishDataSpainYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataUsaYear = 5475780;
-let fishDataUsa = `(Measured in TONS)<fn>2</fn> <ul class="list" >
+let fishDataUsa = `(Measured in Tons)<fn>2</fn> <ul class="list" >
 <li>Yearly: </li> <div>${fishDataUsaYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(fishDataUsaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Daily: </li> <div>${(fishDataUsaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -983,7 +983,7 @@ function orangeButtons(){
             sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div>`;
             chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div>`;
             turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Fish"><div class="tooltip">Fish</div>`;
+            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div>`;
         break;
         case "pigs":
             cowBtn.innerHTML = `<img src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div>`;
@@ -991,7 +991,7 @@ function orangeButtons(){
             sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div>`;
             chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div>`;
             turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Fish"><div class="tooltip">Fish</div>`;
+            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div>`;
         break;
         case "sheep":
             cowBtn.innerHTML = `<img src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div>`;
@@ -999,7 +999,7 @@ function orangeButtons(){
             sheepBtn.innerHTML = `<img src="images/sheep-icon-orange.png" alt="Sheep"><div class="tooltip">Sheep</div>`;
             chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div>`;
             turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Fish"><div class="tooltip">Fish</div>`;
+            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div>`;
         break;
         case "chicken":
             cowBtn.innerHTML = `<img src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div>`;
@@ -1007,7 +1007,7 @@ function orangeButtons(){
             sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div>`;
             chickenBtn.innerHTML = `<img src="images/chicken-icon-orange.png" alt="Chicken"><div class="tooltip">Chicken</div>`;
             turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Fish"><div class="tooltip">Fish</div>`;
+            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div>`;
         break;
         case "turkey":
             cowBtn.innerHTML = `<img src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div>`;
@@ -1015,7 +1015,7 @@ function orangeButtons(){
             sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div>`;
             chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div>`;
             turkeyBtn.innerHTML = `<img src="images/turkey-icon-orange.png" alt="Turkey"><div class="tooltip">Turkey</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Fish"><div class="tooltip">Fish</div>`;
+            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div>`;
 
         break;
         case "fish":
@@ -1023,19 +1023,9 @@ function orangeButtons(){
             pigsBtn.innerHTML = `<img src="images/pig-icon.png" alt="Pigs"><div class="tooltip">Pigs</div>`;
             sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div>`;
             chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div>`;
-            turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey2</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon-orange.png" alt="Fish"><div class="tooltip">Fish2</div>`;
+            turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div>`;
+            fishBtn.innerHTML = `<img src="images/fish-icon-orange.png" alt="Sea animals"><div class="tooltip">Sea animals</div>`;
 
         break;
 };
 }
-
-
-
-
-
-
-
-
-
-
