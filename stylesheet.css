@@ -23,9 +23,8 @@ body{
     width: 95%;
 }
 .upperinfo button{
-    margin: 0 0 2px 0;
+    margin: 0;
     padding: 0 1.2em 0 0;
-    height: 0.8em;
     font-size: 1em;
     color: #555;
     font-family: Cairo, Arial, Helvetica, sans-serif;
@@ -44,12 +43,12 @@ body{
     color: rgb(217, 129, 53);
 }
 
-#upperline{
-    /* border-top: 1px solid #cdcdcd; */
+ /* #upperline{
+   border-top: 1px solid #cdcdcd;
     width: 70%;
     max-width: 1000px;
     margin: -5px auto -5px auto;
-}
+} */
 
 .maskcontainer1{
     position: relative;
