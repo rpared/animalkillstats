@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="index-esp.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="charts-esp.js" defer></script>
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="icon" href="images/animalkillstatsfavicon.png" type="image/x-icon">
 </head>
@@ -21,7 +23,7 @@
     </div>
     <div id="upperline"></div>
 <header>
-    <div id="brand"><img src="images/AnimalKill-Brand.png" alt="Animal Kill Stats"></div>
+    <div id="brand"><img src="images/AnimalKill-Brand-A.png" alt="Animal Kill Stats"></div>
     <div class="introtext">Animales asesinados para comida (innecesariamente).
          <br> <span>No incluye caza ni producción de lácteos y huevos.</span>
     </div>
@@ -39,11 +41,12 @@
             </div>
         </div>
         <div class="mainblockbtn">
-            <div id="collapseline">
-            <button id="collapse" onclick="collapseanimals()" > <p>Por animal</p> <img
-                id="arrow" src="images/CollapseButtonA.png" alt=""></button>
+            <div class="collapseline">
+            <button class="collapse" onclick="collapseanimals()" > <p>Por animal</p> 
+                <img id="arrow" src="images/CollapseButtonA.png" alt=""></button>
             </div>
         </div>
+
         <div id="mainblockperanimal">
             <div class="animalstats">
                 <div><img class="animalimg" src="images/cow-icon.png" alt="Vacas"> <p>Vacas</p> <div id="deathcount-cows">0 </div> </div>
@@ -56,20 +59,57 @@
         
         </div>
     </div>
+
     
+    
+    <div class="mainblockbtn">
+        <div class="collapseline">
+        <button class="collapse" onclick="collapselandchart()" > <p>Animales terrestres por año en el mundo</p> <img
+            id="arrow-chart1" src="images/CollapseButtonA.png" alt=""></button>
+        </div>
+    </div>
+    <div id="landanimalschart-wrapper">
+    <div class="chart-container" >
+        <canvas id="LandAnimalsChart"></canvas>
+    </div>
+    <p>El total anual es la suma de vacas, cerdos, ovejas, pollos y pavos asesinados.</p>
+    </div>
+
+    <div class="mainblockbtn">
+        <div class="collapseline">
+        <button class="collapse" onclick="collapseseachart()" > <p>Animales marinos en Kg. por año en el mundo</p> <img
+            id="arrow-chart2" src="images/CollapseButtonA.png" alt=""></button>
+        </div>
+    </div>
+    <div id="seaanimalschart-wrapper">
+    <div class="chart-container" >
+        <canvas id="SeaAnimalsChart"></canvas>
+    </div>
+    <p>Animales marinos pezcados y de granjas acuícolas. <strong>medido en kilogramos</strong>.</p>
+    <div class="collapseline"></div>
+    </div>
+
+    <br>
+
+
+
+
 <main class="container" >
     
     <div class="countrydropdown" >
         <form name="countryform">
-            <label for="country">Elige un país: </label>
+            <label for="country">Elige una ubicación: </label>
             <select name="countrylist" id="countrylist" onchange="getSelectedCountry()">
                 <option value="World">Mundial</option>
                 <option value="Argentina">Argentina</option>
                 <option value="Brazil">Brasil</option>
                 <option value="Canada">Canadá</option>
                 <option value="China">China</option>
+                <option value="Colombia">Colombia</option>
                 <option value="Ecuador">Ecuador</option>
+                <option value="India">India</option>
                 <option value="Mexico">México</option>
+                <option value="Russia">Rusia</option>
                 <option value="Spain">España</option>
                 <option value="Usa">Estados Unidos</option>
             </select>
@@ -121,8 +161,20 @@
                 <div>Animales marinos <span>(Toneladas)</span><fn>2</fn></div>
             </div>
             </div>
-    </div>
-     <div id="countrydeathcount-ecu" >
+     </div>
+     <div id="countrydeathcount-col" >
+        <div class="mainblockinfo">
+            <p>Desde que se cargó esta página en <strong> Colombia:</strong></p>
+            <div class="counters">
+                <div id="deathcount-col" >0</div>
+                <div id="fishdeathcount-col" >0</div></div>
+            <div class="counters">
+                <div>Animales terrestres<fn>1</fn></div>
+                <div>Animales marinos <span>(Toneladas)</span><fn>2</fn></div>
+            </div>
+            </div>
+     </div>
+    <div id="countrydeathcount-ecu" >
         <div class="mainblockinfo">
             <p>Desde que se cargó esta página en <strong> Ecuador:</strong></p>
             <div class="counters">
@@ -134,6 +186,18 @@
             </div>
         </div>
     </div>
+    <div id="countrydeathcount-ind" >
+        <div class="mainblockinfo">
+            <p>Desde que se cargó esta página en <strong> India:</strong></p>
+            <div class="counters">
+                <div id="deathcount-ind" >0</div>
+                <div id="fishdeathcount-ind" >0</div></div>
+            <div class="counters">
+                <div>Animales terrestres<fn>1</fn></div>
+                <div>Animales marinos <span>(Toneladas)</span><fn>2</fn></div>
+            </div>
+            </div>
+     </div>
     <div id="countrydeathcount-mex" >
         <div class="mainblockinfo">
             <p>Desde que se cargó esta página en<strong> México:</strong></p>
@@ -146,6 +210,18 @@
             </div>
         </div>
     </div>
+    <div id="countrydeathcount-rus" >
+        <div class="mainblockinfo">
+            <p>Desde que se cargó esta página en <strong> Rusia:</strong></p>
+            <div class="counters">
+                <div id="deathcount-rus" >0</div>
+                <div id="fishdeathcount-rus" >0</div></div>
+            <div class="counters">
+                <div>Animales terrestres<fn>1</fn></div>
+                <div>Animales marinos <span>(Toneladas)</span><fn>2</fn></div>
+            </div>
+            </div>
+     </div>
     <div id="countrydeathcount-spa" >
         <div class="mainblockinfo">
             <p>Desde que se cargó esta página en<strong> España:</strong></p>
@@ -196,6 +272,7 @@
         https://faunalytics.org/global-animal-slaughter-statistics-charts-2022-update/ <br>
         http://www.fao.org/faostat/en/#data <br>
         https://ourworldindata.org/grapher/animals-slaughtered-for-meat <br>
+        https://www.worldometers.info/world-population/world-population-by-year/<br>
         <div class="about"> <a href="https://roger.costra.ec" target="_blank" > - Roger Paredes 2023 -</a></div></p>
     </footer>
 

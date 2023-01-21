@@ -18,13 +18,13 @@ body{
     /* border: 1px solid red; */
 }
 .upperinfo p{
-    margin: 0 0 2px 0;
+    margin: 0 0 2px 0.2em;
     text-align: left;
     width: 95%;
 }
 .upperinfo button{
     margin: 0;
-    padding: 0 1.2em 0 0;
+    padding: 0 0.2em 0 0.8em;
     font-size: 1em;
     color: #555;
     font-family: Cairo, Arial, Helvetica, sans-serif;
@@ -43,8 +43,8 @@ body{
     color: rgb(217, 129, 53);
 }
 
- /* #upperline{
-   border-top: 1px solid #cdcdcd;
+/* #upperline{
+    border-top: 1px solid #cdcdcd;
     width: 70%;
     max-width: 1000px;
     margin: -5px auto -5px auto;
@@ -144,14 +144,14 @@ font-size: 0.8em;
 
 /*Main Gray block per Animal*/
 
-#collapseline{
+#collapseline, .collapseline{
     border-top: 1px solid #a7a7a7;
     width: 70%;
     max-width: 1000px;
     margin: 6px auto -16px auto;
 }
 
-#collapse{
+#collapse, .collapse {
     display: flex;
     align-content: center;
     text-align: center;
@@ -163,23 +163,24 @@ font-size: 0.8em;
     color: #555;
     cursor: pointer;
 }
-#collapse p{
+
+.collapse p{
     margin-top: -6px;
     vertical-align: top;
     display: inline;
 }
-#collapse img{
+.collapse img{
     margin-left: 0.5em;
     margin-top: 1px;
     scale: 95%;
     height: fit-content;
 
 }
-#collapse:hover{
+.collapse:hover{
     filter: invert(74%) sepia(20%) saturate(6848%) hue-rotate(338deg) brightness(91%) contrast(86%);
 }
 
-#mainblockperanimal {
+#mainblockperanimal, #landanimalschart-wrapper, #seaanimalschart-wrapper {
 display: none;
 }
 
@@ -236,8 +237,10 @@ display: none;
 #deathcount, #fishdeathcount, #deathcount-country, #fishdeathcount-country,
 #deathcount-arg, #fishdeathcount-arg, #deathcount-bra, #fishdeathcount-bra,
 #deathcount-can, #fishdeathcount-can, #deathcount-chi, #fishdeathcount-chi,
-#deathcount-ecu, #fishdeathcount-ecu, #deathcount-mex, #fishdeathcount-mex,
-#deathcount-spa, #fishdeathcount-spa, #deathcount-usa, #fishdeathcount-usa
+#deathcount-col, #fishdeathcount-col, #deathcount-ecu, #fishdeathcount-ecu, 
+#deathcount-ind, #fishdeathcount-ind, #deathcount-mex, #fishdeathcount-mex,
+#deathcount-rus, #fishdeathcount-rus, #deathcount-spa, #fishdeathcount-spa,
+#deathcount-usa, #fishdeathcount-usa
 {
     font-size: 2em;
     color: rgb(217, 129, 53);
@@ -260,9 +263,10 @@ display: none;
 }
 
 #countrydeathcount, #countrydeathcount-arg, #countrydeathcount-bra,
-#countrydeathcount-can, #countrydeathcount-chi, #countrydeathcount-ecu, 
-#countrydeathcount-mex, #countrydeathcount-spa, #countrydeathcount-usa
- {
+#countrydeathcount-can, #countrydeathcount-chi, #countrydeathcount-col,
+#countrydeathcount-ecu, #countrydeathcount-ind, #countrydeathcount-mex,
+#countrydeathcount-rus, #countrydeathcount-spa, #countrydeathcount-usa
+{
     display: none;
 }
 
@@ -338,7 +342,11 @@ display: none;
     padding: 0 1em 0.3em 0.5em;
     background-color: none;
 }
-.list{
+#data-el p{
+    text-align: center;
+    line-height: 0.9em;
+}
+#data-el .list{
     width: fit-content;
     display: grid;
     grid-template-columns: 0.9fr 1fr;
@@ -349,7 +357,7 @@ display: none;
     white-space: nowrap;
 }
 
-.list div{
+#data-el .list div{
     text-align: right;
     font-size: 1.5em;
     color: rgb(217, 129, 53);
@@ -376,5 +384,18 @@ footer div a{
 footer div a:visited{
     color: rgb(217, 129, 53);
     text-decoration: none;
+}
+
+
+.chart-container{
+    position: relative;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 80%;
+    max-width: 800px;
+    height: 350px;
+    
 }
 

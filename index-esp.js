@@ -17,7 +17,7 @@ function counter(){
 }
 setInterval(counter,1000);
 
-//Collapsible button
+//Collapsible button Animals Worldwide Since page was loaded
 let mainBlockPerAnimal = document.getElementById("mainblockperanimal");
 let collapseArrowBtn = document.querySelector("#arrow");
 let collapse = false;
@@ -34,6 +34,45 @@ collapse = false;
 collapseArrowBtn.style.rotate = "0deg";
 }
 }
+
+//Collapsible button Land Animals
+let LandAnimalsChartWrapper = document.getElementById("landanimalschart-wrapper");
+let collapseArrowBtnChart1 = document.querySelector("#arrow-chart1");
+let collapseLandChart = false;
+
+function collapselandchart(){
+if (collapseLandChart == false){
+    LandAnimalsChartWrapper.style.display = "inline";
+    collapseLandChart = true;
+    collapseArrowBtnChart1.style.rotate = "180deg";
+}
+else if (collapseLandChart == true) {
+    LandAnimalsChartWrapper.style.display = "none";
+    collapseLandChart = false;
+    collapseArrowBtnChart1.style.rotate = "0deg";
+}
+}
+
+//Collapsible button Sea Animals
+let SeaAnimalsChartWrapper = document.getElementById("seaanimalschart-wrapper");
+let collapseArrowBtnChart2 = document.querySelector("#arrow-chart2");
+let collapseSeaChart = false;
+
+
+function collapseseachart(){
+    if (collapseSeaChart == false){
+        SeaAnimalsChartWrapper.style.display = "inline";
+        collapseSeaChart = true;
+        collapseArrowBtnChart2.style.rotate = "180deg";
+    }
+    else if (collapseSeaChart == true) {
+        SeaAnimalsChartWrapper.style.display = "none";
+        collapseSeaChart = false;
+        collapseArrowBtnChart2.style.rotate = "0deg";
+    }
+}
+
+
 
 //Death count in main block per Animal Por segundo
 let deathCountCowsEl = document.getElementById("deathcount-cows");
@@ -80,8 +119,11 @@ let countryDeathCountArg = document.getElementById("countrydeathcount-arg");
 let countryDeathCountBra = document.getElementById("countrydeathcount-bra");
 let countryDeathCountCan = document.getElementById("countrydeathcount-can");
 let countryDeathCountChi = document.getElementById("countrydeathcount-chi");
+let countryDeathCountCol = document.getElementById("countrydeathcount-col");
 let countryDeathCountEcu = document.getElementById("countrydeathcount-ecu");
+let countryDeathCountInd = document.getElementById("countrydeathcount-ind");
 let countryDeathCountMex = document.getElementById("countrydeathcount-mex");
+let countryDeathCountRus = document.getElementById("countrydeathcount-rus");
 let countryDeathCountSpa = document.getElementById("countrydeathcount-spa");
 let countryDeathCountUsa = document.getElementById("countrydeathcount-usa");
 //Changing Numbers
@@ -93,10 +135,16 @@ let deathCountCan = document.getElementById("deathcount-can")
 let fishDeathCountCan= document.getElementById("fishdeathcount-can");
 let deathCountChi = document.getElementById("deathcount-chi")
 let fishDeathCountChi= document.getElementById("fishdeathcount-chi");
+let deathCountCol = document.getElementById("deathcount-col")
+let fishDeathCountCol= document.getElementById("fishdeathcount-col");
 let deathCountEcu = document.getElementById("deathcount-ecu")
 let fishDeathCountEcu= document.getElementById("fishdeathcount-ecu");
+let deathCountInd = document.getElementById("deathcount-ind")
+let fishDeathCountInd= document.getElementById("fishdeathcount-ind");
 let deathCountMex = document.getElementById("deathcount-mex")
 let fishDeathCountMex= document.getElementById("fishdeathcount-mex");
+let deathCountRus = document.getElementById("deathcount-rus")
+let fishDeathCountRus= document.getElementById("fishdeathcount-rus");
 let deathCountSpa = document.getElementById("deathcount-spa")
 let fishDeathCountSpa= document.getElementById("fishdeathcount-spa");
 let deathCountUsa = document.getElementById("deathcount-usa")
@@ -156,6 +204,19 @@ function counterChi(){
 }
 setInterval(counterChi,1000);
 
+let deathsCol = 0;
+let fishDeathsCol = 0;
+let deathsColNum;
+let fishDeathsColNum;
+
+function counterCol(){
+    deathsColNum = deathsCol+=32;
+    deathCountCol.textContent = deathsColNum.toLocaleString();
+    fishDeathsColNum = fishDeathsCol+=0.01;
+    fishDeathCountCol.textContent = fishDeathsColNum.toLocaleString();
+}
+setInterval(counterCol,1000);
+
 let deathsEcu = 0;
 let fishDeathsEcu = 0;
 let deathsEcuNum;
@@ -169,6 +230,19 @@ function counterEcu(){
 }
 setInterval(counterEcu,1000);
 
+let deathsInd = 0;
+let fishDeathsInd = 0;
+let deathsIndNum;
+let fishDeathsIndNum;
+
+function counterInd(){
+    deathsIndNum = deathsInd+=87;
+    deathCountInd.textContent = deathsIndNum.toLocaleString();
+    fishDeathsIndNum = fishDeathsInd+=0.37;
+    fishDeathCountInd.textContent = fishDeathsIndNum.toLocaleString();
+}
+setInterval(counterInd,1000);
+
 let deathsMex = 0;
 let fishDeathsMex = 0;
 let deathsMexNum;
@@ -181,6 +255,20 @@ function counterMex(){
     fishDeathCountMex.textContent = fishDeathsMexNum.toLocaleString();
 }
 setInterval(counterMex,1000);
+
+let deathsRus = 0;
+let fishDeathsRus = 0;
+let deathsRusNum;
+let fishDeathsRusNum;
+
+function counterRus(){
+    deathsRusNum = deathsRus+=81.3;
+    deathCountRus.textContent = deathsRusNum.toLocaleString();
+    fishDeathsRusNum = fishDeathsRus+=0.16;
+    fishDeathCountRus.textContent = fishDeathsRusNum.toLocaleString();
+}
+setInterval(counterRus,1000);
+
 
 let deathsSpa = 0;
 let fishDeathsSpa = 0;
@@ -227,114 +315,186 @@ function getSelectedCountry(){
     
     switch (selectedCountry){
         case "World":
-        stats.innerHTML = '<p>Select Animal</p>';
+        stats.innerHTML = '<p>Elige un Animal</p>';
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
         countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="none";
         countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="none";
         countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
         break;
 
         case "Argentina":
-        stats.innerHTML = '<p>Select Animal</p>';
+        stats.innerHTML = '<p>Elige un Animal</p>';
         countryDeathCountArg.style.display="block";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
         countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="none";
         countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="none";
         countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
         break;
 
         case "Brazil":
-        stats.innerHTML = '<p>Select Animal</p>';
+        stats.innerHTML = '<p>Elige un Animal</p>';
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="block";
         countryDeathCountCan.style.display="none";
         countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="none";
         countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="none";
         countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
         break;
 
         case "Canada":
-        stats.innerHTML = '<p>Select Animal</p>';
-        stats.innerHTML = '<p>Select Animal</p>';
+        stats.innerHTML = '<p>Elige un Animal</p>';
+        stats.innerHTML = '<p>Elige un Animal</p>';
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="block";
         countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="none";
         countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="none";
         countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
         break;
 
         case "China":
-        stats.innerHTML = '<p>Select Animal</p>';
+        stats.innerHTML = '<p>Elige un Animal</p>';
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
         countryDeathCountChi.style.display="block";
+        countryDeathCountCol.style.display="none";
         countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="none";
         countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="none";
+        countryDeathCountSpa.style.display="none";
+        countryDeathCountUsa.style.display="none";
+        break;
+
+        case "Colombia":
+        stats.innerHTML = '<p>Elige un Animal</p>';
+        countryDeathCountArg.style.display="none";
+        countryDeathCountBra.style.display="none";
+        countryDeathCountCan.style.display="none";
+        countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="block";
+        countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="none";
+        countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
         break;
 
         case "Ecuador":
-        stats.innerHTML = '<p>Select Animal</p>';
+        stats.innerHTML = '<p>Elige un Animal</p>';
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
         countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="none";
         countryDeathCountEcu.style.display="block";
+        countryDeathCountInd.style.display="none";
         countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="none";
+        countryDeathCountSpa.style.display="none";
+        countryDeathCountUsa.style.display="none";
+        break;
+
+        case "India":
+        stats.innerHTML = '<p>Elige un Animal</p>';
+        countryDeathCountArg.style.display="none";
+        countryDeathCountBra.style.display="none";
+        countryDeathCountCan.style.display="none";
+        countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="none";
+        countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="block";
+        countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
         break;
 
         case "Mexico":
-        stats.innerHTML = '<p>Select Animal</p>';
+        stats.innerHTML = '<p>Elige un Animal</p>';
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
         countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="none";
         countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="none";
         countryDeathCountMex.style.display="block";
+        countryDeathCountRus.style.display="none";
+        countryDeathCountSpa.style.display="none";
+        countryDeathCountUsa.style.display="none";
+        break;
+
+        case "Russia":
+        stats.innerHTML = '<p>Elige un Animal</p>';
+        countryDeathCountArg.style.display="none";
+        countryDeathCountBra.style.display="none";
+        countryDeathCountCan.style.display="none";
+        countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="none";
+        countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="none";
+        countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="block";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
         break;
 
         case "Spain":
-        stats.innerHTML = '<p>Select Animal</p>';
+        stats.innerHTML = '<p>Elige un Animal</p>';
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
         countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="none";
         countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="none";
         countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="block";
         countryDeathCountUsa.style.display="none";
         break;
 
         case "Usa":
-        stats.innerHTML = '<p>Select Animal</p>';
+        stats.innerHTML = '<p>Elige un animal</p>';
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
         countryDeathCountChi.style.display="none";
+        countryDeathCountCol.style.display="none";
         countryDeathCountEcu.style.display="none";
+        countryDeathCountInd.style.display="none";
         countryDeathCountMex.style.display="none";
+        countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="block";
         break;
-        default: alert("Select a country");
+        default: alert("Elige una locación");
     };
 };
 
@@ -344,7 +504,7 @@ function getSelectedCountry(){
 let stats = document.getElementById("data-el");
 
 
-let cowsDataWorld = `<ul class="list" >
+let cowsDataWorld = `<p>Vacas Mundialmente</p><ul class="list" >
 <li>Anual:</li> <div>293,196,735</div>
 <li>Mensual:</li> <div>24,433,061</div>
 <li>Diario:</li> <div>803,279</div>
@@ -352,7 +512,7 @@ let cowsDataWorld = `<ul class="list" >
 <li>Por minuto:</li> <div>558</div>
 <li>Por segundo:</li> <div>9</div>
 </ul>`;
-let cowsDataArgentina = `<ul class="list" >
+let cowsDataArgentina = `<p>Vacas en Argentina</p><ul class="list" >
 <li>Anual: </li> <div>13,991,415</div>
 <li>Mensual: </li> <div>1,165,951</div>
 <li>Diario: </li> <div>38,333</div>
@@ -361,7 +521,7 @@ let cowsDataArgentina = `<ul class="list" >
 <li>Por segundo: </li> <div>0.4</div>
 </ul>`;
 let cowsDataBrazilYear = 29887036;
-let cowsDataBrazil = `<ul class="list" >
+let cowsDataBrazil = `<p>Vacas en Brasil</p><ul class="list" >
 <li>Anual: </li> <div>${cowsDataBrazilYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(cowsDataBrazilYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(cowsDataBrazilYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -370,7 +530,7 @@ let cowsDataBrazil = `<ul class="list" >
 <li>Por segundo: </li> <div>${(cowsDataBrazilYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 </ul>`;
 
-let cowsDataCanada = `<ul class="list" >
+let cowsDataCanada = `<p>Vacas en Canadá</p><ul class="list" >
 <li>Anual: </li> <div>3,538,900</div>
 <li>Mensual: </li> <div>294,908</div>
 <li>Diario: </li> <div>9,696</div>
@@ -378,7 +538,7 @@ let cowsDataCanada = `<ul class="list" >
 <li>Por minuto: </li> <div>7</div>
 <li>Por segundo: </li> <div>0.1</div>
 </ul>`;
-let cowsDataChina = `<ul class="list" >
+let cowsDataChina = `<p>Vacas en China</p><ul class="list" >
 <li>Anual: </li> <div>40,819,593</div>
 <li>Mensual: </li> <div>3,401,633</div>
 <li>Diario: </li> <div>111,835</div>
@@ -386,7 +546,16 @@ let cowsDataChina = `<ul class="list" >
 <li>Por minuto: </li> <div>78</div>
 <li>Por segundo: </li> <div>1.3</div>
 </ul>`;
-let cowsDataEcuador = `<ul class="list" >
+let cowsDataColombiaYear = 3257033;
+let cowsDataColombia = `<p>Vacas en Colombia</p><ul class="list" >
+<li>Anual: </li> <div>${cowsDataColombiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(cowsDataColombiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(cowsDataColombiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(cowsDataColombiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(cowsDataColombiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(cowsDataColombiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+</ul>`;
+let cowsDataEcuador = `<p>Vacas en Ecuador</p><ul class="list" >
 <li>Anual: </li> <div>1,100,247</div>
 <li>Mensual: </li> <div>91,687</div>
 <li>Diario: </li> <div>3,014</div>
@@ -394,7 +563,16 @@ let cowsDataEcuador = `<ul class="list" >
 <li>Por minuto: </li> <div>2</div>
 <li>Por segundo: </li> <div>0.03</div>
 </ul>`;
-let cowsDataMexico = `<ul class="list" >
+let cowsDataIndiaYear = 8898832;
+let cowsDataIndia = `<p>Vacas en India</p><ul class="list" >
+<li>Anual: </li> <div>${cowsDataIndiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(cowsDataIndiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(cowsDataIndiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(cowsDataIndiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(cowsDataIndiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(cowsDataIndiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+</ul>`;
+let cowsDataMexico = `<p>Vacas en México</p><ul class="list" >
 <li>Anual: </li> <div>8,410,000</div>
 <li>Mensual: </li> <div>700,833</div>
 <li>Diario: </li> <div>23,041</div>
@@ -402,7 +580,16 @@ let cowsDataMexico = `<ul class="list" >
 <li>Por minuto: </li> <div>16</div>
 <li>Por segundo: </li> <div>0.27</div>
 </ul>`;
-let cowsDataSpain = `<ul class="list" >
+let cowsDataRussiaYear = 7862288;
+let cowsDataRussia = `<p>Vacas en Rusia</p><ul class="list" >
+<li>Anual: </li> <div>${cowsDataRussiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(cowsDataRussiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(cowsDataRussiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(cowsDataRussiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(cowsDataRussiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(cowsDataRussiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+</ul>`;
+let cowsDataSpain = `<p>Vacas en España</p><ul class="list" >
 <li>Anual: </li> <div>2,420,000</div>
 <li>Mensual: </li> <div>201,667</div>
 <li>Diario: </li> <div>6,630</div>
@@ -410,7 +597,7 @@ let cowsDataSpain = `<ul class="list" >
 <li>Por minuto: </li> <div>5</div>
 <li>Por segundo: </li> <div>0.08</div>
 </ul>`;
-let cowsDataUsa = `<ul class="list" >
+let cowsDataUsa = `<p>Vacas en Estados Unidos</p><ul class="list" >
 <li>Anual: </li> <div>33,366,100</div>
 <li>Mensual: </li> <div>2,780,508</div>
 <li>Diario: </li> <div>91,414</div>
@@ -418,7 +605,7 @@ let cowsDataUsa = `<ul class="list" >
 <li>Por minuto: </li> <div>63</div>
 <li>Por segundo: </li> <div>1.1</div>
 </ul>`;
-let pigsDataWorld = `<ul class="list" >
+let pigsDataWorld = `<p>Cerdos Mundialmente</p><ul class="list" >
 <li>Anual: </li> <div>1,511,512,828</div>
 <li>Mensual: </li> <div>125,959,402</div>
 <li>Diario: </li> <div>4,141,131</div>
@@ -426,7 +613,7 @@ let pigsDataWorld = `<ul class="list" >
 <li>Por minuto: </li> <div>2,876</div>
 <li>Por segundo: </li> <div>48</div>
 </ul>`;
-let pigsDataArgentina = `<ul class="list" >
+let pigsDataArgentina = `<p>Cerdos en Argentina</p><ul class="list" >
 <li>Anual: </li> <div>7,010,000</div>
 <li>Mensual: </li> <div>584,167</div>
 <li>Diario: </li> <div>19,205</div>
@@ -435,7 +622,7 @@ let pigsDataArgentina = `<ul class="list" >
 <li>Por segundo: </li> <div>0.2</div>
 </ul>`;
 let pigsDataBrazilYear = 49356207;
-let pigsDataBrazil = `<ul class="list" >
+let pigsDataBrazil = `<p>Cerdos en Brasil</p><ul class="list" >
 <li>Anual: </li> <div>${pigsDataBrazilYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(pigsDataBrazilYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(pigsDataBrazilYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -443,7 +630,7 @@ let pigsDataBrazil = `<ul class="list" >
 <li>Por minuto: </li> <div>${(pigsDataBrazilYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(pigsDataBrazilYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 </ul>`;
-let pigsDataCanada = `<ul class="list" >
+let pigsDataCanada = `<p>Cerdos en Canadá</p><ul class="list" >
 <li>Anual: </li> <div>22,720,000</div>
 <li>Mensual: </li> <div>1,893,333</div>
 <li>Diario: </li> <div>62,247</div>
@@ -451,7 +638,7 @@ let pigsDataCanada = `<ul class="list" >
 <li>Por minuto: </li> <div>43</div>
 <li>Por segundo: </li> <div>0.72</div>
 </ul>`;
-let pigsDataChina = `<ul class="list" >
+let pigsDataChina = `<p>Cerdos en China</p><ul class="list" >
 <li>Anual: </li> <div>714,860,000</div>
 <li>Mensual: </li> <div>59,571,667</div>
 <li>Diario: </li> <div>1,958,521</div>
@@ -459,7 +646,16 @@ let pigsDataChina = `<ul class="list" >
 <li>Por minuto: </li> <div>1,360</div>
 <li>Por segundo: </li> <div>22.7</div>
 </ul>`;
-let pigsDataEcuador = `<ul class="list" >
+let pigsDataColombiaYear = 5002299;
+let pigsDataColombia = `<p>Cerdos en Colombia</p><ul class="list" >
+<li>Anual: </li> <div>${pigsDataColombiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(pigsDataColombiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(pigsDataColombiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(pigsDataColombiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(pigsDataColombiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(pigsDataColombiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+</ul>`;
+let pigsDataEcuador = `<p>Cerdos en Ecuador</p><ul class="list" >
 <li>Anual: </li> <div>2,100,000</div>
 <li>Mensual: </li> <div>175,000</div>
 <li>Diario: </li> <div>5,753</div>
@@ -467,7 +663,16 @@ let pigsDataEcuador = `<ul class="list" >
 <li>Por minuto: </li> <div>4</div>
 <li>Por segundo: </li> <div>0.07</div>
 </ul>`;
-let pigsDataMexico = `<ul class="list" >
+let pigsDataIndiaYear = 9597994;
+let pigsDataIndia = `<p>Cerdos en India</p><ul class="list" >
+<li>Anual: </li> <div>${pigsDataIndiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(pigsDataIndiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(pigsDataIndiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(pigsDataIndiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(pigsDataIndiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(pigsDataIndiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+</ul>`;
+let pigsDataMexico = `<p>Cerdos en México</p><ul class="list" >
 <li>Anual: </li> <div>20,290,000</div>
 <li>Mensual: </li> <div>1,690,833</div>
 <li>Diario: </li> <div>55,589</div>
@@ -475,7 +680,16 @@ let pigsDataMexico = `<ul class="list" >
 <li>Por minuto: </li> <div>39</div>
 <li>Por segundo: </li> <div>0.64</div>
 </ul>`;
-let pigsDataSpain = `<ul class="list" >
+let pigsDataRussiaYear = 46363647;
+let pigsDataRussia = `<p>Cerdos en Rusia</p><ul class="list" >
+<li>Anual: </li> <div>${pigsDataRussiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(pigsDataRussiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(pigsDataRussiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(pigsDataRussiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(pigsDataRussiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(pigsDataRussiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+</ul>`;
+let pigsDataSpain = `<p>Cerdos en España</p><ul class="list" >
 <li>Anual: </li> <div>56,130,000</div>
 <li>Mensual: </li> <div>4,677,500</div>
 <li>Diario: </li> <div>153,781</div>
@@ -483,7 +697,7 @@ let pigsDataSpain = `<ul class="list" >
 <li>Por minuto: </li> <div>107</div>
 <li>Por segundo: </li> <div>1.78</div>
 </ul>`;
-let pigsDataUsa = `<ul class="list" >
+let pigsDataUsa = `<p>Cerdos en Estados Unidos</p><ul class="list" >
 <li>Anual: </li> <div>131,640,000</div>
 <li>Mensual: </li> <div>10,970,000</div>
 <li>Diario: </li> <div>360,658</div>
@@ -492,7 +706,7 @@ let pigsDataUsa = `<ul class="list" >
 <li>Por segundo: </li> <div>4.17</div>
 </ul>`;
 let sheepDataWorldYear = 590507650;
-let sheepDataWorld = `<ul class="list" >
+let sheepDataWorld = `<p>Ovejas Mundialmente</p><ul class="list" >
 <li>Anual: </li> <div>${sheepDataWorldYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(sheepDataWorldYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(sheepDataWorldYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -501,7 +715,7 @@ let sheepDataWorld = `<ul class="list" >
 <li>Por segundo: </li> <div>${(sheepDataWorldYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:1})}</div>
 </ul>`;
 let sheepDataArgentinaYear = 3080000;
-let sheepDataArgentina = `<ul class="list" >
+let sheepDataArgentina = `<p>Ovejas en Argentina</p><ul class="list" >
 <li>Anual: </li> <div>${sheepDataArgentinaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(sheepDataArgentinaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(sheepDataArgentinaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -510,7 +724,7 @@ let sheepDataArgentina = `<ul class="list" >
 <li>Por segundo: </li> <div>${(sheepDataArgentinaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let sheepDataBrazilYear = 6389554;
-let sheepDataBrazil = `<ul class="list" >
+let sheepDataBrazil = `<p>Ovejas en Brasil</p><ul class="list" >
 <li>Anual: </li> <div>${sheepDataBrazilYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(sheepDataBrazilYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(sheepDataBrazilYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -519,7 +733,7 @@ let sheepDataBrazil = `<ul class="list" >
 <li>Por segundo: </li> <div>${(sheepDataBrazilYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let sheepDataCanadaYear = 744800;
-let sheepDataCanada = `<ul class="list" >
+let sheepDataCanada = `<p>Ovejas en Canada</p><ul class="list" >
 <li>Anual: </li> <div>${sheepDataCanadaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(sheepDataCanadaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(sheepDataCanadaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -528,7 +742,7 @@ let sheepDataCanada = `<ul class="list" >
 <li>Por segundo: </li> <div>${(sheepDataCanadaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let sheepDataChinaYear = 176850000;
-let sheepDataChina = `<ul class="list" >
+let sheepDataChina = `<p>Ovejas en China</p><ul class="list" >
 <li>Anual: </li> <div>${sheepDataChinaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(sheepDataChinaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(sheepDataChinaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -536,8 +750,17 @@ let sheepDataChina = `<ul class="list" >
 <li>Por minuto: </li> <div>${(sheepDataChinaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(sheepDataChinaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+let sheepDataColombiaYear = 38434;
+let sheepDataColombia = `<p>Ovejas en Colombia</p><ul class="list" >
+<li>Anual: </li> <div>${sheepDataColombiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(sheepDataColombiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(sheepDataColombiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(sheepDataColombiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(sheepDataColombiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(sheepDataColombiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
+</ul>`;
 let sheepDataEcuadorYear = 372096;
-let sheepDataEcuador = `<ul class="list" >
+let sheepDataEcuador = `<p>Ovejas en Ecuador</p><ul class="list" >
 <li>Anual: </li> <div>${sheepDataEcuadorYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(sheepDataEcuadorYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(sheepDataEcuadorYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -545,8 +768,17 @@ let sheepDataEcuador = `<ul class="list" >
 <li>Por minuto: </li> <div>${(sheepDataEcuadorYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(sheepDataEcuadorYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+let sheepDataIndiaYear = 21136270;
+let sheepDataIndia = `<p>Ovejas en India</p><ul class="list" >
+<li>Anual: </li> <div>${sheepDataIndiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(sheepDataIndiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(sheepDataIndiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(sheepDataIndiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(sheepDataIndiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(sheepDataIndiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
+</ul>`;
 let sheepDataMexicoYear = 3170000;
-let sheepDataMexico = `<ul class="list" >
+let sheepDataMexico = `<p>Ovejas en México</p><ul class="list" >
 <li>Anual: </li> <div>${sheepDataMexicoYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(sheepDataMexicoYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(sheepDataMexicoYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -554,8 +786,17 @@ let sheepDataMexico = `<ul class="list" >
 <li>Por minuto: </li> <div>${(sheepDataMexicoYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(sheepDataMexicoYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+let sheepDataRussiaYear = 11186861;
+let sheepDataRussia = `<p>Ovejas en Rusia</p><ul class="list" >
+<li>Anual: </li> <div>${sheepDataRussiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(sheepDataRussiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(sheepDataRussiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(sheepDataRussiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(sheepDataRussiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(sheepDataRussiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
+</ul>`;
 let sheepDataSpainYear = 9560000;
-let sheepDataSpain = `<ul class="list" >
+let sheepDataSpain = `<p>Ovejas en España</p><ul class="list" >
 <li>Anual: </li> <div>${sheepDataSpainYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(sheepDataSpainYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(sheepDataSpainYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -564,7 +805,7 @@ let sheepDataSpain = `<ul class="list" >
 <li>Por segundo: </li> <div>${(sheepDataSpainYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let sheepDataUsaYear = 2320000;
-let sheepDataUsa = `<ul class="list" >
+let sheepDataUsa = `<p>Ovejas en Estados Unidos</p><ul class="list" >
 <li>Anual: </li> <div>${sheepDataUsaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(sheepDataUsaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(sheepDataUsaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -572,7 +813,7 @@ let sheepDataUsa = `<ul class="list" >
 <li>Por minuto: </li> <div>${(sheepDataUsaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(sheepDataUsaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
-let chickenDataWorld = `<ul class="list" >
+let chickenDataWorld = `<p>Pollos Mundialmente</p><ul class="list" >
 <li>Anual: </li> <div>70,767,577,000</div>
 <li>Mensual: </li> <div>5,897,298,083</div>
 <li>Diario: </li> <div>193,883,773</div>
@@ -580,7 +821,7 @@ let chickenDataWorld = `<ul class="list" >
 <li>Por minuto: </li> <div>134,642</div>
 <li>Por segundo: </li> <div>2,244</div>
 </ul>`;
-let chickenDataArgentina = `<ul class="list" >
+let chickenDataArgentina = `<p>Pollos en Argentina</p><ul class="list" >
 <li>Anual: </li> <div>757,490,000</div>
 <li>Mensual: </li> <div>63,124,167</div>
 <li>Diario: </li> <div>2,075,315</div>
@@ -589,7 +830,7 @@ let chickenDataArgentina = `<ul class="list" >
 <li>Por segundo: </li> <div>24</div>
 </ul>`;
 let chickenDataBrazilYear = 6006415000;
-let chickenDataBrazil = `<ul class="list" >
+let chickenDataBrazil = `<p>Pollos en Brasil</p><ul class="list" >
 <li>Anual: </li> <div>${chickenDataBrazilYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(chickenDataBrazilYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(chickenDataBrazilYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -597,7 +838,7 @@ let chickenDataBrazil = `<ul class="list" >
 <li>Por minuto: </li> <div>${(chickenDataBrazilYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(chickenDataBrazilYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 </ul>`;
-let chickenDataCanada = `<ul class="list" >
+let chickenDataCanada = `<p>Pollos en Canadá</p><ul class="list" >
 <li>Anual: </li> <div>754,950,000</div>
 <li>Mensual: </li> <div>62,912,500</div>
 <li>Diario: </li> <div>2,068,356</div>
@@ -605,7 +846,7 @@ let chickenDataCanada = `<ul class="list" >
 <li>Por minuto: </li> <div>1,436</div>
 <li>Por segundo: </li> <div>24</div>
 </ul>`;
-let chickenDataChina = `<ul class="list" >
+let chickenDataChina = `<p>Pollos en China</p><ul class="list" >
 <li>Anual: </li> <div>9,690,000,000</div>
 <li>Mensual: </li> <div>807,500,000</div>
 <li>Diario: </li> <div>26,547,945</div>
@@ -613,7 +854,16 @@ let chickenDataChina = `<ul class="list" >
 <li>Por minuto: </li> <div>18,436</div>
 <li>Por segundo: </li> <div>307</div>
 </ul>`;
-let chickenDataEcuador = `<ul class="list" >
+let chickenDataColombiaYear = 1011486000;
+let chickenDataColombia = `<p>Pollos en Colombia</p><ul class="list" >
+<li>Anual: </li> <div>${chickenDataColombiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(chickenDataColombiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(chickenDataColombiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(chickenDataColombiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(chickenDataColombiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(chickenDataColombiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+</ul>`;
+let chickenDataEcuador = `<p>Pollos en Ecuador</p><ul class="list" >
 <li>Anual: </li> <div>155,680,000</div>
 <li>Mensual: </li> <div>12,973,333</div>
 <li>Diario: </li> <div>426,521</div>
@@ -621,7 +871,16 @@ let chickenDataEcuador = `<ul class="list" >
 <li>Por minuto: </li> <div>296</div>
 <li>Por segundo: </li> <div>5</div>
 </ul>`;
-let chickenDataMexico = `<ul class="list" >
+let chickenDataIndiaYear = 2625635000;
+let chickenDataIndia = `<p>Pollos en India</p><ul class="list" >
+<li>Anual: </li> <div>${chickenDataIndiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(chickenDataIndiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(chickenDataIndiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(chickenDataIndiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(chickenDataIndiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(chickenDataIndiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+</ul>`;
+let chickenDataMexico = `<p>Pollos en México</p><ul class="list" >
 <li>Anual: </li> <div>1,960,000,000</div>
 <li>Mensual: </li> <div>163,333,333</div>
 <li>Diario: </li> <div>5,369,863</div>
@@ -629,7 +888,16 @@ let chickenDataMexico = `<ul class="list" >
 <li>Por minuto: </li> <div>3,729</div>
 <li>Por segundo: </li> <div>62</div>
 </ul>`;
-let chickenDataSpain = `<ul class="list" >
+let chickenDataRussiaYear = 2497984000;
+let chickenDataRussia = `<p>Pollos en Rusia</p><ul class="list" >
+<li>Anual: </li> <div>${chickenDataRussiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(chickenDataRussiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(chickenDataRussiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(chickenDataRussiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(chickenDataRussiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(chickenDataRussiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+</ul>`;
+let chickenDataSpain = `<p>Pollos en España</p><ul class="list" >
 <li>Anual: </li> <div>696,390,000</div>
 <li>Mensual: </li> <div>58,032,500</div>
 <li>Diario: </li> <div>1,907,918</div>
@@ -638,7 +906,7 @@ let chickenDataSpain = `<ul class="list" >
 <li>Por segundo: </li> <div>22</div>
 </ul>`;
 let chickenDataUsaYear = 9346660000;
-let chickenDataUsa = `<ul class="list" >
+let chickenDataUsa = `<p>Pollos en Estados Unidos</p><ul class="list" >
 <li>Anual: </li> <div>${chickenDataUsaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(chickenDataUsaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(chickenDataUsaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -647,7 +915,7 @@ let chickenDataUsa = `<ul class="list" >
 <li>Por segundo: </li> <div>${(chickenDataUsaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 </ul>`;
 let turkeyDataWorldYear = 617880000;
-let turkeyDataWorld = `<ul class="list" >
+let turkeyDataWorld = `<p>Pavos Mundialmente</p><ul class="list" >
 <li>Anual: </li> <div>${turkeyDataWorldYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(turkeyDataWorldYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(turkeyDataWorldYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -656,7 +924,7 @@ let turkeyDataWorld = `<ul class="list" >
 <li>Por segundo: </li> <div>${(turkeyDataWorldYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:1})}</div>
 </ul>`;
 let turkeyDataArgentinaYear = 6980000;
-let turkeyDataArgentina = `<ul class="list" >
+let turkeyDataArgentina = `<p>Pavos en Argentina</p><ul class="list" >
 <li>Anual: </li> <div>${turkeyDataArgentinaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(turkeyDataArgentinaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(turkeyDataArgentinaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -665,7 +933,7 @@ let turkeyDataArgentina = `<ul class="list" >
 <li>Por segundo: </li> <div>${(turkeyDataArgentinaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let turkeyDataBrazilYear = 86706000;
-let turkeyDataBrazil = `<ul class="list" >
+let turkeyDataBrazil = `<p>Pavos en Brasil</p><ul class="list" >
 <li>Anual: </li> <div>${turkeyDataBrazilYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(turkeyDataBrazilYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(turkeyDataBrazilYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -674,7 +942,7 @@ let turkeyDataBrazil = `<ul class="list" >
 <li>Por segundo: </li> <div>${(turkeyDataBrazilYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let turkeyDataCanadaYear = 18730000;
-let turkeyDataCanada = `<ul class="list" >
+let turkeyDataCanada = `<p>Pavos en Canadá</p><ul class="list" >
 <li>Anual: </li> <div>${turkeyDataCanadaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(turkeyDataCanadaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(turkeyDataCanadaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -683,7 +951,7 @@ let turkeyDataCanada = `<ul class="list" >
 <li>Por segundo: </li> <div>${(turkeyDataCanadaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let turkeyDataChinaYear = 176850000;
-let turkeyDataChina = `<ul class="list" >
+let turkeyDataChina = `<p>Pavos en China</p><ul class="list" >
 <li>Anual: </li> <div>${turkeyDataChinaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(turkeyDataChinaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(turkeyDataChinaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -691,8 +959,18 @@ let turkeyDataChina = `<ul class="list" >
 <li>Por minuto: </li> <div>${(turkeyDataChinaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(turkeyDataChinaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+let turkeyDataColombiaYear = "No hay datos 😞";
+let turkeyDataColombia = `<p>Pavos en Colombia</p><ul class="list" >
+<li>Anual: </li> <div>${turkeyDataColombiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(turkeyDataColombiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(turkeyDataColombiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(turkeyDataColombiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(turkeyDataColombiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(turkeyDataColombiaYear).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
+</ul>
+`;
 let turkeyDataEcuadorYear = 758000;
-let turkeyDataEcuador = `<ul class="list" >
+let turkeyDataEcuador = `<p>Pavos en Ecuador</p><ul class="list" >
 <li>Anual: </li> <div>${turkeyDataEcuadorYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(turkeyDataEcuadorYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(turkeyDataEcuadorYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -700,8 +978,17 @@ let turkeyDataEcuador = `<ul class="list" >
 <li>Por minuto: </li> <div>${(turkeyDataEcuadorYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(turkeyDataEcuadorYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+let turkeyDataIndiaYear = "No hay datos 😞";
+let turkeyDataIndia = `<p>Pavos en India</p><ul class="list" >
+<li>Anual: </li> <div>${turkeyDataIndiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(turkeyDataIndiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(turkeyDataIndiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(turkeyDataIndiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(turkeyDataIndiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(turkeyDataIndiaYear).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
+</ul>`;
 let turkeyDataMexicoYear = 2910000;
-let turkeyDataMexico = `<ul class="list" >
+let turkeyDataMexico = `<p>Pavos en México</p><ul class="list" >
 <li>Anual: </li> <div>${turkeyDataMexicoYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(turkeyDataMexicoYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(turkeyDataMexicoYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -709,8 +996,17 @@ let turkeyDataMexico = `<ul class="list" >
 <li>Por minuto: </li> <div>${(turkeyDataMexicoYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(turkeyDataMexicoYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+let turkeyDataRussiaYear = "No hay datos 😞";
+let turkeyDataRussia = `<p>Pavos en Rusia</p><ul class="list" >
+<li>Anual: </li> <div>${turkeyDataRussiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(turkeyDataRussiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(turkeyDataRussiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(turkeyDataRussiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(turkeyDataRussiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(turkeyDataRussiaYear).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
+</ul>`;
 let turkeyDataSpainYear = 27410000;
-let turkeyDataSpain = `<ul class="list" >
+let turkeyDataSpain = `<p>Pavos en España</p><ul class="list" >
 <li>Anual: </li> <div>${turkeyDataSpainYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(turkeyDataSpainYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(turkeyDataSpainYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -719,7 +1015,7 @@ let turkeyDataSpain = `<ul class="list" >
 <li>Por segundo: </li> <div>${(turkeyDataSpainYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let turkeyDataUsaYear = 223000000;
-let turkeyDataUsa = `<ul class="list" >
+let turkeyDataUsa = `<p>Pavos en Estados Unidos</p><ul class="list" >
 <li>Anual: </li> <div>${turkeyDataUsaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(turkeyDataUsaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(turkeyDataUsaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -728,7 +1024,7 @@ let turkeyDataUsa = `<ul class="list" >
 <li>Por segundo: </li> <div>${(turkeyDataUsaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataWorldYear = 171094560;
-let fishDataWorld = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
+let fishDataWorld = `<p>Animales marinos Mundialmente<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
 <li>Anual: </li> <div>${fishDataWorldYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(fishDataWorldYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(fishDataWorldYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -737,7 +1033,7 @@ let fishDataWorld = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
 <li>Por segundo: </li> <div>${(fishDataWorldYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:1})}</div>
 </ul>`;
 let fishDataArgentinaYear = 838630;
-let fishDataArgentina = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
+let fishDataArgentina = `<p>Animales marinos en Argentina<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
 <li>Anual: </li> <div>${fishDataArgentinaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(fishDataArgentinaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(fishDataArgentinaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -746,7 +1042,7 @@ let fishDataArgentina = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
 <li>Por segundo: </li> <div>${(fishDataArgentinaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataBrazilYear = 1299120;
-let fishDataBrazil = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
+let fishDataBrazil = `<p>Animales marinos en Brasil<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
 <li>Anual: </li> <div>${fishDataBrazilYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(fishDataBrazilYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(fishDataBrazilYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -755,7 +1051,7 @@ let fishDataBrazil = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
 <li>Por segundo: </li> <div>${(fishDataBrazilYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataCanadaYear = 1026450;
-let fishDataCanada = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
+let fishDataCanada = `<p>Animales marinos en Canadá<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
 <li>Anual: </li> <div>${fishDataCanadaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(fishDataCanadaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(fishDataCanadaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -764,7 +1060,7 @@ let fishDataCanada = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
 <li>Por segundo: </li> <div>${(fishDataCanadaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataChinaYear = 63360572;
-let fishDataChina = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
+let fishDataChina = `<p>Animales marinos en China<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
 <li>Anual: </li> <div>${fishDataChinaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(fishDataChinaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(fishDataChinaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -772,8 +1068,17 @@ let fishDataChina = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
 <li>Por minuto: </li> <div>${(fishDataChinaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(fishDataChinaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+let fishDataColombiaYear = 187450;
+let fishDataColombia = `<p>Animales marinos en Colombia<br> (medido en Toneladas)<fn>2</fn></p><ul class="list" >
+<li>Anual: </li> <div>${fishDataColombiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(fishDataColombiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(fishDataColombiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(fishDataColombiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(fishDataColombiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(fishDataColombiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
+</ul>`;
 let fishDataEcuadorYear = 1112710;
-let fishDataEcuador = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
+let fishDataEcuador = `<p>Animales marinos en Ecuador<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
 <li>Anual: </li> <div>${fishDataEcuadorYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(fishDataEcuadorYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(fishDataEcuadorYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -781,8 +1086,17 @@ let fishDataEcuador = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
 <li>Por minuto: </li> <div>${(fishDataEcuadorYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(fishDataEcuadorYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+let fishDataIndiaYear = 11607680;
+let fishDataIndia = `<p>Animales marinos en India<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
+<li>Anual: </li> <div>${fishDataIndiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(fishDataIndiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(fishDataIndiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(fishDataIndiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(fishDataIndiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(fishDataIndiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
+</ul>`;
 let fishDataMexicoYear = 1871950;
-let fishDataMexico = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
+let fishDataMexico = `<p>Animales marinos en México<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
 <li>Anual: </li> <div>${fishDataMexicoYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(fishDataMexicoYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(fishDataMexicoYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -790,8 +1104,17 @@ let fishDataMexico = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
 <li>Por minuto: </li> <div>${(fishDataMexicoYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(fishDataMexicoYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+let fishDataRussiaYear = 5054340;
+let fishDataRussia = `<p>Animales marinos en Rusia<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
+<li>Anual: </li> <div>${fishDataRussiaYear.toLocaleString()}</div>
+<li>Mensual: </li> <div>${(fishDataRussiaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Diario: </li> <div>${(fishDataRussiaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por hora: </li> <div>${(fishDataRussiaYear/365/24).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por minuto: </li> <div>${(fishDataRussiaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
+<li>Por segundo: </li> <div>${(fishDataRussiaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
+</ul>`;
 let fishDataSpainYear = 1264820;
-let fishDataSpain = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
+let fishDataSpain = `<p>Animales marinos en España<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
 <li>Anual: </li> <div>${fishDataSpainYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(fishDataSpainYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(fishDataSpainYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -800,7 +1123,7 @@ let fishDataSpain = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
 <li>Por segundo: </li> <div>${(fishDataSpainYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
 let fishDataUsaYear = 5475780;
-let fishDataUsa = `(Medido en Toneladas)<fn>2</fn> <ul class="list" >
+let fishDataUsa = `<p>Animales marinos Estados Unidos<br> (medido en Toneladas)<fn>2</fn></p> <ul class="list" >
 <li>Anual: </li> <div>${fishDataUsaYear.toLocaleString()}</div>
 <li>Mensual: </li> <div>${(fishDataUsaYear/12).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Diario: </li> <div>${(fishDataUsaYear/365).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -826,15 +1149,21 @@ function cows(){
         break;
         case "China": stats.innerHTML = cowsDataChina;
         break;
+        case "Colombia": stats.innerHTML = cowsDataColombia;
+        break;
         case "Ecuador": stats.innerHTML = cowsDataEcuador;
         break;
+        case "India": stats.innerHTML = cowsDataIndia;
+        break;
         case "Mexico": stats.innerHTML = cowsDataMexico;
+        break;
+        case "Russia": stats.innerHTML = cowsDataRussia;
         break;
         case "Spain": stats.innerHTML = cowsDataSpain;
         break;
         case "Usa": stats.innerHTML = cowsDataUsa;
         break;
-        default: alert("Select a country");
+        default: alert("Elige una locación");
     }
 };
 
@@ -852,7 +1181,15 @@ function pigs(){
         break;
         case "China": stats.innerHTML = pigsDataChina;
         break;
+        case "Colombia": stats.innerHTML = pigsDataColombia;
+        break;
         case "Ecuador": stats.innerHTML = pigsDataEcuador;
+        break;
+        case "India": stats.innerHTML = pigsDataIndia;
+        break;
+        case "Mexico": stats.innerHTML = pigsDataMexico;
+        break;
+        case "Russia": stats.innerHTML = pigsDataRussia;
         break;
         case "Spain": stats.innerHTML = pigsDataSpain;
         break;
@@ -860,7 +1197,7 @@ function pigs(){
         break;
         case "Usa": stats.innerHTML = pigsDataUsa;
         break;
-        default: alert("Select a country");
+        default: alert("Elige una locación");
     }
 };
 
@@ -878,7 +1215,15 @@ function sheep(){
         break;
         case "China": stats.innerHTML = sheepDataChina;
         break;
+        case "Colombia": stats.innerHTML = sheepDataColombia;
+        break;
         case "Ecuador": stats.innerHTML = sheepDataEcuador;
+        break;
+        case "India": stats.innerHTML = sheepDataIndia;
+        break;
+        case "Mexico": stats.innerHTML = sheepDataMexico;
+        break;
+        case "Russia": stats.innerHTML = sheepDataRussia;
         break;
         case "Mexico": stats.innerHTML = sheepDataMexico;
         break;
@@ -886,7 +1231,7 @@ function sheep(){
         break;
         case "Usa": stats.innerHTML = sheepDataUsa;
         break;
-        default: alert("Select a country");
+        default: alert("Elige una locación");
     }
 };
 
@@ -904,7 +1249,15 @@ function chicken(){
         break;
         case "China": stats.innerHTML = chickenDataChina;
         break;
+        case "Colombia": stats.innerHTML = chickenDataColombia;
+        break;
         case "Ecuador": stats.innerHTML = chickenDataEcuador;
+        break;
+        case "India": stats.innerHTML = chickenDataIndia;
+        break;
+        case "Mexico": stats.innerHTML = chickenDataMexico;
+        break;
+        case "Russia": stats.innerHTML = chickenDataRussia;
         break;
         case "Mexico": stats.innerHTML = chickenDataMexico;
         break;
@@ -912,7 +1265,7 @@ function chicken(){
         break;
         case "Usa": stats.innerHTML = chickenDataUsa;
         break;
-        default: alert("Select a country");
+        default: alert("Elige una locación");
     }
 };
 
@@ -930,7 +1283,15 @@ function turkey(){
         break;
         case "China": stats.innerHTML = turkeyDataChina;
         break;
+        case "Colombia": stats.innerHTML = turkeyDataColombia;
+        break;
         case "Ecuador": stats.innerHTML = turkeyDataEcuador;
+        break;
+        case "India": stats.innerHTML = turkeyDataIndia;
+        break;
+        case "Mexico": stats.innerHTML = turkeyDataMexico;
+        break;
+        case "Russia": stats.innerHTML = turkeyDataRussia;
         break;
         case "Mexico": stats.innerHTML = turkeyDataMexico;
         break;
@@ -938,7 +1299,7 @@ function turkey(){
         break;
         case "Usa": stats.innerHTML = turkeyDataUsa;
         break;
-        default: alert("Select a country");
+        default: alert("Elige una locación");
     }
 };
 
@@ -956,7 +1317,15 @@ function fish(){
         break;
         case "China": stats.innerHTML = fishDataChina;
         break;
+        case "Colombia": stats.innerHTML = fishDataColombia;
+        break;
         case "Ecuador": stats.innerHTML = fishDataEcuador;
+        break;
+        case "India": stats.innerHTML = fishDataIndia;
+        break;
+        case "Mexico": stats.innerHTML = fishDataMexico;
+        break;
+        case "Russia": stats.innerHTML = fishDataRussia;
         break;
         case "Mexico": stats.innerHTML = fishDataMexico;
         break;
@@ -964,7 +1333,7 @@ function fish(){
         break;
         case "Usa": stats.innerHTML = fishDataUsa;
         break;
-        default: alert("Select a country");
+        default: alert("Elige una locación");
     }
 };
 
