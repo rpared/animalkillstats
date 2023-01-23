@@ -1395,6 +1395,7 @@ function fish(){
         default: alert("Elige una locación");
     }
 };
+//Orange Btns
 
 let cowBtn = document.getElementById("cowbtn");
 let pigsBtn = document.getElementById("pigsbtn");
@@ -1402,58 +1403,73 @@ let sheepBtn = document.getElementById("sheepbtn");
 let chickenBtn = document.getElementById("chickenbtn");
 let turkeyBtn = document.getElementById("turkeybtn");
 let fishBtn = document.getElementById("fishbtn");
+let cowBtnImg = document.getElementById("cowbtnimg");
+let pigsBtnImg = document.getElementById("pigbtnimg");
+let sheepBtnImg = document.getElementById("sheepbtnimg");
+let chickenBtnImg = document.getElementById("chickenbtnimg");
+let turkeyBtnImg = document.getElementById("turkeybtnimg");
+let fishBtnImg = document.getElementById("fishbtnimg");
+
 
 function orangeButtons(){
     switch(orangeBtn){
         case "cow":
-            cowBtn.innerHTML = `<img src="images/cow-icon-orange.png" alt="Vacas"><div class="tooltip">Vacas</div>`;
-            pigsBtn.innerHTML = `<img src="images/pig-icon.png" alt="Cerdos"><div class="tooltip">Cerdos</div>`;
-            sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Ovejas"><div class="tooltip">Ovejas</div>`;
-            chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Pollos"><div class="tooltip">Pollos</div>`;
-            turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Pavos"><div class="tooltip">Pavos</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Marinos"><div class="tooltip">Marinos</div>`;
+            cowBtnImg.src = "images/cow-icon-orange.png";
+            pigsBtnImg.src = "images/pig-icon.png";
+            sheepBtnImg.src = "images/sheep-icon.png";
+            chickenBtnImg.src = "images/chicken-icon.png";
+            turkeyBtnImg.src = "images/turkey-icon.png";
+            fishBtnImg.src = "images/fish-icon.png";
+            // cowBtn.innerHTML  = `<img src="images/cow-icon-orange.png" alt="Cattle"><div class="tooltip">Cattle</div>`;
+            // pigsBtn.innerHTML = `<img src="images/pig-icon.png" alt="Pigs"><div class="tooltip">Pigs</div>`;
+            // sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div>`;
+            // chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div>`;
+            // turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div>`;
+            // fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div>`;
         break;
         case "pigs":
-            cowBtn.innerHTML = `<img src="images/cow-icon.png" alt="Vacas"><div class="tooltip">Vacas</div>`;
-            pigsBtn.innerHTML = `<img src="images/pig-icon-orange.png" alt="Cerdos"><div class="tooltip">Cerdos</div>`;
-            sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Ovejas"><div class="tooltip">Ovejas</div>`;
-            chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Pollos"><div class="tooltip">Pollos</div>`;
-            turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Pavos"><div class="tooltip">Pavos</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Marinos"><div class="tooltip">Marinos</div>`;
+            cowBtnImg.src = "images/cow-icon.png";
+            pigsBtnImg.src = "images/pig-icon-orange.png";
+            sheepBtnImg.src = "images/sheep-icon.png";
+            chickenBtnImg.src = "images/chicken-icon.png";
+            turkeyBtnImg.src = "images/turkey-icon.png";
+            fishBtnImg.src = "images/fish-icon.png";
         break;
+
         case "sheep":
-            cowBtn.innerHTML = `<img src="images/cow-icon.png" alt="Vacas"><div class="tooltip">Vacas</div>`;
-            pigsBtn.innerHTML = `<img src="images/pig-icon.png" alt="Cerdos"><div class="tooltip">Cerdos</div>`;
-            sheepBtn.innerHTML = `<img src="images/sheep-icon-orange.png" alt="Ovejas"><div class="tooltip">Ovejas</div>`;
-            chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Pollos"><div class="tooltip">Pollos</div>`;
-            turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Pavos"><div class="tooltip">Pavos</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Marinos"><div class="tooltip">Marinos</div>`;
+            cowBtnImg.src = "images/cow-icon.png";
+            pigsBtnImg.src = "images/pig-icon.png";
+            sheepBtnImg.src = "images/sheep-icon-orange.png";
+            chickenBtnImg.src = "images/chicken-icon.png";
+            turkeyBtnImg.src = "images/turkey-icon.png";
+            fishBtnImg.src = "images/fish-icon.png";
         break;
+
         case "chicken":
-            cowBtn.innerHTML = `<img src="images/cow-icon.png" alt="Vacas"><div class="tooltip">Vacas</div>`;
-            pigsBtn.innerHTML = `<img src="images/pig-icon.png" alt="Cerdos"><div class="tooltip">Cerdos</div>`;
-            sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Ovejas"><div class="tooltip">Ovejas</div>`;
-            chickenBtn.innerHTML = `<img src="images/chicken-icon-orange.png" alt="Pollos"><div class="tooltip">Pollos</div>`;
-            turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Pavos"><div class="tooltip">Pavos</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Marinos"><div class="tooltip">Marinos</div>`;
+            cowBtnImg.src = "images/cow-icon.png";
+            pigsBtnImg.src = "images/pig-icon.png";
+            sheepBtnImg.src = "images/sheep-icon.png";
+            chickenBtnImg.src = "images/chicken-icon-orange.png";
+            turkeyBtnImg.src = "images/turkey-icon.png";
+            fishBtnImg.src = "images/fish-icon.png";
         break;
+
         case "turkey":
-            cowBtn.innerHTML = `<img src="images/cow-icon.png" alt="Vacas"><div class="tooltip">Vacas</div>`;
-            pigsBtn.innerHTML = `<img src="images/pig-icon.png" alt="Cerdos"><div class="tooltip">Cerdos</div>`;
-            sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Ovejas"><div class="tooltip">Sheep</div>`;
-            chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Pollos"><div class="tooltip">Pollos</div>`;
-            turkeyBtn.innerHTML = `<img src="images/turkey-icon-orange.png" alt="Pavos"><div class="tooltip">Pavos</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon.png" alt="Marinos"><div class="tooltip">Marinos</div>`;
-
+            cowBtnImg.src = "images/cow-icon.png";
+            pigsBtnImg.src = "images/pig-icon.png";
+            sheepBtnImg.src = "images/sheep-icon.png";
+            chickenBtnImg.src = "images/chicken-icon.png";
+            turkeyBtnImg.src = "images/turkey-icon-orange.png";
+            fishBtnImg.src = "images/fish-icon.png";
         break;
-        case "fish":
-            cowBtn.innerHTML = `<img src="images/cow-icon.png" alt="Vacas"><div class="tooltip">Vacas</div>`;
-            pigsBtn.innerHTML = `<img src="images/pig-icon.png" alt="Cerdos"><div class="tooltip">Pigs</div>`;
-            sheepBtn.innerHTML = `<img src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div>`;
-            chickenBtn.innerHTML = `<img src="images/chicken-icon.png" alt="Pollos"><div class="tooltip">Pollos</div>`;
-            turkeyBtn.innerHTML = `<img src="images/turkey-icon.png" alt="Pavos"><div class="tooltip">Pavos</div>`;
-            fishBtn.innerHTML = `<img src="images/fish-icon-orange.png" alt="Marinos"><div class="tooltip">Marinos</div>`;
 
+        case "fish":
+            cowBtnImg.src = "images/cow-icon.png";
+            pigsBtnImg.src = "images/pig-icon.png";
+            sheepBtnImg.src = "images/sheep-icon.png";
+            chickenBtnImg.src = "images/chicken-icon.png";
+            turkeyBtnImg.src = "images/turkey-icon.png";
+            fishBtnImg.src = "images/fish-icon-orange.png";
         break;
 };
 }
