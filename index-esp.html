@@ -60,39 +60,79 @@
         </div>
     </div>
 
-    
+<section id="worldwidecharts">
+        <div class="mainblockbtn">
+            <div class="collapseline">
+            <button class="collapse" onclick="collapsecharts()" > <p>Estadísticas Mundiales</p> <img
+                id="arrow1" src="images/CollapseButtonA.png" alt=""></button>
+        </div>
+
+
+<div id="charts-wrapper" >
+   
     
     <div class="mainblockbtn">
         <div class="collapseline">
-        <button class="collapse" onclick="collapselandchart()" > <p>Animales terrestres por año en el mundo</p> <img
+        <button class="collapse" onclick="collapselandchart()" > <p>• Animales terrestres por año</p> <img
             id="arrow-chart1" src="images/CollapseButtonA.png" alt=""></button>
         </div>
     </div>
-    <div id="landanimalschart-wrapper">
-    <div class="chart-container" >
-        <canvas id="LandAnimalsChart"></canvas>
+        <div id="landanimalschart-wrapper">
+        <div class="chart-container" >
+            <canvas id="LandAnimalsChart"></canvas>
+        </div>
+        <p class="legend">El total anual es la suma de vacas, cerdos, ovejas, pollos y pavos asesinados. Más de <strong>74 mil millones</strong> asesinados en 2020.</p>
+        </div>
+
+    <div class="mainblockbtn">
+            <div class="collapseline">
+            <button class="collapse" onclick="collapselandchart1()" > <p>• Animales terrestres por persona anual</p> <img
+                id="arrow-chart2" src="images/CollapseButtonA.png" alt=""></button>
+            </div>
     </div>
-    <p>El total anual es la suma de vacas, cerdos, ovejas, pollos y pavos asesinados.</p>
-    </div>
+        <div id="landanimalschart1-wrapper">
+            <div class="chart-container" >
+                <canvas id="LandAnimalsPerPersonChart"></canvas>
+            </div>
+            <p class="legend">Animales terrestres divididos por la población mundial. Cerca de <strong>9.5</strong> animales terrestres fueron asesinados <strong>por persona</strong> en 2020.</p>
+        </div>
+
 
     <div class="mainblockbtn">
         <div class="collapseline">
-        <button class="collapse" onclick="collapseseachart()" > <p>Animales marinos en Kg. por año en el mundo</p> <img
+        <button class="collapse" onclick="collapseseachart()" > <p>• Animales marinos en Kg. por año</p> <img
             id="arrow-chart2" src="images/CollapseButtonA.png" alt=""></button>
         </div>
     </div>
-    <div id="seaanimalschart-wrapper">
-    <div class="chart-container" >
-        <canvas id="SeaAnimalsChart"></canvas>
+        <div id="seaanimalschart-wrapper">
+            <div class="chart-container" >
+                <canvas id="SeaAnimalsChart"></canvas>
+            </div>
+            <p class="legend">Animales marinos pescados y de granjas acuícolas, <strong>medido en kilogramos</strong>.</p>
+   
+        </div>
+
+
+    <div class="mainblockbtn">
+        <div class="collapseline">
+        <button class="collapse" onclick="collapseseachart1()" > <p>• Animales marinos (Kg.) por persona anual</p> <img
+            id="arrow-chart4" src="images/CollapseButtonA.png" alt=""></button>
+        </div>
     </div>
-    <p>Animales marinos pezcados y de granjas acuícolas. <strong>medido en kilogramos</strong>.</p>
-    <div class="collapseline"></div>
+    <div id="seaanimalschart1-wrapper">
+        <div class="chart-container" >
+            <canvas id="SeaAnimalsPerPersonChart"></canvas>
+        </div>
+        <p class="legend">Kilogramos de animales marinos divididos por la población mundial, el resultado es el promedio de Kg. por persona anual. En 2019 más de <strong>22 Kg.</strong> de animales marinos <strong>por persona</strong>.</p>
+        <div class="collapseline"></div>
     </div>
 
-    <br>
+    
 
+</div>
+</section>
 
-
+<br>
 
 <main class="container" >
     

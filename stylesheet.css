@@ -142,7 +142,7 @@ span{
 font-size: 0.8em;
 }
 
-/*Main Gray block per Animal*/
+/*Main Gray block per Animal and Charts*/
 
 #collapseline, .collapseline{
     border-top: 1px solid #a7a7a7;
@@ -180,9 +180,35 @@ font-size: 0.8em;
     filter: invert(74%) sepia(20%) saturate(6848%) hue-rotate(338deg) brightness(91%) contrast(86%);
 }
 
-#mainblockperanimal, #landanimalschart-wrapper, #seaanimalschart-wrapper {
+#mainblockperanimal, #landanimalschart-wrapper, #seaanimalschart-wrapper, #landanimalschart1-wrapper, #seaanimalschart1-wrapper, #charts-wrapper {
 display: none;
 }
+
+.chart-container{
+    position: relative;
+    margin: 0.5em auto;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 80%;
+    max-width: 800px;
+    height: 350px;
+}
+
+.mainblockbtn .legend {
+    margin: 0 2em 2em 2em;
+}
+
+#charts-wrapper .mainblockbtn p{
+    color: #555;
+}
+
+#charts-wrapper .collapseline{
+    width: 68%;
+}
+
+
+/*Location stats*/
 
 .animalstats{
     display: flex;
@@ -374,6 +400,7 @@ footer {
     font-size: 0.7em;
     line-height: 1.2em;
     background-color: #ffffff7a;
+    margin: auto 1em;
      }
 
 
@@ -387,15 +414,4 @@ footer div a:visited{
 }
 
 
-.chart-container{
-    position: relative;
-    margin: 0 auto;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    width: 80%;
-    max-width: 800px;
-    height: 350px;
-    
-}
 

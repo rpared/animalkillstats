@@ -17,7 +17,8 @@ function counter(){
 }
 setInterval(counter,1000);
 
-//Collapsible button Animals Worldwide Since page was loaded
+
+//Collapsible button Worldwide Animals since page loaded
 let mainBlockPerAnimal = document.getElementById("mainblockperanimal");
 let collapseArrowBtn = document.querySelector("#arrow");
 let collapse = false;
@@ -34,6 +35,27 @@ collapse = false;
 collapseArrowBtn.style.rotate = "0deg";
 }
 }
+
+//Collapsible button Worldwide Charts
+let ChartsWrapper = document.getElementById("charts-wrapper");
+let collapseArrowBtn1 = document.querySelector("#arrow1");
+let collapseCharts = false;
+
+function collapsecharts(){
+if (collapseCharts == false){
+    ChartsWrapper.style.display = "inline";
+    collapseCharts = true;
+    collapseArrowBtn1.style.rotate = "180deg";
+}
+else if (collapseCharts == true) {
+    ChartsWrapper.style.display = "none";
+    collapseCharts = false;
+    collapseArrowBtn1.style.rotate = "0deg";
+}
+}
+
+
+
 
 //Collapsible button Land Animals
 let LandAnimalsChartWrapper = document.getElementById("landanimalschart-wrapper");
@@ -53,9 +75,27 @@ else if (collapseLandChart == true) {
 }
 }
 
+//Collapsible button Land Animals Per Person
+let LandAnimalsChartWrapper1 = document.getElementById("landanimalschart1-wrapper");
+let collapseArrowBtnChart2 = document.querySelector("#arrow-chart2");
+let collapseLandChart1 = false;
+
+function collapselandchart1(){
+if (collapseLandChart1 == false){
+    LandAnimalsChartWrapper1.style.display = "inline";
+    collapseLandChart1 = true;
+    collapseArrowBtnChart2.style.rotate = "180deg";
+}
+else if (collapseLandChart1 == true) {
+    LandAnimalsChartWrapper1.style.display = "none";
+    collapseLandChart1 = false;
+    collapseArrowBtnChart2.style.rotate = "0deg";
+}
+}
+
 //Collapsible button Sea Animals
 let SeaAnimalsChartWrapper = document.getElementById("seaanimalschart-wrapper");
-let collapseArrowBtnChart2 = document.querySelector("#arrow-chart2");
+let collapseArrowBtnChart3 = document.querySelector("#arrow-chart3");
 let collapseSeaChart = false;
 
 
@@ -63,12 +103,31 @@ function collapseseachart(){
     if (collapseSeaChart == false){
         SeaAnimalsChartWrapper.style.display = "inline";
         collapseSeaChart = true;
-        collapseArrowBtnChart2.style.rotate = "180deg";
+        collapseArrowBtnChart3.style.rotate = "180deg";
     }
     else if (collapseSeaChart == true) {
         SeaAnimalsChartWrapper.style.display = "none";
         collapseSeaChart = false;
-        collapseArrowBtnChart2.style.rotate = "0deg";
+        collapseArrowBtnChart3.style.rotate = "0deg";
+    }
+}
+
+//Collapsible button Sea Animals Per Person
+let SeaAnimalsChartWrapper1 = document.getElementById("seaanimalschart1-wrapper");
+let collapseArrowBtnChart4 = document.querySelector("#arrow-chart4");
+let collapseSeaChart1 = false;
+
+
+function collapseseachart1(){
+    if (collapseSeaChart1 == false){
+        SeaAnimalsChartWrapper1.style.display = "inline";
+        collapseSeaChart1 = true;
+        collapseArrowBtnChart4.style.rotate = "180deg";
+    }
+    else if (collapseSeaChart1 == true) {
+        SeaAnimalsChartWrapper1.style.display = "none";
+        collapseSeaChart1 = false;
+        collapseArrowBtnChart4.style.rotate = "0deg";
     }
 }
 
