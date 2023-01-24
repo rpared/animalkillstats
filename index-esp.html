@@ -7,18 +7,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
-    <script src="index-esp.js" defer></script>
+    <script src="animalstatspercountry-esp.js" defer></script>
+    <script src="index.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script src="charts-esp.js" defer></script>
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="icon" href="images/animalkillstatsfavicon.png" type="image/x-icon">
 </head>
 <body>
-<div class="maskcontainer1">
+<div class="maskcontainer1" onload="languageEsp()">
     <div class="upperinfo">
         <p>2023 INFO DE ESTIMADOS 2020<fn>1,2</fn></p>
         <button><a href="https://www.apocalypsisopus.com/93/opus?id=114" target="_blanc" >VÍNCULOS</a></button>
-        <button><a href="index.html" target="_self" >ENGLISH</a></button>
+        <button ><a href="index.html" target="_self" >ENGLISH</a></button>
         
     </div>
     <div id="upperline"></div>
@@ -134,7 +135,7 @@
 
 <br>
 
-<main class="container" >
+<main class="container">
     
     <div class="countrydropdown" >
         <form name="countryform">
@@ -289,14 +290,14 @@
     </div>
 
     <div class="animalbuttons" >
-        <button id="cowbtn" onclick="cows(), orangeButtons()"> <img id="cowbtnimg" src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div></button>
-        <button id="pigsbtn" onclick="pigs(), orangeButtons()"><img id="pigbtnimg" src="images/pig-icon.png" alt="Pigs"><div class="tooltip">Pigs</div> </button>
-        <button id="sheepbtn" onclick="sheep(), orangeButtons()"><img id="sheepbtnimg" src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div></button>
-        <button id="chickenbtn" onclick="chicken(), orangeButtons()"><img id="chickenbtnimg" src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div></button>
-        <button id="turkeybtn" onclick="turkey(), orangeButtons()"><img id="turkeybtnimg" src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div></button>
-        <button id="fishbtn" onclick="fish(), orangeButtons()"><img id="fishbtnimg" src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div></button>
+        <button id="cowbtn" onclick="cows(), orangeButtons()"> <img id="cowbtnimg" src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Vacas</div></button>
+        <button id="pigsbtn" onclick="pigs(), orangeButtons()"><img id="pigbtnimg" src="images/pig-icon.png" alt="Pigs"><div class="tooltip">Cerdos</div> </button>
+        <button id="sheepbtn" onclick="sheep(), orangeButtons()"><img id="sheepbtnimg" src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Ovejas</div></button>
+        <button id="chickenbtn" onclick="chicken(), orangeButtons()"><img id="chickenbtnimg" src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Pollos</div></button>
+        <button id="turkeybtn" onclick="turkey(), orangeButtons()"><img id="turkeybtnimg" src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Pavos</div></button>
+        <button id="fishbtn" onclick="fish(), orangeButtons()"><img id="fishbtnimg" src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Marinos</div></button>
     </div>
-    <div id="data-el">Select Animal</div>
+    <div id="data-el">Elige un animal</div>
     <br><br>
 
     

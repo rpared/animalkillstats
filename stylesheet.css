@@ -6,16 +6,13 @@ body{
     text-align: center;
     justify-content: center;
     position: relative;
-    /* border: 3px dashed rgba(255, 0, 0, 0.974); */
 }
-
 .upperinfo{
     display: flex;
     margin: 0 auto;
     font-size: 0.7em;
     width: 70%;
     max-width: 1000px;
-    /* border: 1px solid red; */
 }
 .upperinfo p{
     margin: 0 0 2px 0.2em;
@@ -41,6 +38,15 @@ body{
 }
 .upperinfo a:hover{
     color: rgb(217, 129, 53);
+}
+
+@media screen and (max-width: 405px){
+    .upperinfo{
+        display: flex;
+        margin: 0 auto;
+        width: 100%
+    }
+
 }
 
 /* #upperline{
@@ -125,8 +131,9 @@ span{
     box-shadow: 0 -1px 3px #cbcbcb7f inset;
 }
 .mainblockinfo{
-    width: 440px;
+    max-width: 440px;
     margin: 0 auto;
+    justify-content: center;
 }
 
 .mainblockinfo span{
@@ -137,6 +144,7 @@ span{
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-top: -15px;
+    justify-content: center;
 }
 .counters span{
 font-size: 0.8em;
@@ -214,7 +222,7 @@ display: none;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* border: 1px solid red; */
+
 }
 .animalstats div{
     display: grid;
@@ -235,18 +243,16 @@ display: none;
 
 .animalstats div p{
     margin: -1em 0 0 0;
+
 }
 
 @media screen and (max-width:900px) {
-    .animalstats{
-        flex-wrap: wrap;
-        border-color: none;
-    }
     .animalstats div{
         flex-basis: 30%;
         resize: none;
     }
 }
+
 
 
 #countrylist{
@@ -357,6 +363,33 @@ display: none;
     .animalbuttons button{
         flex: 28%;
         resize: none;
+    }
+}
+
+@media screen and (max-width:420px) {
+    .animalbuttons{
+        flex-wrap: wrap;
+        border-color: none;
+    }
+    .animalbuttons button{
+        flex: 45%;
+        resize: none;
+        
+    }
+}
+
+@media screen and (max-width:300px) {
+    .animalbuttons{
+        flex-wrap: wrap;
+        border-color: none;
+        scale: 80%;
+    }
+    .animalbuttons button{
+        flex: 45%;
+        resize: both;
+        margin: -1em 0 0.5em 0;
+        padding: 0.8em 0;
+        
     }
 }
 

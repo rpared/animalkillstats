@@ -7,17 +7,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="animalstatspercountry.js" defer></script>
     <script src="index.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script src="charts.js" defer></script>
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="icon" href="images/animalkillstatsfavicon.png" type="image/x-icon">
 </head>
-<body>
+<body onload="languageEng()">
 <div class="maskcontainer1">
     <div class="upperinfo">
         <p>2023 DATA FROM 2020 ESTIMATES<fn>1,2</fn></p>
-        <button><a href="https://www.apocalypsisopus.com/93/opus?id=114" target="_blanc" >LINKS</a></button>
+        <button><a href="https://www.apocalypsisopus.com/93/opus?id=114" target="_blanc">LINKS</a></button>
         <button><a href="index-esp.html" target="_self" >ESPAÑOL</a></button>
         
     </div>
@@ -134,7 +135,7 @@
     <div class="countrydropdown" >
         <form name="countryform">
             <label for="country">Choose a location: </label>
-            <select name="countrylist" id="countrylist" onchange="getSelectedCountry()">
+            <select name="countrylist" id="countrylist" onchange="getSelectedCountry() , orangeButtons()">
                 <option value="World">Worldwide</option>
                 <option value="Argentina">Argentina</option>
                 <option value="Brazil">Brazil</option>
