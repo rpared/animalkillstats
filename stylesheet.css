@@ -40,7 +40,7 @@ body{
     color: rgb(217, 129, 53);
 }
 
-@media screen and (max-width: 405px){
+@media screen and (max-width: 420px){
     .upperinfo{
         display: flex;
         margin: 0 auto;
@@ -162,18 +162,19 @@ font-size: 0.8em;
 #collapse, .collapse {
     display: flex;
     align-content: center;
-    text-align: center;
+    text-align: left;
     border: none;
     background-color: none;
     background: none;
     font-size: 0.9em;
     font-family: Cairo, Arial, Helvetica, sans-serif;
+    line-height: 1.3em;
     color: #555;
     cursor: pointer;
 }
 
 .collapse p{
-    margin-top: -6px;
+    margin-top: -2px;
     vertical-align: top;
     display: inline;
 }
@@ -363,10 +364,12 @@ display: none;
     .animalbuttons button{
         flex: 28%;
         resize: none;
+        margin: -1em 0 0.5em 0;
+        padding: 0.8em 0;
     }
 }
 
-@media screen and (max-width:420px) {
+@media screen and (max-width:400px) {
     .animalbuttons{
         flex-wrap: wrap;
         border-color: none;
@@ -374,6 +377,8 @@ display: none;
     .animalbuttons button{
         flex: 45%;
         resize: none;
+        margin: -1em 0 0.5em 0;
+        padding: 0.8em 0;
         
     }
 }
