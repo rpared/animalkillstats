@@ -110,12 +110,19 @@ body{
     max-width: 300px;
 }
 
+@media screen and (max-width:300px)  {
+    #brand img{
+        margin: 20px auto;
+        max-width: 230px;
+    }
+}
+
 h1{
     font-size: 2.5em;
 }
 
 .introtext{
-    line-height: 0.8em;
+    line-height: 0.9em;
     margin-bottom: 5px;
 }
 
