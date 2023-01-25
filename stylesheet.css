@@ -105,8 +105,9 @@ body{
     100%{opacity: 0;}
     }
 
-#brand{
+#brand img{
     margin: 20px auto;
+    max-width: 300px;
 }
 
 h1{
