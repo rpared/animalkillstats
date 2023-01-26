@@ -11,6 +11,11 @@
     <meta name="language" content="English">
     <meta name="revisit-after" content="30 days">
     <meta name="author" content="Roger Paredes">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@RogerParedes999">
+    <meta name="twitter:title" content="Animal Kill Stats">
+    <meta name="twitter:description" content="Statistics for 2023 on animal slaughter for food by animal, worldwide and by country. Includes a real time animal kill count." >
+    <meta name="twitter:image" content="https://animalkillstats.apocalypsisopus.com/images/animalkillstatsfavicon.png">
 
     <title>Animal Kill Stats | 2023</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,8 +39,10 @@
     <div id="upperline"></div>
 <header>
     <div id="brand"><img src="images/AnimalKill-Brand.png" alt="Animal Kill Stats"></div>
-    <article class="introtext">Animals killed for food (needlessly).
-         <br> <span>Does not include hunting, incidental death dairy or egg production.</span>
+    <article itemscope itemtype="http://schema.org/Article" class="introtext">
+        <meta itemprop="datePublised" content="2023-01-25 09:30:00 -0700 -0700">
+        Animals killed for food (needlessly).
+         <br> <span>Does not include hunting, incidental death, dairy or egg production.</span>
     </article>
 </header>
     <div class="mainblock">
@@ -144,7 +151,7 @@
     <div class="countrydropdown" >
         <form name="countryform">
             <label for="country">Choose a location: </label>
-            <select name="countrylist" id="countrylist" onchange="getSelectedCountry() , orangeButtons()">
+            <select name="countrylist" id="countrylist" onchange="getSelectedCountry(), orangeButtons()">
                 <option value="World">Worldwide</option>
                 <option value="Argentina">Argentina</option>
                 <option value="Brazil">Brazil</option>
@@ -328,7 +335,7 @@
         http://www.fao.org/faostat/en/#data <br>
         https://ourworldindata.org/grapher/animals-slaughtered-for-meat <br>
         https://www.worldometers.info/world-population/world-population-by-year/<br>
-        <div class="about"> <a href="https://roger.costra.ec" target="_blank" > - Roger Paredes 2023 -</a></div></p>
+        <div class="about"> <a itemprop="author" name="Roger Paredes" href="https://roger.costra.ec" target="_blank" > - Roger Paredes 2023 -</a></div></p>
     </footer>
 
     
