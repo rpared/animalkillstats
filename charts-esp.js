@@ -114,3 +114,60 @@ new Chart(ctxSeaAnimalsPerPerson, {
     color: '#555',
   }
 });
+
+//Per Capita Charts
+
+let meatKg;
+let worldMeatCapita = [8.94,	15.48,	1.97,	15.75,	0.67,	19.75];
+let argMeatCapita = [48.09,	14.49,	1.34,	45.10,	1.21,	7.16];
+let braMeatCapita = [37.12,	14.35,	0.60,	46.94,	0.54,	8.95];
+let canMeatCapita = [26.62,	24.97,	1.00,	41.08,	0.01,	21.84];
+let chiMeatCapita = [6.19,	39.11,	3.64,	14.21,	0.53,	38.49];
+let colMeatCapita = [14.72,	11.31,	0.22,	35.91,	0.11,	6.86];
+let ecuMeatCapita = [13.22, 15.07, 0.35, 17.99, 0.06, 8.35];
+let indMeatCapita = [1,	0.26,	0.60,	3.09,	0.00,	6.76];
+let mexMeatCapita = [14.85,	18.28,	0.86,	35.61,	0.63,	14.36];
+let rusMeatCapita = [13.15,	27.09,	1.40,	31.35,	3.39,	20.06];
+let spaMeatCapita = [13.71,	55.21,	2.05,	33.34,	1.63,	42.40];
+let usaMeatCapita = [37.66,	30.84,	0.53,	58.60,	0.81,	22.13];
+
+
+
+function capitaChart(){
+
+const ctxCapita = document.getElementById('capitaAnimals');
+
+let totalMeatKgEl = document.getElementById('capitaTotal');
+let totalMeatKg = meatKg.reduce((partialSum, a) => partialSum + a, 0); 
+console.log(totalMeatKg);
+
+totalMeatKgEl.textContent = totalMeatKg.toLocaleString();
+
+new Chart(ctxCapita, {
+  type: 'bar',
+  data: {
+    labels: ['Ganado', 'Cerdos', 'Ovejas', 'Aves', 'Otros', 'Marinos' ],
+    datasets: [{
+      label: 'Kg. per capita (2019)',
+      data: meatKg,
+      borderWidth: 2,
+      borderColor: 'rgba(217, 129, 53, 0.9)',
+      backgroundColor: 'rgba(217, 129, 53, 0.4)',
+      pointStyle: 'circle',
+      borderSkipped: 'bottom',
+      barPercentage: '0.5',
+  }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    aspectRatio: 1|1,
+    color: 'rgba(217, 129, 53, 0.9)',
+    scales: {
+      x: {
+          grid: {offset: true}
+          
+      }
+  }
+  }
+});
+}

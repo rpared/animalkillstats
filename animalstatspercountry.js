@@ -1,6 +1,5 @@
 // Animal Stats per country
 
-
 let cowsDataWorld = `<p>Cattle Worldwide</p><ul class="list" >
 <li>Yearly:</li> <div>293,196,735</div>
 <li>Monthly:</li> <div>24,433,061</div>
@@ -456,7 +455,7 @@ let turkeyDataChina = `<p>Turkeys in China</p><ul class="list" >
 <li>Per minute: </li> <div>${(turkeyDataChinaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Per second: </li> <div>${(turkeyDataChinaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
-let turkeyDataColombiaYear = "no data, sorry";
+let turkeyDataColombiaYear = "no data on this 😞";
 let turkeyDataColombia = `<p>Turkeys in Colombia</p><ul class="list" >
 <li>Yearly: </li> <div>${turkeyDataColombiaYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(turkeyDataColombiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -474,7 +473,7 @@ let turkeyDataEcuador = `<p>Turkeys in Ecuador</p><ul class="list" >
 <li>Per minute: </li> <div>${(turkeyDataEcuadorYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Per second: </li> <div>${(turkeyDataEcuadorYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
-let turkeyDataIndiaYear = "no data, sorry";
+let turkeyDataIndiaYear = "no data on this 😞";
 let turkeyDataIndia = `<p>Turkeys in India</p><ul class="list" >
 <li>Yearly: </li> <div>${turkeyDataIndiaYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(turkeyDataIndiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -492,7 +491,7 @@ let turkeyDataMexico = `<p>Turkeys in Mexico</p><ul class="list" >
 <li>Per minute: </li> <div>${(turkeyDataMexicoYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Per second: </li> <div>${(turkeyDataMexicoYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
-let turkeyDataRussiaYear = "no data, sorry";
+let turkeyDataRussiaYear = "no data on this 😞";
 let turkeyDataRussia = `<p>Turkeys in Russia</p><ul class="list" >
 <li>Yearly: </li> <div>${turkeyDataRussiaYear.toLocaleString()}</div>
 <li>Monthly: </li> <div>${(turkeyDataRussiaYear).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
@@ -627,3 +626,14 @@ let fishDataUsa = `<p>Sea animals in the USA<br> (measured in Tons)<fn>2</fn></p
 <li>Per minute: </li> <div>${(fishDataUsaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Per second: </li> <div>${(fishDataUsaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+
+
+
+let capitaMeatKgText = `<h2>Kilograms consumed per capita - 2019</h2>
+<div class="chart-container" >
+<canvas id="capitaAnimals"></canvas>
+</div>
+<p class="legend" ><span id="capitaTotal"></span> kg. of animals were consumed per person in 2019<span id="countryname"></span>.</p>`;
+
+
+

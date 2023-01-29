@@ -111,7 +111,7 @@ function collapseseachart(){
     }
 }
 
-//Collapsible Sea Animals Per PErson
+//Collapsible Sea Animals Per Person
 let SeaAnimalsChartWrapper1 = document.getElementById("seaanimalschart1-wrapper");
 let collapseArrowBtnChart4 = document.querySelector("#arrow-chart4");
 let collapseSeaChart1 = false;
@@ -129,7 +129,6 @@ function collapseseachart1(){
         collapseArrowBtnChart4.style.rotate = "0deg";
     }
 }
-
 
 //Death count in main block per Animal per second
 let deathCountCowsEl = document.getElementById("deathcount-cows");
@@ -363,19 +362,22 @@ function languageEng(){
 
 //Country Selector
 
-let selectedCountry = document.getElementById("countrylist").value;
 let stats = document.getElementById("data-el");
 let orangeBtn;
 
 function getSelectedCountry(){
     let selectedCountry = document.getElementById("countrylist").value;
+    let animalsPerCapita = document.getElementById("animalspercapita");
+    let countryName;
+    let countryNameText;
+
     console.log(selectedCountry);
     orangeBtn = "none";
     
     switch (selectedCountry){
         case "World":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " worldwide";}
+        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " mundialmente"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
@@ -387,11 +389,18 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
+        // animalsPerCapita.style.display ="none";
+        meatKg = worldMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "Argentina":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+            if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+            else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en Argentina"};
         countryDeathCountArg.style.display="block";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
@@ -403,11 +412,17 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
+        meatKg = argMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "Brazil":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en Brasil"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="block";
         countryDeathCountCan.style.display="none";
@@ -419,11 +434,17 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
+        meatKg = braMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "Canada":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en Canadá"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="block";
@@ -435,11 +456,17 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
+        meatKg = canMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "China":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en China"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
@@ -451,11 +478,17 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
+        meatKg = chiMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "Colombia":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+            if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+            else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en Colombia"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
@@ -467,11 +500,17 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
+        meatKg = colMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "Ecuador":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+            if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+            else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en Ecuador"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
@@ -483,11 +522,17 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
+        meatKg = ecuMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "India":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+            if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+            else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en India"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
@@ -499,11 +544,17 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
+        meatKg = indMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "Mexico":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+            if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+            else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en México"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
@@ -515,11 +566,17 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
+        meatKg = mexMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "Russia":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+            if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+            else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en Rusia"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
@@ -531,11 +588,17 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="block";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="none";
+        meatKg = rusMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "Spain":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};
+            if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+            else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en España"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
@@ -547,11 +610,17 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="block";
         countryDeathCountUsa.style.display="none";
+        meatKg = spaMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
 
         case "Usa":
-        if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>';}
-        else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'};;
+            if (language == "eng"){stats.innerHTML = '<p>Select Animal</p>'; countryNameText = " in "+ selectedCountry;}
+            else if (language == "esp") {stats.innerHTML = '<p>Elige un animal</p>'; countryNameText = " en Estados Unidos"};
         countryDeathCountArg.style.display="none";
         countryDeathCountBra.style.display="none";
         countryDeathCountCan.style.display="none";
@@ -563,10 +632,23 @@ function getSelectedCountry(){
         countryDeathCountRus.style.display="none";
         countryDeathCountSpa.style.display="none";
         countryDeathCountUsa.style.display="block";
+        meatKg = usaMeatCapita;
+        animalsPerCapita.style.display ="block";
+        animalsPerCapita.innerHTML = capitaMeatKgText;
+        capitaChart();
+        countryName = document.getElementById("countryname");
+        countryName.textContent = countryNameText;
         break;
         default: alert("Select a location");
     };
 };
+
+
+
+
+
+
+
 
 // Animal Btns
 // They call for variables stated in the file: animalstatspercountry.js
@@ -599,7 +681,10 @@ function cows(){
         break;
         case "Usa": stats.innerHTML = cowsDataUsa;
         break;
-        default: alert("Select a country");
+        default: 
+        if (language == "eng"){alert("Choose a location");}
+        else if (language == "esp") {alert("Elige una ubicación");};
+        
     }
 };
 
@@ -633,7 +718,9 @@ function pigs(){
         break;
         case "Usa": stats.innerHTML = pigsDataUsa;
         break;
-        default: alert("Select a location");
+        default:
+        if (language == "eng"){alert("Choose a location");}
+        else if (language == "esp") {alert("Elige una ubicación");};
     }
 };
 
@@ -667,7 +754,9 @@ function sheep(){
         break;
         case "Usa": stats.innerHTML = sheepDataUsa;
         break;
-        default: alert("Select a location");
+        default:
+        if (language == "eng"){alert("Choose a location");}
+        else if (language == "esp") {alert("Elige una ubicación");};
     }
 };
 
@@ -701,7 +790,9 @@ function chicken(){
         break;
         case "Usa": stats.innerHTML = chickenDataUsa;
         break;
-        default: alert("Select a location");
+        default:
+        if (language == "eng"){alert("Choose a location");}
+        else if (language == "esp") {alert("Elige una ubicación");};
     }
 };
 
@@ -735,7 +826,9 @@ function turkey(){
         break;
         case "Usa": stats.innerHTML = turkeyDataUsa;
         break;
-        default: alert("Select a location");
+        default:
+        if (language == "eng"){alert("Choose a location");}
+        else if (language == "esp") {alert("Elige una ubicación");};
     }
 };
 
@@ -769,7 +862,9 @@ function fish(){
         break;
         case "Usa": stats.innerHTML = fishDataUsa;
         break;
-        default: alert("Select a location");
+        default:
+        if (language == "eng"){alert("Choose a location");}
+        else if (language == "esp") {alert("Elige una ubicación");};
     }
 };
 

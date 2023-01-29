@@ -627,3 +627,9 @@ let fishDataUsa = `<p>Animales marinos Estados Unidos<br> (medido en Toneladas)<
 <li>Por minuto: </li> <div>${(fishDataUsaYear/365/24/60).toLocaleString(undefined, {maximumFractionDigits:0})}</div>
 <li>Por segundo: </li> <div>${(fishDataUsaYear/365/24/60/60).toLocaleString(undefined, {maximumFractionDigits:2})}</div>
 </ul>`;
+
+let capitaMeatKgText = `<h2>Kilogramos consumidos per capita - 2019 </h2>
+<div class="chart-container" >
+<canvas id="capitaAnimals"></canvas>
+</div>
+<p class="legend" ><span id="capitaTotal"></span> kg. de animales fueron consumidos por persona en 2019<span id="countryname"></span>.</p>`;

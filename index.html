@@ -40,7 +40,8 @@
 <header>
     <div id="brand"><img src="images/AnimalKill-Brand.png" alt="Animal Kill Stats"></div>
     <article itemscope itemtype="http://schema.org/Article" class="introtext">
-        <meta itemprop="datePublised" content="2023-01-25 09:30:00 -0700 -0700">
+        <meta itemprop="datePublished" content="2023-01-23 09:30:00 -0700 -0700">
+        <meta itemprop="dateModified" content="2023-01-29 15:30:00 -0700 -0700">
         Animals killed for food (needlessly).
          <br> <span>Does not include hunting, incidental death, dairy or egg production.</span>
     </article>
@@ -152,6 +153,7 @@
         <form name="countryform">
             <label for="country">Choose a location: </label>
             <select name="countrylist" id="countrylist" onchange="getSelectedCountry(), orangeButtons()">
+                <option selected disabled>---</option>
                 <option value="World">Worldwide</option>
                 <option value="Argentina">Argentina</option>
                 <option value="Brazil">Brazil</option>
@@ -311,6 +313,9 @@
     
     </div>
 
+    <!-- Kilograms PerCapita  -->
+    <div id="animalspercapita"></div>
+
     <div class="animalbuttons" >
         <button id="cowbtn" onclick="cows(), orangeButtons()"> <img id="cowbtnimg" src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div></button>
         <button id="pigsbtn" onclick="pigs(), orangeButtons()"><img id="pigbtnimg" src="images/pig-icon.png" alt="Pigs"><div class="tooltip">Pigs</div> </button>
@@ -330,11 +335,11 @@
         Fish and seafood production is measured in Tons as the sum of seafood from wild catch and fish farming (aquaculture). <br>
         *2020 consumtion was significantly less than 2019 due to covid lockdowns. <br>
         *China data is estimated by FAO.<br>
-        Sources: <br>
-        https://faunalytics.org/global-animal-slaughter-statistics-charts-2022-update/ <br>
-        http://www.fao.org/faostat/en/#data <br>
-        https://ourworldindata.org/grapher/animals-slaughtered-for-meat <br>
-        https://www.worldometers.info/world-population/world-population-by-year/<br>
+        <strong>Sources:</strong>  <br>
+        <a href="https://faunalytics.org/global-animal-slaughter-statistics-charts-2022-update/" target="_blank">https://faunalytics.org/global-animal-slaughter-statistics-charts-2022-update/</a><br>
+        <a href="http://www.fao.org/faostat/en/#data" target="_blank">http://www.fao.org/faostat/en/#data</a><br>
+        <a href="https://ourworldindata.org/grapher/animals-slaughtered-for-meat" target="_blank">https://ourworldindata.org/grapher/animals-slaughtered-for-meat</a> <br>
+        <a href="https://www.worldometers.info/world-population/world-population-by-year/" target="_blank">https://www.worldometers.info/world-population/world-population-by-year/</a><br>
         <div class="about"> <a itemprop="author" name="Roger Paredes" href="https://roger.costra.ec" target="_blank" > - Roger Paredes 2023 -</a></div></p>
     </footer>
 
