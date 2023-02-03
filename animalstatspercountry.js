@@ -639,5 +639,8 @@ let capitaMeatKgText = `<h2>Kilograms consumed per capita - 2019</h2>
 let toggleLegend5AnimalsText =`Animal kg. consumed per person yearly. The sum equals the "Total animal" chart.
 `;
 
+let toggleBtnTextTotal = "Display chart by totals";
+let toggleBtnTextAnimals = "Display chart by animals";
+
 let toggleLegend5TotalsText =`Total animal kilograms (land + sea animals) consumed per person yearly. <span id="totalKg2019"></span> per capita in <strong>2019</strong>.
 `;

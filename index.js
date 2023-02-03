@@ -181,11 +181,11 @@ function perAnimalTogglechart(){
     
     if (chart5 == "total"){
         chart5 = "per animal";
-        toggleBtnCapita.innerText= "Display chart by totals";
+        toggleBtnCapita.innerText = toggleBtnTextTotal;
         toggleLegend5.textContent = toggleLegend5AnimalsText;
     }else if (chart5 == "per animal"){
         chart5 = "total";
-        toggleBtnCapita.innerText= "Display chart by animals"
+        toggleBtnCapita.innerText = toggleBtnTextAnimals;
         toggleLegend5.innerHTML = toggleLegend5TotalsText;
     }
     console.log("Toggle chart " + chart5);
