@@ -633,3 +633,9 @@ let capitaMeatKgText = `<h2>Kilogramos consumidos per capita - 2019 </h2>
 <canvas id="capitaAnimals"></canvas>
 </div>
 <p class="legend" ><span id="capitaTotal"></span> kg. de animales fueron consumidos por persona en 2019<span id="countryname"></span>.</p>`;
+
+let toggleLegend5AnimalsText =`Kg. animales consumidos por persona al año. La suma es igual a el gráfico "Total animal".
+`;
+
+let toggleLegend5TotalsText =`Kilogramos animales totales (terrestres + marinos) consumidos por persona al año.<span id="totalKg2019"></span> per cápita en <strong>2019</strong>.
+`;

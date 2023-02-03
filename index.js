@@ -37,10 +37,35 @@ collapseArrowBtn.style.rotate = "0deg";
 }
 }
 
+
 //Collapsible Worldwide Charts
+
+
 let ChartsWrapper = document.getElementById("charts-wrapper");
 let collapseArrowBtn1 = document.querySelector("#arrow1");
 let collapseCharts = false;
+
+let LandAnimalsChartWrapper = document.getElementById("landanimalschart-wrapper");
+let LandAnimalsChartWrapper1 = document.getElementById("landanimalschart1-wrapper");
+let SeaAnimalsChartWrapper = document.getElementById("seaanimalschart-wrapper");
+let SeaAnimalsChartWrapper1 = document.getElementById("seaanimalschart1-wrapper");
+let capitaChartWrapper = document.getElementById("capitachart-wrapper");
+let worldChartsWrappers = [LandAnimalsChartWrapper, LandAnimalsChartWrapper1, SeaAnimalsChartWrapper, SeaAnimalsChartWrapper1, capitaChartWrapper];
+
+
+let collapseArrowBtnChart1 = document.querySelector("#arrow-chart1");
+let collapseArrowBtnChart2 = document.querySelector("#arrow-chart2");
+let collapseArrowBtnChart3 = document.querySelector("#arrow-chart3");
+let collapseArrowBtnChart4 = document.querySelector("#arrow-chart4");
+let collapseArrowBtnChart5 = document.querySelector("#arrow-chart5");
+let worldArrowBtns = [collapseArrowBtnChart1, collapseArrowBtnChart2, collapseArrowBtnChart3, collapseArrowBtnChart4, collapseArrowBtnChart5];
+
+let collapseLandChart = false;
+let collapseLandChart1 = false;
+let collapseSeaChart = false;
+let collapseSeaChart1 = false;
+let collapseCapitaChart = false;
+let eachChartCollapseBoolean = [collapseLandChart, collapseLandChart1, collapseSeaChart, collapseSeaChart1, collapseCapitaChart];
 
 function collapsecharts(){
 if (collapseCharts == false){
@@ -52,14 +77,23 @@ else if (collapseCharts == true) {
     ChartsWrapper.style.display = "none";
     collapseCharts = false;
     collapseArrowBtn1.style.rotate = "0deg";
+
+    for (i=0; i < worldChartsWrappers.length; i++ ){
+    worldChartsWrappers[i].style.display = "none";
+    worldArrowBtns[i].style.rotate = "0deg";
+}
+    collapseLandChart = false;
+    collapseLandChart1 = false;
+    collapseSeaChart = false;
+    collapseSeaChart1 = false;
+    collapseCapitaChart = false;
+
 }
 }
+
 
 
 //Collapsible Land Animals
-let LandAnimalsChartWrapper = document.getElementById("landanimalschart-wrapper");
-let collapseArrowBtnChart1 = document.querySelector("#arrow-chart1");
-let collapseLandChart = false;
 
 function collapselandchart(){
 if (collapseLandChart == false){
@@ -75,9 +109,6 @@ else if (collapseLandChart == true) {
 }
 
 //Collapsible Land Animals Per Person
-let LandAnimalsChartWrapper1 = document.getElementById("landanimalschart1-wrapper");
-let collapseArrowBtnChart2 = document.querySelector("#arrow-chart2");
-let collapseLandChart1 = false;
 
 function collapselandchart1(){
 if (collapseLandChart1 == false){
@@ -93,10 +124,6 @@ else if (collapseLandChart1 == true) {
 }
 
 //Collapsible Sea Animals
-let SeaAnimalsChartWrapper = document.getElementById("seaanimalschart-wrapper");
-let collapseArrowBtnChart3 = document.querySelector("#arrow-chart3");
-let collapseSeaChart = false;
-
 
 function collapseseachart(){
     if (collapseSeaChart == false){
@@ -112,10 +139,6 @@ function collapseseachart(){
 }
 
 //Collapsible Sea Animals Per Person
-let SeaAnimalsChartWrapper1 = document.getElementById("seaanimalschart1-wrapper");
-let collapseArrowBtnChart4 = document.querySelector("#arrow-chart4");
-let collapseSeaChart1 = false;
-
 
 function collapseseachart1(){
     if (collapseSeaChart1 == false){
@@ -129,6 +152,46 @@ function collapseseachart1(){
         collapseArrowBtnChart4.style.rotate = "0deg";
     }
 }
+
+//Collapsible Total Animals Per Capita with Toggle
+
+let chart5 = "total";
+
+function collapsePerCapitachart(){
+    if (collapseCapitaChart == false){
+        capitaChartWrapper.style.display = "inline";
+        collapseCapitaChart = true;
+        collapseArrowBtnChart5.style.rotate = "180deg";
+        chart5 = "total";
+        toggleBtnCapita.innerText= "Display chart by animals"
+        toggleLegend5.innerHTML = toggleLegend5TotalsText;
+    }
+    else if (collapseCapitaChart == true) {
+        capitaChartWrapper.style.display = "none";
+        collapseCapitaChart = false;
+        collapseArrowBtnChart5.style.rotate = "0deg";
+    }
+}
+console.log("Toggle chart initial stats " + chart5);
+
+let toggleBtnCapita = document.getElementById("togglebtncapita");
+let toggleLegend5 = document.getElementById("togglelegend5");
+
+function perAnimalTogglechart(){
+    
+    if (chart5 == "total"){
+        chart5 = "per animal";
+        toggleBtnCapita.innerText= "Display chart by totals";
+        toggleLegend5.textContent = toggleLegend5AnimalsText;
+    }else if (chart5 == "per animal"){
+        chart5 = "total";
+        toggleBtnCapita.innerText= "Display chart by animals"
+        toggleLegend5.innerHTML = toggleLegend5TotalsText;
+    }
+    console.log("Toggle chart " + chart5);
+}
+
+
 
 //Death count in main block per Animal per second
 let deathCountCowsEl = document.getElementById("deathcount-cows");
