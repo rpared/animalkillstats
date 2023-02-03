@@ -163,7 +163,7 @@ function collapsePerCapitachart(){
         collapseCapitaChart = true;
         collapseArrowBtnChart5.style.rotate = "180deg";
         chart5 = "total";
-        toggleBtnCapita.innerText= "Display chart by animals"
+        toggleBtnCapita.innerText= toggleBtnTextTotal;
         toggleLegend5.innerHTML = toggleLegend5TotalsText;
     }
     else if (collapseCapitaChart == true) {
