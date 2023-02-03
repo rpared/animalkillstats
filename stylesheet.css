@@ -200,6 +200,16 @@ font-size: 0.8em;
     filter: invert(74%) sepia(20%) saturate(6848%) hue-rotate(338deg) brightness(91%) contrast(86%);
 }
 
+@media screen and (max-width:430px)  {
+    .collapse{
+        margin-bottom: 1.2em;
+    }
+    #collapse1{
+        margin-bottom: -1em;
+    }
+}
+
+
 .collapseperanimal {
     margin: -0.6em auto;
     line-height: 18px;
