@@ -95,7 +95,7 @@ new Chart(ctxFish, {
 
 //Sea Animals per person per year Chart
 const ctxSeaAnimalsPerPerson = document.getElementById('SeaAnimalsPerPersonChart');
-let SeaAnimalsPerPersonArray = [49206392000/3339583597, 64587352000/3700437046, 64495600000/4079480606, 70873936000/4458003514, 85344640000/4870921740, 96847704000/5327231061, 115577856000/5744212979, 124331952000/6143493823, 134890976000/6541907027, 143832096000/6956823603, 162916064000/7379797139, 171094560000/7713468100
+let SeaAnimalsPerPersonArray = [9.86,	10.72,	11.53,	11.34,	12.39,	13.36,	14.87,	15.68,	16.75,	18.36,	19.82,	19.75
 ];
 SeaAnimalsPerPersonArray = SeaAnimalsPerPersonArray.map(function(each_element){
   return Number (each_element.toFixed(1));
