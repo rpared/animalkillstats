@@ -158,7 +158,7 @@ new Chart(ctxCapita, {
       data: meatKg,
       borderWidth: 2,
       borderColor: 'rgba(217, 129, 53, 0.9)',
-      backgroundColor: 'rgba(217, 129, 53, 0.9)',
+      backgroundColor: 'rgba(217, 129, 53, 0.4)',
       pointStyle: 'circle',
       borderSkipped: 'bottom',
       barPercentage: '0.5',
