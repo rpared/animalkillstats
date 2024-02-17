@@ -503,6 +503,10 @@ fn {
     vertical-align: 0.5em;
 }
 
+#plantbasedtreaty{
+    margin-bottom: 14px;
+}
+
 footer {
     border-top: 1px solid #a7a7a7;
     font-size: 0.7em;
