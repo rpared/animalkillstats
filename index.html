@@ -31,17 +31,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
-    <script src="animalstatspercountry.js" defer></script>
-    <script src="index.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- <script src="script/google-sheets-to-json.js" defer></script> -->
+    <script src="script/animalstatspercountry.js" defer></script>
+    <script src="script/index.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-    <script src="charts.js" defer></script>
+    <script src="script/charts.js" defer></script>
     <link rel="stylesheet" href="stylesheet.css">
     <link rel="icon" href="images/animalkillstatsfavicon.png" type="image/x-icon">
 </head>
-<body onload="languageEng()">
+<body lang="en">
 <div class="maskcontainer1">
     <div class="upperinfo">
-        <p>2024 DATA FROM 2020 ESTIMATES<fn>1,2</fn></p>
+        <p>2024 DATA FROM 2021 ESTIMATES<fn>1,2,3,4</fn></p>
         <button><a href="https://www.apocalypsisopus.com/93/opus?id=114" target="_blanc">LINKS</a></button>
         <button><a href="index-esp.html" target="_self" >ESPAÑOL</a></button>
         
@@ -51,7 +53,7 @@
     <div id="brand"><img src="images/AnimalKill-Brand.png" alt="Animal Kill Stats"></div>
     <article itemscope itemtype="http://schema.org/Article" class="introtext">
         <meta itemprop="datePublished" content="2023-01-23 09:30:00 -0700 -0700">
-        <meta itemprop="dateModified" content="2024-02-12 21:30:00 -0700 -0700">
+        <meta itemprop="dateModified" content="2024-03-28 21:30:00 -0700 -0700">
         Animals killed for food (needlessly).
          <br> <span>Does not include hunting, incidental death, dairy or egg production.</span>
     </article>
@@ -65,13 +67,14 @@
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
         <div class="mainblockbtn">
             <div class="collapseline">
-            <button id="collapse1" class="collapse" onclick="collapseanimals()" > <p>Per animal</p> <img
+            <button id="collapse1" class="collapse"  > <p>Per animal</p> <img
                 id="arrow" src="images/CollapseButtonA.png" alt=""></button>
+                <!-- onclick="collapseanimals()" -->
             </div>
         </div>
 
@@ -92,7 +95,7 @@
 <section id="worldwidecharts">
     <div class="mainblockbtn">
         <div class="collapseline">
-        <button class="collapse" onclick="collapsecharts()" > <p>Worldwide Stats per year</p> <img
+        <button class="collapse" id="collapse2" > <p>Worldwide Stats per year</p> <img
             id="arrow1" src="images/CollapseButtonA.png" alt=""></button>
         </div>
     <div id="charts-wrapper" >
@@ -100,7 +103,7 @@
  <!-- Land Animals -->
     <div class="mainblockbtn">
         <div class="collapseline">
-        <button class="collapse" onclick="collapselandchart()" > <p>• Land animals</p> <img
+        <button class="collapse" id="collapse2-LandChart" > <p>• Land animals</p> <img
             id="arrow-chart1" src="images/CollapseButtonA.png" alt=""></button>
         </div>
     </div>
@@ -108,13 +111,13 @@
     <div class="chart-container" >
         <canvas id="LandAnimalsChart"></canvas>
     </div>
-    <p class="legend">The yearly total is the sum of cattle, pigs, sheep, chicken and turkey slaughter. Over <span>74 billion</span>  in 2020.</p>
+    <p class="legend">The yearly total is the sum of cattle, pigs, sheep, chicken, turkey, goat and duck slaughter. Over <span>81 billion</span> in 2021.</p>
     </div>
 
 <!-- Land Animals per Capita -->
     <div class="mainblockbtn">
         <div class="collapseline">
-        <button class="collapse" onclick="collapselandchart1()" > <p>• Land animals per capita</p> <img
+        <button class="collapse" id="collapse2-LandChartCapita" > <p>• Land animals per capita</p> <img
             id="arrow-chart2" src="images/CollapseButtonA.png" alt=""></button>
         </div>
     </div>
@@ -122,13 +125,13 @@
     <div class="chart-container" >
         <canvas id="LandAnimalsPerPersonChart"></canvas>
     </div>
-    <p class="legend">Land animals divided by world population. About <span>9.5</span> land animals were slaughtered <strong>per person</strong> in 2020.</p>
+    <p id="landAnimalsPerCapitaLegend" class="legend">Land animals divided by world population. About <span>10.3</span> land animals were slaughtered <strong>per person</strong> in 2021.</p>
     </div>
 
 <!-- Sea Animal Kg -->
     <div class="mainblockbtn">
         <div class="collapseline">
-        <button class="collapse" onclick="collapseseachart()" > <p>• Sea animal Kg.</p> <img
+        <button class="collapse" id="collapse2-SeaChart" > <p>• Sea animal Kg.</p> <img
             id="arrow-chart3" src="images/CollapseButtonA.png" alt=""></button>
         </div>
     </div>
@@ -136,13 +139,13 @@
     <div class="chart-container" >
         <canvas id="SeaAnimalsChart"></canvas>
     </div>
-    <p class="legend">Sea animals caught and farmed <strong>measured in kilograms</strong>. In 2019 over<span> 171 billion</span> Kg.</p>
+    <p id="seaAnimalsLegend" class="legend">Sea animals caught and farmed <strong>measured in kilograms</strong>. In 2020 over <span> 176 </span> billon Kg.</p>
   
     </div>
 <!-- Sea Animal Kg per Capita -->
     <div class="mainblockbtn">
         <div class="collapseline">
-        <button class="collapse" onclick="collapseseachart1()" > <p>• Sea animal Kg. per capita</p> <img
+        <button class="collapse" id="collapse2-SeaChartCapita" > <p>• Sea animal Kg. per capita</p> <img
             id="arrow-chart4" src="images/CollapseButtonA.png" alt=""></button>
         </div>
     </div>
@@ -150,24 +153,24 @@
     <div class="chart-container" >
         <canvas id="SeaAnimalsPerPersonChart"></canvas>
     </div>
-    <p class="legend">Sea animal kilograms divided by world population, the result equals the average Kg. per person yearly. In 2019 over <span>22 Kg.</span> sea animals <strong>per person</strong>.</p>
+    <p id="seaAnimalsPerCapitaLegend" class="legend"> <fn>3</fn> Average sea animal Kilograms per person. In 2020 over <span>20 </span> Kg. of sea animals <strong>per person</strong>.</p>
 
     </div>
 
 <!-- Total Animal Kg per Capita Toggle Chart -->
     <div class="mainblockbtn">
         <div class="collapseline">
-        <button class="collapse" onclick="collapsePerCapitachart(), chart5Toggle()" > <p>• Total animal Kg. per capita</p> 
+        <button class="collapse" id="collapse2-TotalCapita" > <p>• Total animal Kg. per capita</p> 
             <img id="arrow-chart5" src="images/CollapseButtonA.png" alt=""></button>
         </div>
     </div>
     <div id="capitachart-wrapper">
-        <button id="togglebtncapita" class="collapseperanimal" onclick="perAnimalTogglechart(), chart5Toggle()" >Display chart by animal</button>
+        <button id="togglebtncapita" class="collapseperanimal" >Display chart by animal</button>
 
     <div class="chart-container" >
         <canvas id="capitaYearly"></canvas>
     </div>
-        <p id="togglelegend5" class="legend" >Total animal kilograms (land + sea animals) consumed per person yearly. <span id="totalKg2019"></span> per capita in <strong>2019</strong>.</p>
+        <p id="togglelegend5" class="legend"> <fn>3,4</fn> Total animal kilograms (land + sea animals) consumed per person yearly. <span id="totalKg2020"></span> per capita in <strong>2020</strong>.</p>
     
     <div class="collapseline"></div>
     </div>
@@ -183,7 +186,8 @@
     <div class="countrydropdown" >
         <form name="countryform">
             <label for="country">Choose a location: </label>
-            <select name="countrylist" id="countrylist" onchange="getSelectedCountry(), orangeButtons()">
+            <select name="countrylist" id="countrylist">
+                <!-- onchange="getSelectedCountry(), orangeButtons()" -->
                 <option selected disabled>---</option>
                 <option value="World">Worldwide</option>
                 <option value="Argentina">Argentina</option>
@@ -192,10 +196,12 @@
                 <option value="China">China</option>
                 <option value="Colombia">Colombia</option>
                 <option value="Ecuador">Ecuador</option>
+                <option value="Germany">Germany</option>
                 <option value="India">India</option>
                 <option value="Mexico">Mexico</option>
                 <option value="Russia">Russia</option>
                 <option value="Spain">Spain</option>
+                <option value="Uk">United Kingdom</option>
                 <option value="Usa">United States</option>
             </select>
         </form>
@@ -203,12 +209,12 @@
         <div class="mainblockinfo">
             <p>Since you loaded this page in<strong> Argentina:</strong></p>
             <div class="counters">
-                <div id="deathcount-arg" >0</div>
-                <div id="fishdeathcount-arg" >0</div>
+                <div id="deathcount-arg" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-arg" class="deathcount-country">0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     </div>
@@ -216,12 +222,12 @@
         <div class="mainblockinfo">
             <p>Since you loaded this page in<strong> Brazil:</strong></p>
             <div class="counters">
-                <div id="deathcount-bra" >0</div>
-                <div id="fishdeathcount-bra" >0</div>
+                <div id="deathcount-bra" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-bra" class="deathcount-country">0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     </div>
@@ -229,12 +235,12 @@
         <div class="mainblockinfo">
             <p>Since you loaded this page in<strong> Canada:</strong></p>
             <div class="counters">
-                <div id="deathcount-can" >0</div>
-                <div id="fishdeathcount-can" >0</div>
+                <div id="deathcount-can" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-can" class="deathcount-country">0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     </div>
@@ -242,12 +248,12 @@
         <div class="mainblockinfo">
             <p>Since you loaded this page in <strong> China:</strong></p>
             <div class="counters">
-                <div id="deathcount-chi" >0</div>
-                <div id="fishdeathcount-chi" >0</div>
+                <div id="deathcount-chi" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-chi" class="deathcount-country" >0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     </div>
@@ -255,25 +261,38 @@
         <div class="mainblockinfo">
             <p>Since you loaded this page in <strong> Colombia:</strong></p>
             <div class="counters">
-                <div id="deathcount-col" >0</div>
-                <div id="fishdeathcount-col" >0</div>
+                <div id="deathcount-col" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-col" class="deathcount-country" >0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     </div>
-     <div id="countrydeathcount-ecu" >
+    <div id="countrydeathcount-ecu" >
         <div class="mainblockinfo">
             <p>Since you loaded this page in <strong> Ecuador:</strong></p>
             <div class="counters">
-                <div id="deathcount-ecu" >0</div>
-                <div id="fishdeathcount-ecu" >0</div>
+                <div id="deathcount-ecu" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-ecu" class="deathcount-country" >0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+            </div>
+        </div>
+    </div>
+    <div id="countrydeathcount-ger" >
+        <div class="mainblockinfo">
+            <p>Since you loaded this page in <strong> Germany:</strong></p>
+            <div class="counters">
+                <div id="deathcount-ger" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-ger" class="deathcount-country" >0</div>
+            </div>
+            <div class="counters">
+                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     </div>
@@ -281,12 +300,12 @@
         <div class="mainblockinfo">
             <p>Since you loaded this page in <strong> India:</strong></p>
             <div class="counters">
-                <div id="deathcount-ind" >0</div>
-                <div id="fishdeathcount-ind" >0</div>
+                <div id="deathcount-ind" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-ind" class="deathcount-country" >0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     </div>
@@ -294,12 +313,12 @@
         <div class="mainblockinfo">
             <p>Since you loaded this page in<strong> Mexico:</strong></p>
             <div class="counters">
-                <div id="deathcount-mex" >0</div>
-                <div id="fishdeathcount-mex" >0</div>
+                <div id="deathcount-mex" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-mex" class="deathcount-country" >0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     </div>
@@ -307,12 +326,12 @@
         <div class="mainblockinfo">
             <p>Since you loaded this page in <strong> Russia:</strong></p>
             <div class="counters">
-                <div id="deathcount-rus" >0</div>
-                <div id="fishdeathcount-rus" >0</div>
+                <div id="deathcount-rus" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-rus" class="deathcount-country" >0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     </div>
@@ -320,12 +339,25 @@
         <div class="mainblockinfo">
             <p>Since you loaded this page in<strong> Spain:</strong></p>
             <div class="counters">
-                <div id="deathcount-spa" >0</div>
-                <div id="fishdeathcount-spa" >0</div>
+                <div id="deathcount-spa" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-spa" class="deathcount-country" >0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+            </div>
+        </div>
+    </div>
+    <div id="countrydeathcount-uk" >
+        <div class="mainblockinfo">
+            <p>Since you loaded this page in the <strong>United Kingdom:</strong></p>
+            <div class="counters">
+                <div id="deathcount-uk" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-uk" class="deathcount-country" >0</div>
+            </div>
+            <div class="counters">
+                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     </div>       
@@ -333,12 +365,12 @@
         <div class="mainblockinfo">
             <p>Since you loaded this page in the <strong>United States:</strong></p>
             <div class="counters">
-                <div id="deathcount-usa" >0</div>
-                <div id="fishdeathcount-usa" >0</div>
+                <div id="deathcount-usa" class="deathcount-country" >0</div>
+                <div id="fishdeathcount-usa" class="deathcount-country" >0</div>
             </div>
             <div class="counters">
                 <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tons)</span><fn>2</fn></div>
+                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
             </div>
         </div>
     
@@ -348,12 +380,12 @@
     <div id="animalspercapita"></div>
 
     <div class="animalbuttons" >
-        <button id="cowbtn" onclick="cows(), orangeButtons()"> <img id="cowbtnimg" src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div></button>
-        <button id="pigsbtn" onclick="pigs(), orangeButtons()"><img id="pigbtnimg" src="images/pig-icon.png" alt="Pigs"><div class="tooltip">Pigs</div> </button>
-        <button id="sheepbtn" onclick="sheep(), orangeButtons()"><img id="sheepbtnimg" src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div></button>
-        <button id="chickenbtn" onclick="chicken(), orangeButtons()"><img id="chickenbtnimg" src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div></button>
-        <button id="turkeybtn" onclick="turkey(), orangeButtons()"><img id="turkeybtnimg" src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div></button>
-        <button id="fishbtn" onclick="fish(), orangeButtons()"><img id="fishbtnimg" src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div></button>
+        <button id="cowbtn" > <img id="cowbtnimg" src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div></button>
+        <button id="pigsbtn" ><img id="pigbtnimg" src="images/pig-icon.png" alt="Pigs"><div class="tooltip">Pigs</div> </button>
+        <button id="sheepbtn" ><img id="sheepbtnimg" src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div></button>
+        <button id="chickenbtn" ><img id="chickenbtnimg" src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div></button>
+        <button id="turkeybtn" ><img id="turkeybtnimg" src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div></button>
+        <button id="fishbtn" ><img id="fishbtnimg" src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div></button>
     </div>
     <div id="data-el">Select Animal</div>
     <br><br>
@@ -364,16 +396,27 @@
     </section>
 
     <footer>
-    <p> <fn>1</fn>Land animals data is 2020 by UN - FAO.<br>
-        <fn>2</fn>Fish and sea animals data is 2019 by UN - FAO.
-        Fish and seafood production is measured in Tons as the sum of seafood from wild catch and fish farming (aquaculture). <br>
-        *2020 consumtion was influenced by covid lockdowns. <br>
-        *China data is estimated by FAO.<br>
-        <strong>Sources:</strong>  <br>
-        <a href="https://faunalytics.org/global-animal-slaughter-statistics-charts-2022-update/" target="_blank">https://faunalytics.org/global-animal-slaughter-statistics-charts-2022-update/</a><br>
-        <a href="http://www.fao.org/faostat/en/#data" target="_blank">http://www.fao.org/faostat/en/#data</a><br>
-        <a href="https://ourworldindata.org/grapher/animals-slaughtered-for-meat" target="_blank">https://ourworldindata.org/grapher/animals-slaughtered-for-meat</a> <br>
-        <a href="https://www.worldometers.info/world-population/world-population-by-year/" target="_blank">https://www.worldometers.info/world-population/world-population-by-year/</a><br>
+    <p> <strong>Sources:</strong>  <br>
+        <fn>1</fn>Land animals data is 2021 by <a href="https://ourworldindata.org/grapher/animals-slaughtered-for-meat?tab=table&time=2020..latest" target="_blank">ourworldindata.org</a> (UN - FAO). <button class="collapse-footer"> <img
+        width="10px" class="collapse-footer-button" src="images/CollapseButtonA.png" alt=""></button><br>
+        <iframe id="ourWorldInData1-table" class="footer-embedded-element" src="https://ourworldindata.org/grapher/animals-slaughtered-for-meat?tab=table&time=2020..latest" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+        <br>
+        <fn>2</fn>Fish and seafood data is 2020 by <a href="https://ourworldindata.org/grapher/fish-seafood-production?tab=table" target="_blank">ourworldindata.org</a> (UN - FAO). 
+        Fish and seafood production is measured in Tonnes as the sum of seafood from wild catch and fish farming (aquaculture). <button class="collapse-footer"> <img
+            width="10px" class="collapse-footer-button" src="images/CollapseButtonA.png" alt=""></button><br>
+        <iframe id="ourWorldInData2-table" class="footer-embedded-element" src="https://ourworldindata.org/grapher/fish-seafood-production?tab=table" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+        <br>
+        <fn>3</fn>Fish and seafood consumed per capita is 2020 by <a href="https://ourworldindata.org/grapher/fish-and-seafood-consumption-per-capita?tab=table" target="_blank">ourworldindata.org</a> (UN - FAO). <button class="collapse-footer"> <img
+            width="10px" class="collapse-footer-button" src="images/CollapseButtonA.png" alt=""></button><br>
+            <iframe id="ourWorldInData3-table" class="footer-embedded-element" src="https://ourworldindata.org/grapher/fish-and-seafood-consumption-per-capita?tab=table" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+        <br>
+        <fn>4</fn>Animals consumed per capita is 2020 by <a href="https://ourworldindata.org/grapher/per-capita-meat-consumption-by-type-kilograms-per-year?tab=table" target="_blank">ourworldindata.org</a> (UN - FAO). <button class="collapse-footer"> <img
+            width="10px" class="collapse-footer-button" src="images/CollapseButtonA.png" alt=""></button><br>
+            <iframe id="ourWorldInData4-table" class="footer-embedded-element" src="https://ourworldindata.org/grapher/per-capita-meat-consumption-by-type-kilograms-per-year?tab=table" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+        <br>
+        
+        
+        World Population by <a href="https://www.worldometers.info/world-population/world-population-by-year/" target="_blank">worldometers.info</a><br>
         <div class="about"> <a itemprop="author" name="Roger Paredes" href="https://roger.costra.ec" target="_blank" > - Roger Paredes 2024 -</a></div></p>
     </footer>
 
