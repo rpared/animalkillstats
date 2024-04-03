@@ -594,3 +594,61 @@ footer div a:visited {
 .footer-embedded-element {
   display: none;
 }
+
+/* PopUP */
+
+.pbt-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the content within the popup */
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100; /* To Ensure it's on top of other elements */
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer */
+  user-select: none; /* Standard property */
+}
+.pbt-popup-container {
+  position: relative;
+}
+.fbook {
+  background-color: #fff;
+  max-width: 280px;
+  border-radius: 10px;
+}
+.fbook p {
+  padding: 10px 40px 0 12px;
+}
+
+.pbt-close-btn {
+  position: absolute;
+  cursor: pointer;
+  right: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0 4px 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: large;
+  background-color: #000;
+  color: #d9d9d9;
+  border-radius: 38px;
+  z-index: 101;
+  margin: 8px;
+  width: 34px;
+  height: 34px;
+}
+
+.pbt-close-btn:hover {
+  color: #fff;
+  border-color: #fff;
+  box-shadow: 0 2px 4px #000;
+}
