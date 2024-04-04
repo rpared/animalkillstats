@@ -634,13 +634,14 @@ footer div a:visited {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 0 4px 0;
+  padding: 0 0 2px 0.5px;
   text-align: center;
   font-weight: 600;
   font-size: large;
   background-color: #000;
   color: #d9d9d9;
-  border-radius: 38px;
+  border-radius: 50px;
+  border: none;
   z-index: 101;
   margin: 8px;
   width: 34px;
@@ -649,6 +650,6 @@ footer div a:visited {
 
 .pbt-close-btn:hover {
   color: #fff;
-  border-color: #fff;
+  border: 2px solid #fff;
   box-shadow: 0 2px 4px #000;
 }
