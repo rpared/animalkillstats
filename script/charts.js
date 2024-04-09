@@ -1,6 +1,5 @@
 // import { chart5 } from "./index.js";
 //Language Function
-
 let language;
 let setLanguage = () => {
   const bodyLanguage = $("body").attr("lang"); // Get the "lang" attribute value
@@ -27,7 +26,7 @@ var labelCattle,
   labelPoultry,
   labelOthers,
   labelSeaAnimals;
-var labelKgPerPerson2020;
+var labelKgPerPerson2021;
 const labelTranslation = () => {
   if (language === "eng") {
     labelLandAnimals = "Land Animals";
@@ -50,7 +49,7 @@ const labelTranslation = () => {
     labelPoultry = "Poultry";
     labelOthers = "Others";
     labelSeaAnimals = "Sea Animals";
-    labelKgPerPerson2020 = "Kg. per person (2020)";
+    labelKgPerPerson2021 = "Kg. per person (2021)";
   } else if (language === "spa") {
     labelLandAnimals = "Animales Terrestres";
     labelHumanPopulation = "Población Humana";
@@ -72,7 +71,7 @@ const labelTranslation = () => {
     labelPoultry = "Aves de corral";
     labelOthers = "Otros";
     labelSeaAnimals = "Animales marinos";
-    labelKgPerPerson2020 = "Kg. por persona (2020)";
+    labelKgPerPerson2021 = "Kg. por persona (2021)";
   }
 };
 labelTranslation();
@@ -293,31 +292,96 @@ new Chart(ctxSeaAnimalsPerPerson, {
   },
 });
 
-//Per Capita Country BAR Charts
+//Per Capita COUNTRY BAR Charts
+
+fetchData().then(([data, fetchHtml]) => {
+  const countries = [
+    "World",
+    "Argentina",
+    "Brazil",
+    "Canada",
+    "China",
+    "Colombia",
+    "Ecuador",
+    "Germany",
+    "India",
+    "Mexico",
+    "Russia",
+    "Spain",
+    "Uk",
+    "Usa",
+  ];
+
+  const meatData = {}; // Store meat data for all countries
+
+  countries.forEach((country) => {
+    meatData[`meatKgCapita${country}`] = [
+      fetchHtml[`cowsKgPerCapita${country}`],
+      fetchHtml[`pigsKgPerCapita${country}`],
+      fetchHtml[`sheepKgPerCapita${country}`],
+      fetchHtml[`poultryKgPerCapita${country}`],
+      fetchHtml[`othersKgPerCapita${country}`],
+      fetchHtml[`fishKgPerCapita${country}`],
+    ];
+  });
+  processMeatData(meatData); // Pass meat data object to the processing function
+});
+var worldMeatKgCapita,
+  argMeatKgCapita,
+  braMeatKgCapita,
+  canMeatKgCapita,
+  chiMeatKgCapita,
+  colMeatKgCapita,
+  ecuMeatKgCapita,
+  gerMeatKgCapita,
+  indMeatKgCapita,
+  mexMeatKgCapita,
+  rusMeatKgCapita,
+  spaMeatKgCapita,
+  ukMeatKgCapita,
+  usaMeatKgCapita;
+
+function processMeatData(meatData) {
+  worldMeatKgCapita = meatData[`meatKgCapitaWorld`];
+  console.log("-------World meat data Per Capita:", worldMeatKgCapita);
+  argMeatKgCapita = meatData[`meatKgCapitaArgentina`];
+  braMeatKgCapita = meatData[`meatKgCapitaBrazil`];
+  canMeatKgCapita = meatData[`meatKgCapitaCanada`];
+  chiMeatKgCapita = meatData[`meatKgCapitaChina`];
+  colMeatKgCapita = meatData[`meatKgCapitaColombia`];
+  ecuMeatKgCapita = meatData[`meatKgCapitaEcuador`];
+  gerMeatKgCapita = meatData[`meatKgCapitaGermany`];
+  indMeatKgCapita = meatData[`meatKgCapitaIndia`];
+  mexMeatKgCapita = meatData[`meatKgCapitaMexico`];
+  rusMeatKgCapita = meatData[`meatKgCapitaRussia`];
+  spaMeatKgCapita = meatData[`meatKgCapitaSpain`];
+  ukMeatKgCapita = meatData[`meatKgCapitaUk`];
+  usaMeatKgCapita = meatData[`meatKgCapitaUsa`];
+}
 
 let meatKg;
-let worldMeatKgCapita = [8.98, 14.45, 1.96, 16.21, 0.66, 20.25];
-let argMeatKgCapita = [47.1, 14.47, 1.43, 46.39, 1.15, 6.8];
-let braMeatKgCapita = [35.3, 14.15, 0.65, 48.25, 0.51, 8.06];
-let canMeatKgCapita = [27.39, 21.31, 1.06, 39.94, 0.5, 20.65];
-let chiMeatKgCapita = [6.74, 35.7, 3.8, 15.13, 0.53, 40.33];
-let colMeatKgCapita = [13.67, 10.51, 0.02, 33.75, 0.11, 8.88];
-let ecuMeatKgCapita = [13.3, 12.93, 0.31, 18.94, 0.06, 8.25];
-let gerMeatKgCapita = [14.7, 44.25, 0.97, 18.44, 0.83, 12.66];
-let indMeatKgCapita = [1.13, 0.24, 0.59, 2.57, 0.0, 7.89];
-let mexMeatKgCapita = [14.93, 19.52, 0.84, 33.77, 0.64, 13.95];
-let rusMeatKgCapita = [12.9, 28.26, 1.47, 30.85, 3.39, 21.76];
-let spaMeatKgCapita = [12.33, 51.88, 1.88, 33.17, 1.5, 40.3];
-let ukMeatKgCapita = [17.56, 24.34, 3.99, 33.13, 1.05, 18.13];
-let usaMeatKgCapita = [37.31, 30.19, 0.6, 57.83, 0.8, 22.45];
+/*OLD 2020 data:*/
+// let worldMeatKgCapita = [8.98, 14.45, 1.96, 16.21, 0.66, 20.25];
+// let argMeatKgCapita = [47.1, 14.47, 1.43, 46.39, 1.15, 6.8];
+// let braMeatKgCapita = [35.3, 14.15, 0.65, 48.25, 0.51, 8.06];
+// let canMeatKgCapita = [27.39, 21.31, 1.06, 39.94, 0.5, 20.65];
+// let chiMeatKgCapita = [6.74, 35.7, 3.8, 15.13, 0.53, 40.33];
+// let colMeatKgCapita = [13.67, 10.51, 0.02, 33.75, 0.11, 8.88];
+// let ecuMeatKgCapita = [13.3, 12.93, 0.31, 18.94, 0.06, 8.25];
+// let gerMeatKgCapita = [14.7, 44.25, 0.97, 18.44, 0.83, 12.66];
+// let indMeatKgCapita = [1.13, 0.24, 0.59, 2.57, 0.0, 7.89];
+// let mexMeatKgCapita = [14.93, 19.52, 0.84, 33.77, 0.64, 13.95];
+// let rusMeatKgCapita = [12.9, 28.26, 1.47, 30.85, 3.39, 21.76];
+// let spaMeatKgCapita = [12.33, 51.88, 1.88, 33.17, 1.5, 40.3];
+// let ukMeatKgCapita = [17.56, 24.34, 3.99, 33.13, 1.05, 18.13];
+// let usaMeatKgCapita = [37.31, 30.19, 0.6, 57.83, 0.8, 22.45];
 
 function capitaChart() {
   const ctxCapita = document.getElementById("capitaAnimals");
 
   let totalMeatKgEl = document.getElementById("capitaTotal");
-  let totalMeatKg = meatKg.reduce((partialSum, a) => partialSum + a, 0);
-  console.log(totalMeatKg);
-
+  var totalMeatKg = meatKg.reduce((partialSum, a) => partialSum + a, 0);
+  // console.log("***Total World Meat KG in 2021", totalMeatKg);
   totalMeatKgEl.textContent = totalMeatKg.toLocaleString();
 
   new Chart(ctxCapita, {
@@ -326,7 +390,7 @@ function capitaChart() {
       labels: labelAnimalsArray,
       datasets: [
         {
-          label: labelKgPerPerson2020,
+          label: labelKgPerPerson2021,
           data: meatKg,
           borderWidth: 2,
           borderColor: "rgba(217, 129, 53, 0.9)",
@@ -391,11 +455,12 @@ for (var i = 0; i < 12; i++) {
   // Push the sum into the totalKgPerCapita array
   totalKgPerCapita.push(sum);
 }
-
-totalKg2020.textContent = totalKgPerCapita.slice(-1) + " Kg.";
+function updateTotalKg2020Legend() {
+  let totalKg2020 = document.getElementById("totalKg2020");
+  totalKg2020.textContent = totalKgPerCapita.slice(-1) + " Kg.";
+}
 
 function chart5Toggle() {
-  let totalKg2020 = document.getElementById("totalKg2020");
   let yearsTill2020 = [
     "1965",
     "1970",

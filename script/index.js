@@ -14,7 +14,7 @@ fetchData().then(([data, fetchHtml]) => {
   //Death count in main block per second since page loaded
 
   function indexStuff() {
-    console.log("The test values are: ", fetchHtml.fishDataWorldTest);
+    console.log("The test HTML is Fish Worldwide: ", fetchHtml.fishDataWorld);
     //Language Function
     let language;
     $(document).ready(() => {
@@ -47,12 +47,12 @@ fetchData().then(([data, fetchHtml]) => {
 
     function counter() {
       deathCountWorld = deaths +=
-        data.Worldwide.LandAnimals / 365 / 24 / 60 / 60;
+        fetchHtml.landAnimalsWorld / 365 / 24 / 60 / 60;
       deathCount.textContent = deathCountWorld.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       fishDeathCountWorld = fishDeaths +=
-        data.Worldwide.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalWorld / 365 / 24 / 60 / 60;
       fishDeathCount.textContent = fishDeathCountWorld.toLocaleString(
         undefined,
         {
@@ -81,7 +81,7 @@ fetchData().then(([data, fetchHtml]) => {
 
     $("#collapse1").on("click", collapseanimals);
 
-    //Collapsible Worldwide Charts
+    //Collapsible Worldwide Stats per year Charts
 
     let ChartsWrapper = document.getElementById("charts-wrapper");
     let collapseArrowBtn1 = document.querySelector("#arrow1");
@@ -126,13 +126,6 @@ fetchData().then(([data, fetchHtml]) => {
     let collapseSeaChart = false;
     let collapseSeaChart1 = false;
     let collapseCapitaChart = false;
-    let eachChartCollapseBoolean = [
-      collapseLandChart,
-      collapseLandChart1,
-      collapseSeaChart,
-      collapseSeaChart1,
-      collapseCapitaChart,
-    ];
 
     function collapsecharts() {
       if (collapseCharts == false) {
@@ -185,8 +178,11 @@ fetchData().then(([data, fetchHtml]) => {
         collapseArrowBtnChart2.style.rotate = "0deg";
       }
     }
+    $("#landanimalschart-wrapper p span").text(
+      (fetchHtml.landAnimalsWorld / 1000000000).toFixed(1) + " billion"
+    );
     $("#landAnimalsPerCapitaLegend span").text(
-      (data.Worldwide.LandAnimals / data.Worldwide.Population2021).toFixed(1)
+      (fetchHtml.landAnimalsWorld / fetchHtml.Population2022).toFixed(1)
     );
     $("#collapse2-LandChartCapita").on("click", collapselandchart1);
 
@@ -204,7 +200,7 @@ fetchData().then(([data, fetchHtml]) => {
       }
     }
     $("#seaAnimalsLegend span").text(
-      (data.Worldwide.FishTonnes / 1000000).toFixed(1)
+      (fetchHtml.fishTotalWorld / 1000000).toFixed(1)
     );
     $("#collapse2-SeaChart").on("click", collapseseachart);
 
@@ -222,7 +218,7 @@ fetchData().then(([data, fetchHtml]) => {
       }
     }
     $("#seaAnimalsPerCapitaLegend span").text(
-      data.Worldwide.FishConsumptionKg.toFixed(1)
+      fetchHtml.fishKgPerCapitaWorld.toFixed(1)
     );
     $("#collapse2-SeaChartCapita").on("click", collapseseachart1);
 
@@ -235,6 +231,7 @@ fetchData().then(([data, fetchHtml]) => {
         chart5 = "total";
         toggleBtnCapita.innerText = fetchHtml.toggleBtnTextAnimals;
         toggleLegend5.innerHTML = fetchHtml.toggleLegend5TotalsText;
+        updateTotalKg2020Legend();
       } else if (collapseCapitaChart == true) {
         capitaChartWrapper.style.display = "none";
         collapseCapitaChart = false;
@@ -251,13 +248,12 @@ fetchData().then(([data, fetchHtml]) => {
       if (chart5 == "total") {
         chart5 = "per animal";
         toggleBtnCapita.innerText = fetchHtml.toggleBtnTextTotal;
-
         toggleLegend5.innerHTML = fetchHtml.toggleLegend5AnimalsText;
       } else if (chart5 == "per animal") {
         chart5 = "total";
-
         toggleBtnCapita.innerText = fetchHtml.toggleBtnTextAnimals;
         toggleLegend5.innerHTML = fetchHtml.toggleLegend5TotalsText;
+        updateTotalKg2020Legend();
       }
       console.log("Toggle chart " + chart5);
     }
@@ -289,7 +285,7 @@ fetchData().then(([data, fetchHtml]) => {
     function counterPerAnimal() {
       // deathCountCowsWorld = deathCountCows += 9; // 2020 data
       deathCountCowsWorld = deathCountCows +=
-        data.Worldwide.Cattle / 365 / 24 / 60 / 60;
+        fetchHtml.cowsTotalWorld / 365 / 24 / 60 / 60;
       deathCountCowsEl.textContent = deathCountCowsWorld.toLocaleString(
         undefined,
         {
@@ -298,7 +294,7 @@ fetchData().then(([data, fetchHtml]) => {
       );
       // deathCountPigsWorld = deathCountPigs += 48; // 2020 data
       deathCountPigsWorld = deathCountPigs +=
-        data.Worldwide.Pigs / 365 / 24 / 60 / 60;
+        fetchHtml.pigsTotalWorld / 365 / 24 / 60 / 60;
       deathCountPigsEl.textContent = deathCountPigsWorld.toLocaleString(
         undefined,
         {
@@ -307,7 +303,7 @@ fetchData().then(([data, fetchHtml]) => {
       );
       // deathCountSheepWorld = deathCountSheep += 18.7; // 2020 data
       deathCountSheepWorld = deathCountSheep +=
-        data.Worldwide.Sheep / 365 / 24 / 60 / 60;
+        fetchHtml.sheepTotalWorld / 365 / 24 / 60 / 60;
       deathCountSheepEl.textContent = deathCountSheepWorld.toLocaleString(
         undefined,
         {
@@ -316,7 +312,7 @@ fetchData().then(([data, fetchHtml]) => {
       );
       // deathCountChickenWorld = deathCountChicken += 2244; // 2020 data
       deathCountChickenWorld = deathCountChicken +=
-        data.Worldwide.Chicken / 365 / 24 / 60 / 60;
+        fetchHtml.chickenTotalWorld / 365 / 24 / 60 / 60;
       deathCountChickenEl.textContent = deathCountChickenWorld.toLocaleString(
         undefined,
         {
@@ -325,7 +321,7 @@ fetchData().then(([data, fetchHtml]) => {
       );
       // deathCountTurkeyWorld = deathCountTurkey += 19.6; // 2020 data
       deathCountTurkeyWorld = deathCountTurkey +=
-        data.Worldwide.Turkey / 365 / 24 / 60 / 60;
+        fetchHtml.turkeyTotalWorld / 365 / 24 / 60 / 60;
       deathCountTurkeyEl.textContent = deathCountTurkeyWorld.toLocaleString(
         undefined,
         {
@@ -334,7 +330,7 @@ fetchData().then(([data, fetchHtml]) => {
       );
       // deathCountFishWorld = deathCountFish += 5.4; // 2019 data
       deathCountFishWorld = deathCountFish +=
-        data.Worldwide.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalWorld / 365 / 24 / 60 / 60;
       deathCountFishEl.textContent = deathCountFishWorld.toLocaleString(
         undefined,
         {
@@ -345,7 +341,6 @@ fetchData().then(([data, fetchHtml]) => {
     setInterval(counterPerAnimal, 1000);
 
     //Death count per country per second
-    //Div display
     let countryDeathCountArg = document.getElementById("countrydeathcount-arg");
     let countryDeathCountBra = document.getElementById("countrydeathcount-bra");
     let countryDeathCountCan = document.getElementById("countrydeathcount-can");
@@ -396,13 +391,13 @@ fetchData().then(([data, fetchHtml]) => {
     function counterArg() {
       //   deathsArgNum = deathsArg += 25; //2020 data
       deathsArgNum = deathsArg +=
-        data.Argentina.LandAnimals / 365 / 24 / 60 / 60;
+        fetchHtml.landAnimalsArgentina / 365 / 24 / 60 / 60;
       deathCountArg.textContent = deathsArgNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       //   fishDeathsArgNum = fishDeathsArg += 0.03; //2019 data
       fishDeathsArgNum = fishDeathsArg +=
-        data.Argentina.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalArgentina / 365 / 24 / 60 / 60;
       fishDeathCountArg.textContent = fishDeathsArgNum.toLocaleString(
         undefined,
         {
@@ -419,13 +414,14 @@ fetchData().then(([data, fetchHtml]) => {
 
     function counterBra() {
       //   deathsBraNum = deathsBra += 196; //2020 data
-      deathsBraNum = deathsBra += data.Brazil.LandAnimals / 365 / 24 / 60 / 60;
+      deathsBraNum = deathsBra +=
+        fetchHtml.landAnimalsBrazil / 365 / 24 / 60 / 60;
       deathCountBra.textContent = deathsBraNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       //   fishDeathsBraNum = fishDeathsBra += 0.04; //2019 data
       fishDeathsBraNum = fishDeathsBra +=
-        data.Brazil.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalBrazil / 365 / 24 / 60 / 60;
       fishDeathCountBra.textContent = fishDeathsBraNum.toLocaleString(
         undefined,
         {
@@ -442,13 +438,14 @@ fetchData().then(([data, fetchHtml]) => {
 
     function counterCan() {
       //   deathsCanNum = deathsCan += 25;//2020 data
-      deathsCanNum = deathsCan += data.Canada.LandAnimals / 365 / 24 / 60 / 60;
+      deathsCanNum = deathsCan +=
+        fetchHtml.landAnimalsCanada / 365 / 24 / 60 / 60;
       deathCountCan.textContent = deathsCanNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       //   fishDeathsCanNum = fishDeathsCan += 0.03;//2019 data
       fishDeathsCanNum = fishDeathsCan +=
-        data.Canada.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalBrazil / 365 / 24 / 60 / 60;
       fishDeathCountCan.textContent = fishDeathsCanNum.toLocaleString(
         undefined,
         {
@@ -465,13 +462,14 @@ fetchData().then(([data, fetchHtml]) => {
 
     function counterChi() {
       //   deathsChiNum = deathsChi += 342;//2020 data
-      deathsChiNum = deathsChi += data.China.LandAnimals / 365 / 24 / 60 / 60;
+      deathsChiNum = deathsChi +=
+        fetchHtml.landAnimalsChina / 365 / 24 / 60 / 60;
       deathCountChi.textContent = deathsChiNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       //   fishDeathsChiNum = fishDeathsChi += 2.01;//2019 data
       fishDeathsChiNum = fishDeathsChi +=
-        data.China.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalChina / 365 / 24 / 60 / 60;
       fishDeathCountChi.textContent = fishDeathsChiNum.toLocaleString(
         undefined,
         {
@@ -489,13 +487,13 @@ fetchData().then(([data, fetchHtml]) => {
     function counterCol() {
       //   deathsColNum = deathsCol += 32;//2020 data
       deathsColNum = deathsCol +=
-        data.Colombia.LandAnimals / 365 / 24 / 60 / 60;
+        fetchHtml.landAnimalsColombia / 365 / 24 / 60 / 60;
       deathCountCol.textContent = deathsColNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       //   fishDeathsColNum = fishDeathsCol += 0.01; //2019 data
       fishDeathsColNum = fishDeathsCol +=
-        data.Colombia.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalColombia / 365 / 24 / 60 / 60;
       fishDeathCountCol.textContent = fishDeathsColNum.toLocaleString(
         undefined,
         {
@@ -512,13 +510,14 @@ fetchData().then(([data, fetchHtml]) => {
 
     function counterEcu() {
       // deathsEcuNum = deathsEcu += 5; //2020 data
-      deathsEcuNum = deathsEcu += data.Ecuador.LandAnimals / 365 / 24 / 60 / 60;
+      deathsEcuNum = deathsEcu +=
+        fetchHtml.landAnimalsEcuador / 365 / 24 / 60 / 60;
       deathCountEcu.textContent = deathsEcuNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       // fishDeathsEcuNum = fishDeathsEcu += 0.04; //2019 data
       fishDeathsEcuNum = fishDeathsEcu +=
-        data.Ecuador.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalEcuador / 365 / 24 / 60 / 60;
       fishDeathCountEcu.textContent = fishDeathsEcuNum.toLocaleString(
         undefined,
         {
@@ -534,12 +533,13 @@ fetchData().then(([data, fetchHtml]) => {
     let fishDeathsGerNum;
 
     function counterGer() {
-      deathsGerNum = deathsGer += data.Germany.LandAnimals / 365 / 24 / 60 / 60;
+      deathsGerNum = deathsGer +=
+        fetchHtml.landAnimalsGermany / 365 / 24 / 60 / 60;
       deathCountGer.textContent = deathsGerNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       fishDeathsGerNum = fishDeathsGer +=
-        data.Germany.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalGermany / 365 / 24 / 60 / 60;
       fishDeathCountGer.textContent = fishDeathsGerNum.toLocaleString(
         undefined,
         {
@@ -556,13 +556,14 @@ fetchData().then(([data, fetchHtml]) => {
 
     function counterInd() {
       // deathsIndNum = deathsInd += 87; //2020 data
-      deathsIndNum = deathsInd += data.India.LandAnimals / 365 / 24 / 60 / 60;
+      deathsIndNum = deathsInd +=
+        fetchHtml.landAnimalsIndia / 365 / 24 / 60 / 60;
       deathCountInd.textContent = deathsIndNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       // fishDeathsIndNum = fishDeathsInd += 0.37; //2019 data
       fishDeathsIndNum = fishDeathsInd +=
-        data.India.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalIndia / 365 / 24 / 60 / 60;
       fishDeathCountInd.textContent = fishDeathsIndNum.toLocaleString(
         undefined,
         {
@@ -579,13 +580,14 @@ fetchData().then(([data, fetchHtml]) => {
 
     function counterMex() {
       // deathsMexNum = deathsMex += 63; //2020 data
-      deathsMexNum = deathsMex += data.Mexico.LandAnimals / 365 / 24 / 60 / 60;
+      deathsMexNum = deathsMex +=
+        fetchHtml.landAnimalsMexico / 365 / 24 / 60 / 60;
       deathCountMex.textContent = deathsMexNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       // fishDeathsMexNum = fishDeathsMex += 0.06; //2019 data
       fishDeathsMexNum = fishDeathsMex +=
-        data.Mexico.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalMexico / 365 / 24 / 60 / 60;
       fishDeathCountMex.textContent = fishDeathsMexNum.toLocaleString(
         undefined,
         {
@@ -602,13 +604,14 @@ fetchData().then(([data, fetchHtml]) => {
 
     function counterRus() {
       // deathsRusNum = deathsRus += 81.3; //2020 data
-      deathsRusNum = deathsRus += data.Russia.LandAnimals / 365 / 24 / 60 / 60;
+      deathsRusNum = deathsRus +=
+        fetchHtml.landAnimalsRussia / 365 / 24 / 60 / 60;
       deathCountRus.textContent = deathsRusNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       // fishDeathsRusNum = fishDeathsRus += 0.16; //2019 data
       fishDeathsRusNum = fishDeathsRus +=
-        data.Russia.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalRussia / 365 / 24 / 60 / 60;
       fishDeathCountRus.textContent = fishDeathsRusNum.toLocaleString(
         undefined,
         {
@@ -625,13 +628,14 @@ fetchData().then(([data, fetchHtml]) => {
 
     function counterSpa() {
       // deathsSpaNum = deathsSpa += 25; //2020 data
-      deathsSpaNum = deathsSpa += data.Spain.LandAnimals / 365 / 24 / 60 / 60;
+      deathsSpaNum = deathsSpa +=
+        fetchHtml.landAnimalsSpain / 365 / 24 / 60 / 60;
       deathCountSpa.textContent = deathsSpaNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       // fishDeathsSpaNum = fishDeathsSpa += 0.04; //2019 data
       fishDeathsSpaNum = fishDeathsSpa +=
-        data.Spain.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalSpain / 365 / 24 / 60 / 60;
       fishDeathCountSpa.textContent = fishDeathsSpaNum.toLocaleString(
         undefined,
         {
@@ -647,13 +651,12 @@ fetchData().then(([data, fetchHtml]) => {
     let fishDeathsUkNum;
 
     function counterUk() {
-      deathsUkNum = deathsUk +=
-        data.UnitedKingdom.LandAnimals / 365 / 24 / 60 / 60;
+      deathsUkNum = deathsUk += fetchHtml.landAnimalsUk / 365 / 24 / 60 / 60;
       deathCountUk.textContent = deathsUkNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       fishDeathsUkNum = fishDeathsUk +=
-        data.UnitedKingdom.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalUk / 365 / 24 / 60 / 60;
       fishDeathCountUk.textContent = fishDeathsUkNum.toLocaleString(undefined, {
         maximumFractionDigits: 2,
       });
@@ -667,14 +670,13 @@ fetchData().then(([data, fetchHtml]) => {
 
     function counterUsa() {
       // deathsUsaNum = deathsUsa += 309; //2020 data
-      deathsUsaNum = deathsUsa +=
-        data.UnitedStates.LandAnimals / 365 / 24 / 60 / 60;
+      deathsUsaNum = deathsUsa += fetchHtml.landAnimalsUsa / 365 / 24 / 60 / 60;
       deathCountUsa.textContent = deathsUsaNum.toLocaleString(undefined, {
         maximumFractionDigits: 0,
       });
       // fishDeathsUsaNum = fishDeathsUsa += 0.2; //2019 data
       fishDeathsUsaNum = fishDeathsUsa +=
-        data.UnitedStates.FishTonnes / 365 / 24 / 60 / 60;
+        fetchHtml.fishTotalUsa / 365 / 24 / 60 / 60;
       fishDeathCountUsa.textContent = fishDeathsUsaNum.toLocaleString(
         undefined,
         {
@@ -720,7 +722,6 @@ fetchData().then(([data, fetchHtml]) => {
           countryDeathCountSpa.style.display = "none";
           countryDeathCountUk.style.display = "none";
           countryDeathCountUsa.style.display = "none";
-          // animalsPerCapita.style.display ="none";
           meatKg = worldMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
