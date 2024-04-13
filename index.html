@@ -186,210 +186,353 @@
     
     <div class="countrydropdown" >
         <form name="countryform">
-            <label for="country">Choose a location: </label>
+            <label for="countrylist">Choose a location: </label>
             <select name="countrylist" id="countrylist">
                 <!-- onchange="getSelectedCountry(), orangeButtons()" -->
                 <option selected disabled>---</option>
                 <option value="World">Worldwide</option>
+                <option value="Africa">Africa</option>
+                <option value="Americas">Americas</option>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="Oceania">Oceania</option>
+                <option selected disabled>---</option>
                 <option value="Argentina">Argentina</option>
+                <option value="Australia">Australia</option>
                 <option value="Brazil">Brazil</option>
                 <option value="Canada">Canada</option>
+                <option value="Chile">Chile</option>
                 <option value="China">China</option>
                 <option value="Colombia">Colombia</option>
                 <option value="Ecuador">Ecuador</option>
+                <option value="France">France</option>
                 <option value="Germany">Germany</option>
                 <option value="India">India</option>
+                <option value="Japan">Japan</option>
                 <option value="Mexico">Mexico</option>
                 <option value="Russia">Russia</option>
+                <option value="SouthAfrica">South Africa</option>
                 <option value="Spain">Spain</option>
                 <option value="Uk">United Kingdom</option>
                 <option value="Usa">United States</option>
             </select>
         </form>
-    <div id="countrydeathcount-arg" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in<strong> Argentina:</strong></p>
-            <div class="counters">
-                <div id="deathcount-arg" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-arg" class="deathcount-country">0</div>
+            <div id="countrydeathcount-afr" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Africa:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-afr" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-afr" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
             </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+            <div id="countrydeathcount-ame" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in the<strong> Americas:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-ame" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-ame" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div id="countrydeathcount-bra" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in<strong> Brazil:</strong></p>
-            <div class="counters">
-                <div id="deathcount-bra" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-bra" class="deathcount-country">0</div>
+            <div id="countrydeathcount-asi" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Asia:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-asi" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-asi" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
             </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+            <div id="countrydeathcount-eur" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Europe:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-eur" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-eur" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-     <div id="countrydeathcount-can" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in<strong> Canada:</strong></p>
-            <div class="counters">
-                <div id="deathcount-can" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-can" class="deathcount-country">0</div>
+            <div id="countrydeathcount-oce" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Oceania:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-oce" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-oce" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
             </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+            <div id="countrydeathcount-arg" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Argentina:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-arg" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-arg" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-     <div id="countrydeathcount-chi" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in <strong> China:</strong></p>
-            <div class="counters">
-                <div id="deathcount-chi" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-chi" class="deathcount-country" >0</div>
+            <div id="countrydeathcount-aus" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Australia:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-aus" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-aus" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
             </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
-            </div>
-        </div>
-    </div>
-    <div id="countrydeathcount-col" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in <strong> Colombia:</strong></p>
-            <div class="counters">
-                <div id="deathcount-col" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-col" class="deathcount-country" >0</div>
-            </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
-            </div>
-        </div>
-    </div>
-    <div id="countrydeathcount-ecu" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in <strong> Ecuador:</strong></p>
-            <div class="counters">
-                <div id="deathcount-ecu" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-ecu" class="deathcount-country" >0</div>
-            </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
-            </div>
-        </div>
-    </div>
-    <div id="countrydeathcount-ger" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in <strong> Germany:</strong></p>
-            <div class="counters">
-                <div id="deathcount-ger" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-ger" class="deathcount-country" >0</div>
-            </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
-            </div>
-        </div>
-    </div>
-    <div id="countrydeathcount-ind" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in <strong> India:</strong></p>
-            <div class="counters">
-                <div id="deathcount-ind" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-ind" class="deathcount-country" >0</div>
-            </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
-            </div>
-        </div>
-    </div>
-    <div id="countrydeathcount-mex" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in<strong> Mexico:</strong></p>
-            <div class="counters">
-                <div id="deathcount-mex" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-mex" class="deathcount-country" >0</div>
-            </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
-            </div>
-        </div>
-    </div>
-    <div id="countrydeathcount-rus" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in <strong> Russia:</strong></p>
-            <div class="counters">
-                <div id="deathcount-rus" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-rus" class="deathcount-country" >0</div>
-            </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
-            </div>
-        </div>
-    </div>
-    <div id="countrydeathcount-spa" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in<strong> Spain:</strong></p>
-            <div class="counters">
-                <div id="deathcount-spa" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-spa" class="deathcount-country" >0</div>
-            </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
-            </div>
-        </div>
-    </div>
-    <div id="countrydeathcount-uk" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in the <strong>United Kingdom:</strong></p>
-            <div class="counters">
-                <div id="deathcount-uk" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-uk" class="deathcount-country" >0</div>
-            </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
-            </div>
-        </div>
-    </div>       
-    <div id="countrydeathcount-usa" >
-        <div class="mainblockinfo">
-            <p>Since you loaded this page in the <strong>United States:</strong></p>
-            <div class="counters">
-                <div id="deathcount-usa" class="deathcount-country" >0</div>
-                <div id="fishdeathcount-usa" class="deathcount-country" >0</div>
-            </div>
-            <div class="counters">
-                <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
-                <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
-            </div>
-        </div>
-    
-    </div>
 
-    <!-- Kilograms PerCapita BAR Charts -->
-    <div id="animalspercapita"></div>
+            <div id="countrydeathcount-bra" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Brazil:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-bra" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-bra" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-can" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Canada:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-can" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-can" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-chi" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in <strong> China:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-chi" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-chi" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-chile" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Chile:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-chile" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-chile" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-col" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in <strong> Colombia:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-col" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-col" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-ecu" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in <strong> Ecuador:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-ecu" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-ecu" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-fra" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> France:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-fra" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-fra" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-ger" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in <strong> Germany:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-ger" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-ger" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-ind" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in <strong> India:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-ind" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-ind" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-jap" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Japan:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-jap" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-jap" class="deathcount-country">0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-mex" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Mexico:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-mex" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-mex" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-rus" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in <strong> Russia:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-rus" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-rus" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-spa" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> Spain:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-spa" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-spa" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-southafrica" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in<strong> South Africa:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-southafrica" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-southafrica" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>
+            <div id="countrydeathcount-uk" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in the <strong>United Kingdom:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-uk" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-uk" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            </div>       
+            <div id="countrydeathcount-usa" >
+                <div class="mainblockinfo">
+                    <p>Since you loaded this page in the <strong>United States:</strong></p>
+                    <div class="counters">
+                        <div id="deathcount-usa" class="deathcount-country" >0</div>
+                        <div id="fishdeathcount-usa" class="deathcount-country" >0</div>
+                    </div>
+                    <div class="counters">
+                        <div>Land animals <span>(aprox.)</span><fn>1</fn></div>
+                        <div>Sea animals <span>(aprox. Tonnes)</span><fn>2</fn></div>
+                    </div>
+                </div>
+            
+            </div>
 
-    <div class="animalbuttons" >
-        <button id="cowbtn" > <img id="cowbtnimg" src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div></button>
-        <button id="pigsbtn" ><img id="pigbtnimg" src="images/pig-icon.png" alt="Pigs"><div class="tooltip">Pigs</div> </button>
-        <button id="sheepbtn" ><img id="sheepbtnimg" src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div></button>
-        <button id="chickenbtn" ><img id="chickenbtnimg" src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div></button>
-        <button id="turkeybtn" ><img id="turkeybtnimg" src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div></button>
-        <button id="fishbtn" ><img id="fishbtnimg" src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div></button>
+        <!-- Kilograms PerCapita BAR Charts -->
+        <div id="animalspercapita"></div>
+
+        <div class="animalbuttons" >
+            <button id="cowbtn" > <img id="cowbtnimg" src="images/cow-icon.png" alt="Cattle"><div class="tooltip">Cattle</div></button>
+            <button id="pigsbtn" ><img id="pigbtnimg" src="images/pig-icon.png" alt="Pigs"><div class="tooltip">Pigs</div> </button>
+            <button id="sheepbtn" ><img id="sheepbtnimg" src="images/sheep-icon.png" alt="Sheep"><div class="tooltip">Sheep</div></button>
+            <button id="chickenbtn" ><img id="chickenbtnimg" src="images/chicken-icon.png" alt="Chicken"><div class="tooltip">Chicken</div></button>
+            <button id="turkeybtn" ><img id="turkeybtnimg" src="images/turkey-icon.png" alt="Turkey"><div class="tooltip">Turkey</div></button>
+            <button id="fishbtn" ><img id="fishbtnimg" src="images/fish-icon.png" alt="Sea animals"><div class="tooltip">Sea animals</div></button>
+        </div>
+        <div id="data-el">Select Animal</div>
+        <br><br>
     </div>
-    <div id="data-el">Select Animal</div>
-    <br><br>
 
     <section id="plantbasedtreaty">
        <a href="https://plantbasedtreaty.org/" target="_blank"> <img src="images/EndorsePlantBasedTreaty_horizontal.png" width="210px" alt="Endorse The Plant Based Treaty!">

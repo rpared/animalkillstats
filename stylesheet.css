@@ -408,18 +408,27 @@ h2 {
   margin: 0 auto;
 }
 
-#countrydeathcount,
+#countrydeathcount-afr,
+#countrydeathcount-ame,
+#countrydeathcount-asi,
+#countrydeathcount-eur,
+#countrydeathcount-oce,
 #countrydeathcount-arg,
+#countrydeathcount-aus,
 #countrydeathcount-bra,
 #countrydeathcount-can,
 #countrydeathcount-chi,
+#countrydeathcount-chile,
 #countrydeathcount-col,
 #countrydeathcount-ecu,
+#countrydeathcount-fra,
 #countrydeathcount-ger,
 #countrydeathcount-ind,
+#countrydeathcount-jap,
 #countrydeathcount-mex,
 #countrydeathcount-rus,
 #countrydeathcount-spa,
+#countrydeathcount-southafrica,
 #countrydeathcount-uk,
 #countrydeathcount-usa {
   display: none;
@@ -634,7 +643,7 @@ footer div a:visited {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 0 2px 0.5px;
+  padding: 0;
   text-align: center;
   font-weight: 600;
   font-size: large;
