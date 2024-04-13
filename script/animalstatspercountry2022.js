@@ -129,6 +129,19 @@ async function fetchData() {
       ),
     };
 
+    const chileData = {
+      ...data.find((item) => item.Entity === "Chile" && item.Year === "2022"),
+      ...dataFish.find(
+        (item) => item.Entity === "Chile" && item.Year === "2021"
+      ),
+      ...dataFishPerCapita.find(
+        (item) => item.Entity === "Chile" && item.Year === "2021"
+      ),
+      ...dataAnimalsPerCapita.find(
+        (item) => item.Entity === "Chile" && item.Year === "2021"
+      ),
+    };
+
     const colombiaData = {
       ...data.find(
         (item) => item.Entity === "Colombia" && item.Year === "2022"
@@ -141,19 +154,6 @@ async function fetchData() {
       ),
       ...dataAnimalsPerCapita.find(
         (item) => item.Entity === "Colombia" && item.Year === "2021"
-      ),
-    };
-
-    const chileData = {
-      ...data.find((item) => item.Entity === "Chile" && item.Year === "2022"),
-      ...dataFish.find(
-        (item) => item.Entity === "Chile" && item.Year === "2021"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Chile" && item.Year === "2021"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Chile" && item.Year === "2021"
       ),
     };
 
@@ -334,9 +334,7 @@ async function fetchData() {
 
     //Continents
     const africaData = {
-      ...data.filter(
-        (item) => item.Year === "2022" && item.Entity === "Africa"
-      ),
+      ...data.find((item) => item.Year === "2022" && item.Entity === "Africa"),
       ...dataFish.find(
         (item) => item.Entity === "Africa" && item.Year === "2021"
       ),
@@ -349,7 +347,7 @@ async function fetchData() {
     };
 
     const asiaData = {
-      ...data.filter((item) => item.Year === "2022" && item.Entity === "Asia"),
+      ...data.find((item) => item.Year === "2022" && item.Entity === "Asia"),
       ...dataFish.find(
         (item) => item.Entity === "Asia" && item.Year === "2021"
       ),
@@ -362,24 +360,22 @@ async function fetchData() {
     };
 
     const americasData = {
-      ...data.filter(
-        (item) => item.Year === "2022" && item.Entity === "Americas"
+      ...data.find(
+        (item) => item.Year === "2022" && item.Entity === "Americas (FAO)"
       ),
       ...dataFish.find(
-        (item) => item.Entity === "Americas" && item.Year === "2021"
+        (item) => item.Entity === "Americas (FAO)" && item.Year === "2021"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Americas" && item.Year === "2021"
+        (item) => item.Entity === "Americas (FAO)" && item.Year === "2021"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Americas" && item.Year === "2021"
+        (item) => item.Entity === "Americas (FAO)" && item.Year === "2021"
       ),
     };
 
     const europeData = {
-      ...data.filter(
-        (item) => item.Year === "2022" && item.Entity === "Europe"
-      ),
+      ...data.find((item) => item.Year === "2022" && item.Entity === "Europe"),
       ...dataFish.find(
         (item) => item.Entity === "Europe" && item.Year === "2021"
       ),
@@ -392,9 +388,7 @@ async function fetchData() {
     };
 
     const oceaniaData = {
-      ...data.filter(
-        (item) => item.Year === "2022" && item.Entity === "Oceania"
-      ),
+      ...data.find((item) => item.Year === "2022" && item.Entity === "Oceania"),
       ...dataFish.find(
         (item) => item.Entity === "Oceania" && item.Year === "2021"
       ),
@@ -406,8 +400,8 @@ async function fetchData() {
       ),
     };
 
-    // console.log("World Fish:",worldData[
-    //     "Fish and seafood | 00002960 || Production | 005511 || tonnes"].toLocaleString());
+    // console.log("Americas Fish:",americasData[
+    // "Fish and seafood | 00002960 || Production | 005511 || tonnes"].toLocaleString());
 
     let fetchHtml = {
       /*Population*/
@@ -415,6 +409,7 @@ async function fetchData() {
       Population2021: 7909295151,
       Population2022: 7975105156,
 
+      //Functions to format HTML data per country:
       /*COWS*/
       cowsData: {
         formatCowsData: function (cattle) {
@@ -617,7 +612,7 @@ async function fetchData() {
         `;
         },
       },
-      //Function to format HTML fish data per country
+      /*FISH*/
       fishData: {
         formatFishData: function (fishTonnes) {
           return {
@@ -1076,17 +1071,27 @@ async function fetchData() {
     function assignAnimalData() {
       const countries = [
         { name: "the World", data: worldData, code: "World" },
+        { name: "Africa", data: africaData, code: "Africa" },
+        { name: "the Americas", data: americasData, code: "Americas" },
+        { name: "Asia", data: asiaData, code: "Asia" },
+        { name: "Europe", data: europeData, code: "Europe" },
+        { name: "Oceania", data: oceaniaData, code: "Oceania" },
         { name: "Argentina", data: argentinaData, code: "Argentina" },
+        { name: "Australia", data: australiaData, code: "Australia" },
         { name: "Brazil", data: brazilData, code: "Brazil" },
         { name: "Canada", data: canadaData, code: "Canada" },
+        { name: "Chile", data: chileData, code: "Chile" },
         { name: "China", data: chinaData, code: "China" },
         { name: "Colombia", data: colombiaData, code: "Colombia" },
         { name: "Ecuador", data: ecuadorData, code: "Ecuador" },
+        { name: "France", data: franceData, code: "France" },
         { name: "Germany", data: germanyData, code: "Germany" },
         { name: "India", data: indiaData, code: "India" },
+        { name: "Japan", data: japanData, code: "Japan" },
         { name: "Mexico", data: mexicoData, code: "Mexico" },
         { name: "Russia", data: russiaData, code: "Russia" },
         { name: "Spain", data: spainData, code: "Spain" },
+        { name: "South Africa", data: southAfricaData, code: "SouthAfrica" },
         { name: "the United Kingdom", data: ukData, code: "Uk" },
         { name: "the United States", data: usaData, code: "Usa" },
       ];
@@ -1130,7 +1135,7 @@ async function fetchData() {
             ]
           );
       });
-      console.log("World land animals", fetchHtml.landAnimalsWorld);
+      // console.log("World land animals", fetchHtml.landAnimalsWorld);
 
       /*ANIMALS FORMATTED IN HTML*/
       //////COWS > to retrieve use: fetchHtml.cowsDataWorld
@@ -1265,8 +1270,8 @@ async function fetchData() {
     // console.log(`Pigs in Usa:`, fetchHtml.pigsDataUsa);
     // console.log(`Fish in World Total at the end:`, fetchHtml.fishTotalWorld);
     // console.log(
-    //   `Fish kg per capita in World at the end:`,
-    //   fetchHtml.fishKgPerCapitaWorld
+    //   `Fish kg per capita in South Africa at the end:`,
+    //   fetchHtml.fishKgPerCapitaSouthAfrica
     // );
     // console.log(`Fish in World Html at the end:`, fetchHtml.fishDataWorld);
 

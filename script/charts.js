@@ -1,4 +1,3 @@
-// import { chart5 } from "./index.js";
 //Language Function
 let language;
 let setLanguage = () => {
@@ -8,7 +7,7 @@ let setLanguage = () => {
   } else if (bodyLanguage === "es") {
     language = "spa";
   }
-  console.log("Language from charts file: ", language);
+  // console.log("Language from charts file: ", language);
 };
 setLanguage();
 
@@ -75,7 +74,7 @@ const labelTranslation = () => {
   }
 };
 labelTranslation();
-console.log("labelLandAnimals is", labelLandAnimals);
+// console.log("labelLandAnimals is", labelLandAnimals);
 const ctx = document.getElementById("LandAnimalsChart");
 
 new Chart(ctx, {
@@ -297,16 +296,26 @@ new Chart(ctxSeaAnimalsPerPerson, {
 fetchData().then(([data, fetchHtml]) => {
   const countries = [
     "World",
+    "Africa",
+    "Americas",
+    "Asia",
+    "Europe",
+    "Oceania",
     "Argentina",
+    "Australia",
     "Brazil",
     "Canada",
+    "Chile",
     "China",
     "Colombia",
     "Ecuador",
     "Germany",
+    "France",
     "India",
+    "Japan",
     "Mexico",
     "Russia",
+    "SouthAfrica",
     "Spain",
     "Uk",
     "Usa",
@@ -324,39 +333,65 @@ fetchData().then(([data, fetchHtml]) => {
       fetchHtml[`fishKgPerCapita${country}`],
     ];
   });
+
   processMeatData(meatData); // Pass meat data object to the processing function
 });
 var worldMeatKgCapita,
+  africaMeatKgCapita,
+  americasMeatKgCapita,
+  asiaMeatKgCapita,
+  europeMeatKgCapita,
+  oceaniaMeatKgCapita,
   argMeatKgCapita,
+  ausMeatKgCapita,
   braMeatKgCapita,
   canMeatKgCapita,
+  chileMeatKgCapita,
   chiMeatKgCapita,
   colMeatKgCapita,
   ecuMeatKgCapita,
+  fraMeatKgCapita,
   gerMeatKgCapita,
   indMeatKgCapita,
+  japMeatKgCapita,
   mexMeatKgCapita,
   rusMeatKgCapita,
+  southAfricaMeatKgCapita,
   spaMeatKgCapita,
   ukMeatKgCapita,
   usaMeatKgCapita;
 
 function processMeatData(meatData) {
   worldMeatKgCapita = meatData[`meatKgCapitaWorld`];
-  console.log("-------World meat data Per Capita:", worldMeatKgCapita);
+  africaMeatKgCapita = meatData[`meatKgCapitaAfrica`];
+  americasMeatKgCapita = meatData[`meatKgCapitaAmericas`];
+  asiaMeatKgCapita = meatData[`meatKgCapitaAsia`];
+  europeMeatKgCapita = meatData[`meatKgCapitaEurope`];
+  oceaniaMeatKgCapita = meatData[`meatKgCapitaOceania`];
   argMeatKgCapita = meatData[`meatKgCapitaArgentina`];
+  ausMeatKgCapita = meatData[`meatKgCapitaAustralia`];
   braMeatKgCapita = meatData[`meatKgCapitaBrazil`];
   canMeatKgCapita = meatData[`meatKgCapitaCanada`];
+  chileMeatKgCapita = meatData[`meatKgCapitaChile`];
   chiMeatKgCapita = meatData[`meatKgCapitaChina`];
   colMeatKgCapita = meatData[`meatKgCapitaColombia`];
   ecuMeatKgCapita = meatData[`meatKgCapitaEcuador`];
+  fraMeatKgCapita = meatData[`meatKgCapitaFrance`];
   gerMeatKgCapita = meatData[`meatKgCapitaGermany`];
   indMeatKgCapita = meatData[`meatKgCapitaIndia`];
+  japMeatKgCapita = meatData[`meatKgCapitaJapan`];
   mexMeatKgCapita = meatData[`meatKgCapitaMexico`];
   rusMeatKgCapita = meatData[`meatKgCapitaRussia`];
+  southAfricaMeatKgCapita = meatData[`meatKgCapitaSouthAfrica`];
   spaMeatKgCapita = meatData[`meatKgCapitaSpain`];
   ukMeatKgCapita = meatData[`meatKgCapitaUk`];
   usaMeatKgCapita = meatData[`meatKgCapitaUsa`];
+
+  // console.log("-------World meat data Per Capita:", worldMeatKgCapita);
+  // console.log(
+  //   `Meat kg per capita in South Africa at the chart file:`,
+  //   southAfricaMeatKgCapita
+  // );
 }
 
 let meatKg;
@@ -415,8 +450,6 @@ function capitaChart() {
 }
 
 //Per Capita Total World Chart with toggle function
-
-// let Total2019 = 8.94 + 15.48 + 1.97 + 15.75 + 0.67 + 19.75;
 
 //For the Total Kg. per capita Sum from 1965 to 2020:
 var cattlePerCapita = [

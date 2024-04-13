@@ -1,7 +1,10 @@
 let chart5 = "total";
 
 //Fetching the data from json file through the animalstatspercountry.js function
-
+console.log("*** Developed by Roger Paredes ***"),
+  console.log(
+    "If you find errors feel free to write to roger@apocalypsisopus.com, thank you :)"
+  );
 fetchData().then(([data, fetchHtml]) => {
   //   // Testing the fetched data
   //   console.log("World Cattle 2nd file:", data.Worldwide.Cattle);
@@ -14,8 +17,8 @@ fetchData().then(([data, fetchHtml]) => {
   //Death count in main block per second since page loaded
 
   function indexStuff() {
-    console.log("The test HTML is Fish Worldwide: ", fetchHtml.fishDataWorld);
-    //Language Function
+    // console.log("Testing Fish Worldwide HTML: ", fetchHtml.fishDataWorld);
+    /*Language Function*/
     let language;
     $(document).ready(() => {
       setLanguage();
@@ -239,7 +242,7 @@ fetchData().then(([data, fetchHtml]) => {
       }
     }
     $("#collapse2-TotalCapita").on("click", collapsePerCapitachart);
-    console.log("Toggle chart initial stats " + chart5);
+    // console.log("Toggle chart initial stats " + chart5);
 
     let toggleBtnCapita = document.getElementById("togglebtncapita");
     let toggleLegend5 = document.getElementById("togglelegend5");
@@ -255,7 +258,7 @@ fetchData().then(([data, fetchHtml]) => {
         toggleLegend5.innerHTML = fetchHtml.toggleLegend5TotalsText;
         updateTotalKg2020Legend();
       }
-      console.log("Toggle chart " + chart5);
+      // console.log("Toggle chart " + chart5);
     }
     $("#togglebtncapita").on("click", function () {
       perAnimalTogglechart();
@@ -383,11 +386,110 @@ fetchData().then(([data, fetchHtml]) => {
     let fishDeathCountUsa = document.getElementById("fishdeathcount-usa");
 
     // Counter Functions per Country >> Death count per country per second
+    let deathsAfr = 0;
+    let fishDeathsAfr = 0;
+    function counterAfr() {
+      let deathsAfrNum = (deathsAfr +=
+        fetchHtml.landAnimalsAfrica / 365 / 24 / 60 / 60);
+      $("#deathcount-afr").text(
+        deathsAfrNum.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+      let fishDeathsAfrNum = (fishDeathsAfr +=
+        fetchHtml.fishTotalAfrica / 365 / 24 / 60 / 60);
+      $("#fishdeathcount-afr").text(
+        fishDeathsAfrNum.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+    setInterval(counterAfr, 1000);
+
+    let deathsAme = 0;
+    let fishDeathsAme = 0;
+    function counterAme() {
+      let deathsAmeNum = (deathsAme +=
+        fetchHtml.landAnimalsAmericas / 365 / 24 / 60 / 60);
+      $("#deathcount-ame").text(
+        deathsAmeNum.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+      let fishDeathsAmeNum = (fishDeathsAme +=
+        fetchHtml.fishTotalAmericas / 365 / 24 / 60 / 60);
+      $("#fishdeathcount-ame").text(
+        fishDeathsAmeNum.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+    setInterval(counterAme, 1000);
+
+    let deathsAsi = 0;
+    let fishDeathsAsi = 0;
+    function counterAsi() {
+      let deathsAsiNum = (deathsAsi +=
+        fetchHtml.landAnimalsAsia / 365 / 24 / 60 / 60);
+      $("#deathcount-asi").text(
+        deathsAsiNum.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+      let fishDeathsAsiNum = (fishDeathsAsi +=
+        fetchHtml.fishTotalAsia / 365 / 24 / 60 / 60);
+      $("#fishdeathcount-asi").text(
+        fishDeathsAsiNum.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+    setInterval(counterAsi, 1000);
+    // console.log("Land Animals in Europe", fetchHtml.landAnimalsEurope);
+    let deathsEur = 0;
+    let fishDeathsEur = 0;
+    function counterEur() {
+      let deathsEurNum = (deathsEur +=
+        fetchHtml.landAnimalsEurope / 365 / 24 / 60 / 60);
+      $("#deathcount-eur").text(
+        deathsEurNum.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+      let fishDeathsEurNum = (fishDeathsEur +=
+        fetchHtml.fishTotalEurope / 365 / 24 / 60 / 60);
+      $("#fishdeathcount-eur").text(
+        fishDeathsEurNum.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+    setInterval(counterEur, 1000);
+
+    let deathsOce = 0;
+    let fishDeathsOce = 0;
+    function counterOce() {
+      let deathsOceNum = (deathsOce +=
+        fetchHtml.landAnimalsOceania / 365 / 24 / 60 / 60);
+      $("#deathcount-oce").text(
+        deathsOceNum.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+      let fishDeathsOceNum = (fishDeathsOce +=
+        fetchHtml.fishTotalOceania / 365 / 24 / 60 / 60);
+      $("#fishdeathcount-oce").text(
+        fishDeathsOceNum.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+    setInterval(counterOce, 1000);
+
     let deathsArg = 0;
     let fishDeathsArg = 0;
     let deathsArgNum;
     let fishDeathsArgNum;
-
     function counterArg() {
       //   deathsArgNum = deathsArg += 25; //2020 data
       deathsArgNum = deathsArg +=
@@ -406,6 +508,26 @@ fetchData().then(([data, fetchHtml]) => {
       );
     }
     setInterval(counterArg, 1000);
+
+    let deathsAus = 0;
+    let fishDeathsAus = 0;
+    function counterAus() {
+      let deathsAusNum = (deathsAus +=
+        fetchHtml.landAnimalsAustralia / 365 / 24 / 60 / 60);
+      $("#deathcount-aus").text(
+        deathsAusNum.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+      let fishDeathsAusNum = (fishDeathsAus +=
+        fetchHtml.fishTotalAustralia / 365 / 24 / 60 / 60);
+      $("#fishdeathcount-aus").text(
+        fishDeathsAusNum.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+    setInterval(counterAus, 1000);
 
     let deathsBra = 0;
     let fishDeathsBra = 0;
@@ -454,6 +576,27 @@ fetchData().then(([data, fetchHtml]) => {
       );
     }
     setInterval(counterCan, 1000);
+
+    let deathsChile = 0;
+    let fishDeathsChile = 0;
+
+    function counterChile() {
+      let deathsChileNum = (deathsChile +=
+        fetchHtml.landAnimalsChile / 365 / 24 / 60 / 60);
+      $("#deathcount-chile").text(
+        deathsChileNum.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+      let fishDeathsChileNum = (fishDeathsChile +=
+        fetchHtml.fishTotalChile / 365 / 24 / 60 / 60);
+      $("#fishdeathcount-chile").text(
+        fishDeathsChileNum.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+    setInterval(counterChile, 1000);
 
     let deathsChi = 0;
     let fishDeathsChi = 0;
@@ -527,6 +670,27 @@ fetchData().then(([data, fetchHtml]) => {
     }
     setInterval(counterEcu, 1000);
 
+    let deathsFra = 0;
+    let fishDeathsFra = 0;
+
+    function counterFra() {
+      let deathsFraNum = (deathsFra +=
+        fetchHtml.landAnimalsFrance / 365 / 24 / 60 / 60);
+      $("#deathcount-fra").text(
+        deathsFraNum.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+      let fishDeathsFraNum = (fishDeathsFra +=
+        fetchHtml.fishTotalFrance / 365 / 24 / 60 / 60);
+      $("#fishdeathcount-fra").text(
+        fishDeathsFraNum.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+    setInterval(counterFra, 1000);
+
     let deathsGer = 0;
     let fishDeathsGer = 0;
     let deathsGerNum;
@@ -572,6 +736,27 @@ fetchData().then(([data, fetchHtml]) => {
       );
     }
     setInterval(counterInd, 1000);
+
+    let deathsJap = 0;
+    let fishDeathsJap = 0;
+
+    function counterJap() {
+      let deathsJapNum = (deathsJap +=
+        fetchHtml.landAnimalsJapan / 365 / 24 / 60 / 60);
+      $("#deathcount-jap").text(
+        deathsJapNum.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+      let fishDeathsJapNum = (fishDeathsJap +=
+        fetchHtml.fishTotalJapan / 365 / 24 / 60 / 60);
+      $("#fishdeathcount-jap").text(
+        fishDeathsJapNum.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+    setInterval(counterJap, 1000);
 
     let deathsMex = 0;
     let fishDeathsMex = 0;
@@ -645,11 +830,31 @@ fetchData().then(([data, fetchHtml]) => {
     }
     setInterval(counterSpa, 1000);
 
+    let deathsSouthafrica = 0;
+    let fishDeathsSouthafrica = 0;
+
+    function counterSouthafrica() {
+      let deathsSouthafricaNum = (deathsSouthafrica +=
+        fetchHtml.landAnimalsSouthAfrica / 365 / 24 / 60 / 60);
+      $("#deathcount-southafrica").text(
+        deathsSouthafricaNum.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+      let fishDeathsSouthafricaNum = (fishDeathsSouthafrica +=
+        fetchHtml.fishTotalSouthAfrica / 365 / 24 / 60 / 60);
+      $("#fishdeathcount-southafrica").text(
+        fishDeathsSouthafricaNum.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+    setInterval(counterSouthafrica, 1000);
+
     let deathsUk = 0;
     let fishDeathsUk = 0;
     let deathsUkNum;
     let fishDeathsUkNum;
-
     function counterUk() {
       deathsUkNum = deathsUk += fetchHtml.landAnimalsUk / 365 / 24 / 60 / 60;
       deathCountUk.textContent = deathsUkNum.toLocaleString(undefined, {
@@ -700,6 +905,32 @@ fetchData().then(([data, fetchHtml]) => {
       console.log(selectedCountry);
       orangeBtn = "none";
 
+      let countriesIndividualStats = [
+        $("#countrydeathcount-afr"),
+        $("#countrydeathcount-ame"),
+        $("#countrydeathcount-asi"),
+        $("#countrydeathcount-eur"),
+        $("#countrydeathcount-oce"),
+        $("#countrydeathcount-arg"),
+        $("#countrydeathcount-aus"),
+        $("#countrydeathcount-bra"),
+        $("#countrydeathcount-can"),
+        $("#countrydeathcount-chi"),
+        $("#countrydeathcount-chile"),
+        $("#countrydeathcount-col"),
+        $("#countrydeathcount-ecu"),
+        $("#countrydeathcount-fra"),
+        $("#countrydeathcount-ger"),
+        $("#countrydeathcount-ind"),
+        $("#countrydeathcount-jap"),
+        $("#countrydeathcount-mex"),
+        $("#countrydeathcount-rus"),
+        $("#countrydeathcount-spa"),
+        $("#countrydeathcount-southafrica"),
+        $("#countrydeathcount-uk"),
+        $("#countrydeathcount-usa"),
+      ];
+
       switch (selectedCountry) {
         case "World":
           if (language == "eng") {
@@ -709,20 +940,115 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " mundialmente";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
           meatKg = worldMeatKgCapita;
+          animalsPerCapita.style.display = "block";
+          animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
+          capitaChart();
+          countryName = document.getElementById("countryname");
+          countryName.textContent = countryNameText;
+          break;
+
+        case "Africa":
+          if (language == "eng") {
+            stats.innerHTML = "<p>Select Animal</p>";
+            countryNameText = " in " + selectedCountry;
+          } else if (language == "spa") {
+            stats.innerHTML = "<p>Elige un animal</p>";
+            countryNameText = " en Africa";
+          }
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-afr").show();
+
+          meatKg = africaMeatKgCapita;
+          animalsPerCapita.style.display = "block";
+          animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
+          capitaChart();
+          countryName = document.getElementById("countryname");
+          countryName.textContent = countryNameText;
+          break;
+
+        case "Americas":
+          if (language == "eng") {
+            stats.innerHTML = "<p>Select Animal</p>";
+            countryNameText = " in " + selectedCountry;
+          } else if (language == "spa") {
+            stats.innerHTML = "<p>Elige un animal</p>";
+            countryNameText = " en América";
+          }
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-ame").show();
+
+          meatKg = americasMeatKgCapita;
+          animalsPerCapita.style.display = "block";
+          animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
+          capitaChart();
+          countryName = document.getElementById("countryname");
+          countryName.textContent = countryNameText;
+          break;
+
+        case "Asia":
+          if (language == "eng") {
+            stats.innerHTML = "<p>Select Animal</p>";
+            countryNameText = " in " + selectedCountry;
+          } else if (language == "spa") {
+            stats.innerHTML = "<p>Elige un animal</p>";
+            countryNameText = " en Asia";
+          }
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-asi").show();
+
+          meatKg = asiaMeatKgCapita;
+          animalsPerCapita.style.display = "block";
+          animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
+          capitaChart();
+          countryName = document.getElementById("countryname");
+          countryName.textContent = countryNameText;
+          break;
+
+        case "Europe":
+          if (language == "eng") {
+            stats.innerHTML = "<p>Select Animal</p>";
+            countryNameText = " in " + selectedCountry;
+          } else if (language == "spa") {
+            stats.innerHTML = "<p>Elige un animal</p>";
+            countryNameText = " en Europa";
+          }
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-eur").show();
+
+          meatKg = europeMeatKgCapita;
+          animalsPerCapita.style.display = "block";
+          animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
+          capitaChart();
+          countryName = document.getElementById("countryname");
+          countryName.textContent = countryNameText;
+          break;
+
+        case "Oceania":
+          if (language == "eng") {
+            stats.innerHTML = "<p>Select Animal</p>";
+            countryNameText = " in " + selectedCountry;
+          } else if (language == "spa") {
+            stats.innerHTML = "<p>Elige un animal</p>";
+            countryNameText = " en Oceanía";
+          }
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-oce").show();
+
+          meatKg = oceaniaMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
           capitaChart();
@@ -738,19 +1064,30 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en Argentina";
           }
-          countryDeathCountArg.style.display = "block";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-arg").show();
+          meatKg = argMeatKgCapita;
+          animalsPerCapita.style.display = "block";
+          animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
+          capitaChart();
+          countryName = document.getElementById("countryname");
+          countryName.textContent = countryNameText;
+          break;
+
+        case "Australia":
+          if (language == "eng") {
+            stats.innerHTML = "<p>Select Animal</p>";
+            countryNameText = " in " + selectedCountry;
+          } else if (language == "spa") {
+            stats.innerHTML = "<p>Elige un animal</p>";
+            countryNameText = " en Australia";
+          }
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-aus").show();
           meatKg = argMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
@@ -767,19 +1104,10 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en Brasil";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "block";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-bra").show();
           meatKg = braMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
@@ -796,20 +1124,31 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en Canadá";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "block";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-can").show();
           meatKg = canMeatKgCapita;
+          animalsPerCapita.style.display = "block";
+          animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
+          capitaChart();
+          countryName = document.getElementById("countryname");
+          countryName.textContent = countryNameText;
+          break;
+
+        case "Chile":
+          if (language == "eng") {
+            stats.innerHTML = "<p>Select Animal</p>";
+            countryNameText = " in " + selectedCountry;
+          } else if (language == "spa") {
+            stats.innerHTML = "<p>Elige un animal</p>";
+            countryNameText = " en Chile";
+          }
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-chile").show();
+          meatKg = chileMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
           capitaChart();
@@ -825,19 +1164,10 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en China";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "block";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-chi").show();
           meatKg = chiMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
@@ -854,19 +1184,10 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en Colombia";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "block";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-col").show();
           meatKg = colMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
@@ -883,20 +1204,31 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en Ecuador";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "block";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-ecu").show();
           meatKg = ecuMeatKgCapita;
+          animalsPerCapita.style.display = "block";
+          animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
+          capitaChart();
+          countryName = document.getElementById("countryname");
+          countryName.textContent = countryNameText;
+          break;
+
+        case "France":
+          if (language == "eng") {
+            stats.innerHTML = "<p>Select Animal</p>";
+            countryNameText = " in " + selectedCountry;
+          } else if (language == "spa") {
+            stats.innerHTML = "<p>Elige un animal</p>";
+            countryNameText = " en Francia";
+          }
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-fra").show();
+          meatKg = fraMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
           capitaChart();
@@ -912,19 +1244,10 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en Alemania";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "block";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-ger").show();
           meatKg = gerMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
@@ -941,20 +1264,31 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en India";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "block";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-ind").show();
           meatKg = indMeatKgCapita;
+          animalsPerCapita.style.display = "block";
+          animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
+          capitaChart();
+          countryName = document.getElementById("countryname");
+          countryName.textContent = countryNameText;
+          break;
+
+        case "Japan":
+          if (language == "eng") {
+            stats.innerHTML = "<p>Select Animal</p>";
+            countryNameText = " in " + selectedCountry;
+          } else if (language == "spa") {
+            stats.innerHTML = "<p>Elige un animal</p>";
+            countryNameText = " en Japón";
+          }
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-jap").show();
+          meatKg = japMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
           capitaChart();
@@ -970,19 +1304,10 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en México";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "block";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-mex").show();
           meatKg = mexMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
@@ -999,19 +1324,10 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en Rusia";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "block";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-rus").show();
           meatKg = rusMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
@@ -1028,20 +1344,31 @@ fetchData().then(([data, fetchHtml]) => {
             stats.innerHTML = "<p>Elige un animal</p>";
             countryNameText = " en España";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "block";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-spa").show();
           meatKg = spaMeatKgCapita;
+          animalsPerCapita.style.display = "block";
+          animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
+          capitaChart();
+          countryName = document.getElementById("countryname");
+          countryName.textContent = countryNameText;
+          break;
+
+        case "SouthAfrica":
+          if (language == "eng") {
+            stats.innerHTML = "<p>Select Animal</p>";
+            countryNameText = " in South Africa";
+          } else if (language == "spa") {
+            stats.innerHTML = "<p>Elige un animal</p>";
+            countryNameText = " en Sudáfrica";
+          }
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-southafrica").show();
+          meatKg = southAfricaMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
           capitaChart();
@@ -1052,24 +1379,15 @@ fetchData().then(([data, fetchHtml]) => {
         case "Uk":
           if (language == "eng") {
             stats.innerHTML = "<p>Select Animal</p>";
-            countryNameText = " in the " + selectedCountry;
+            countryNameText = " in the United Kingdom";
           } else if (language == "spa") {
             stats.innerHTML = "<p>Elige un animal</p>";
-            countryNameText = " en Reino Unido";
+            countryNameText = " en el Reino Unido";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "block";
-          countryDeathCountUsa.style.display = "none";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-uk").show();
           meatKg = ukMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
@@ -1081,24 +1399,15 @@ fetchData().then(([data, fetchHtml]) => {
         case "Usa":
           if (language == "eng") {
             stats.innerHTML = "<p>Select Animal</p>";
-            countryNameText = " in the " + selectedCountry;
+            countryNameText = " in the United States";
           } else if (language == "spa") {
             stats.innerHTML = "<p>Elige un animal</p>";
-            countryNameText = " en Estados Unidos";
+            countryNameText = " en los Estados Unidos";
           }
-          countryDeathCountArg.style.display = "none";
-          countryDeathCountBra.style.display = "none";
-          countryDeathCountCan.style.display = "none";
-          countryDeathCountChi.style.display = "none";
-          countryDeathCountCol.style.display = "none";
-          countryDeathCountEcu.style.display = "none";
-          countryDeathCountGer.style.display = "none";
-          countryDeathCountInd.style.display = "none";
-          countryDeathCountMex.style.display = "none";
-          countryDeathCountRus.style.display = "none";
-          countryDeathCountSpa.style.display = "none";
-          countryDeathCountUk.style.display = "none";
-          countryDeathCountUsa.style.display = "block";
+          countriesIndividualStats.forEach((country) => {
+            country.hide();
+          });
+          $("#countrydeathcount-usa").show();
           meatKg = usaMeatKgCapita;
           animalsPerCapita.style.display = "block";
           animalsPerCapita.innerHTML = fetchHtml.capitaMeatKgText;
@@ -1114,350 +1423,123 @@ fetchData().then(([data, fetchHtml]) => {
     // Animal Btns
     // They call for value pairs in the object fetchHtml in the file: animalstatspercountry.js
 
+    const countries = [
+      "World",
+      "Africa",
+      "Americas",
+      "Asia",
+      "Europe",
+      "Oceania",
+      "Argentina",
+      "Australia",
+      "Brazil",
+      "Canada",
+      "Chile",
+      "China",
+      "Colombia",
+      "Ecuador",
+      "France",
+      "Germany",
+      "India",
+      "Japan",
+      "Mexico",
+      "Russia",
+      "Spain",
+      "SouthAfrica",
+      "Uk",
+      "Usa",
+    ];
+
     function cows() {
       orangeBtn = "cow";
       let selectedCountry = document.getElementById("countrylist").value;
-      switch (selectedCountry) {
-        case "World":
-          stats.innerHTML = fetchHtml.cowsDataWorld;
-          break;
-        case "Argentina":
-          stats.innerHTML = fetchHtml.cowsDataArgentina;
-          break;
-        case "Brazil":
-          stats.innerHTML = fetchHtml.cowsDataBrazil;
-          break;
-        case "Canada":
-          stats.innerHTML = fetchHtml.cowsDataCanada;
-          break;
-        case "China":
-          stats.innerHTML = fetchHtml.cowsDataChina;
-          break;
-        case "Colombia":
-          stats.innerHTML = fetchHtml.cowsDataColombia;
-          break;
-        case "Ecuador":
-          stats.innerHTML = fetchHtml.cowsDataEcuador;
-          break;
-        case "Germany":
-          stats.innerHTML = fetchHtml.cowsDataGer;
-          break;
-        case "India":
-          stats.innerHTML = fetchHtml.cowsDataIndia;
-          break;
-        case "Mexico":
-          stats.innerHTML = fetchHtml.cowsDataMexico;
-          break;
-        case "Russia":
-          stats.innerHTML = fetchHtml.cowsDataRussia;
-          break;
-        case "Spain":
-          stats.innerHTML = fetchHtml.cowsDataSpain;
-          break;
-        case "Uk":
-          stats.innerHTML = fetchHtml.cowsDataUk;
-          break;
-        case "Usa":
-          stats.innerHTML = fetchHtml.cowsDataUsa;
-          break;
-        default:
-          if (language == "eng") {
-            alert("Choose a location");
-          } else if (language == "spa") {
-            alert("Elige una ubicación");
-          }
+      if (selectedCountry !== "---") {
+        const cowsData = `cowsData${selectedCountry}`;
+        stats.innerHTML = fetchHtml[cowsData];
+      } else if (language == "eng") {
+        alert("Choose a location");
+        stats.innerHTML = "Choose a location";
+      } else if (language == "spa") {
+        alert("Elige una ubicación");
+        stats.innerHTML = "Elige una ubicación";
       }
     }
 
     function pigs() {
       orangeBtn = "pigs";
       let selectedCountry = document.getElementById("countrylist").value;
-      switch (selectedCountry) {
-        case "World":
-          stats.innerHTML = fetchHtml.pigsDataWorld;
-          break;
-        case "Argentina":
-          stats.innerHTML = fetchHtml.pigsDataArgentina;
-          break;
-        case "Brazil":
-          stats.innerHTML = fetchHtml.pigsDataBrazil;
-          break;
-        case "Canada":
-          stats.innerHTML = fetchHtml.pigsDataCanada;
-          break;
-        case "China":
-          stats.innerHTML = fetchHtml.pigsDataChina;
-          break;
-        case "Colombia":
-          stats.innerHTML = fetchHtml.pigsDataColombia;
-          break;
-        case "Ecuador":
-          stats.innerHTML = fetchHtml.pigsDataEcuador;
-          break;
-        case "Germany":
-          stats.innerHTML = fetchHtml.pigsDataGer;
-          break;
-        case "India":
-          stats.innerHTML = fetchHtml.pigsDataIndia;
-          break;
-        case "Mexico":
-          stats.innerHTML = fetchHtml.pigsDataMexico;
-          break;
-        case "Russia":
-          stats.innerHTML = fetchHtml.pigsDataRussia;
-          break;
-        case "Spain":
-          stats.innerHTML = fetchHtml.pigsDataSpain;
-          break;
-        case "Usa":
-          stats.innerHTML = fetchHtml.pigsDataUsa;
-          break;
-        case "Uk":
-          stats.innerHTML = fetchHtml.pigsDataUk;
-          break;
-        case "Usa":
-          stats.innerHTML = fetchHtml.pigsDataUsa;
-          break;
-        default:
-          if (language == "eng") {
-            alert("Choose a location");
-          } else if (language == "spa") {
-            alert("Elige una ubicación");
-          }
+      if (selectedCountry != "---") {
+        const pigsData = `pigsData${selectedCountry}`;
+        stats.innerHTML = fetchHtml[pigsData];
+      } else if (language == "eng") {
+        alert("Choose a location");
+        stats.innerHTML = "Choose a location";
+      } else if (language == "spa") {
+        alert("Elige una ubicación");
+        stats.innerHTML = "Elige una ubicación";
       }
     }
 
     function sheep() {
       orangeBtn = "sheep";
       let selectedCountry = document.getElementById("countrylist").value;
-      switch (selectedCountry) {
-        case "World":
-          stats.innerHTML = fetchHtml.sheepDataWorld;
-          break;
-        case "Argentina":
-          stats.innerHTML = fetchHtml.sheepDataArgentina;
-          break;
-        case "Brazil":
-          stats.innerHTML = fetchHtml.sheepDataBrazil;
-          break;
-        case "Canada":
-          stats.innerHTML = fetchHtml.sheepDataCanada;
-          break;
-        case "China":
-          stats.innerHTML = fetchHtml.sheepDataChina;
-          break;
-        case "Colombia":
-          stats.innerHTML = fetchHtml.sheepDataColombia;
-          break;
-        case "Ecuador":
-          stats.innerHTML = fetchHtml.sheepDataEcuador;
-          break;
-        case "Germany":
-          stats.innerHTML = fetchHtml.sheepDataGer;
-          break;
-        case "India":
-          stats.innerHTML = fetchHtml.sheepDataIndia;
-          break;
-        case "Mexico":
-          stats.innerHTML = fetchHtml.sheepDataMexico;
-          break;
-        case "Russia":
-          stats.innerHTML = fetchHtml.sheepDataRussia;
-          break;
-        case "Mexico":
-          stats.innerHTML = fetchHtml.sheepDataMexico;
-          break;
-        case "Spain":
-          stats.innerHTML = fetchHtml.sheepDataSpain;
-          break;
-        case "Uk":
-          stats.innerHTML = fetchHtml.sheepDataUk;
-          break;
-        case "Usa":
-          stats.innerHTML = fetchHtml.sheepDataUsa;
-          break;
-        default:
-          if (language == "eng") {
-            alert("Choose a location");
-          } else if (language == "esp") {
-            alert("Elige una ubicación");
-          }
+      if (selectedCountry != "---") {
+        const sheepData = `sheepData${selectedCountry}`;
+        stats.innerHTML = fetchHtml[sheepData];
+      } else if (language == "eng") {
+        alert("Choose a location");
+        stats.innerHTML = "Choose a location";
+      } else if (language == "spa") {
+        alert("Elige una ubicación");
+        stats.innerHTML = "Elige una ubicación";
       }
     }
 
     function chicken() {
       orangeBtn = "chicken";
       let selectedCountry = document.getElementById("countrylist").value;
-      switch (selectedCountry) {
-        case "World":
-          stats.innerHTML = fetchHtml.chickenDataWorld;
-          break;
-        case "Argentina":
-          stats.innerHTML = fetchHtml.chickenDataArgentina;
-          break;
-        case "Brazil":
-          stats.innerHTML = fetchHtml.chickenDataBrazil;
-          break;
-        case "Canada":
-          stats.innerHTML = fetchHtml.chickenDataCanada;
-          break;
-        case "China":
-          stats.innerHTML = fetchHtml.chickenDataChina;
-          break;
-        case "Colombia":
-          stats.innerHTML = fetchHtml.chickenDataColombia;
-          break;
-        case "Ecuador":
-          stats.innerHTML = fetchHtml.chickenDataEcuador;
-          break;
-        case "Germany":
-          stats.innerHTML = fetchHtml.chickenDataGer;
-          break;
-        case "India":
-          stats.innerHTML = fetchHtml.chickenDataIndia;
-          break;
-        case "Mexico":
-          stats.innerHTML = fetchHtml.chickenDataMexico;
-          break;
-        case "Russia":
-          stats.innerHTML = fetchHtml.chickenDataRussia;
-          break;
-        case "Mexico":
-          stats.innerHTML = fetchHtml.chickenDataMexico;
-          break;
-        case "Spain":
-          stats.innerHTML = fetchHtml.chickenDataSpain;
-          break;
-        case "Uk":
-          stats.innerHTML = fetchHtml.chickenDataUk;
-          break;
-        case "Usa":
-          stats.innerHTML = fetchHtml.chickenDataUsa;
-          break;
-        default:
-          if (language == "eng") {
-            alert("Choose a location");
-          } else if (language == "esp") {
-            alert("Elige una ubicación");
-          }
+      if (selectedCountry != "---") {
+        const chickenData = `chickenData${selectedCountry}`;
+        stats.innerHTML = fetchHtml[chickenData];
+      } else if (language == "eng") {
+        alert("Choose a location");
+        stats.innerHTML = "Choose a location";
+      } else if (language == "spa") {
+        alert("Elige una ubicación");
+        stats.innerHTML = "Elige una ubicación";
       }
     }
 
     function turkey() {
       orangeBtn = "turkey";
       let selectedCountry = document.getElementById("countrylist").value;
-      switch (selectedCountry) {
-        case "World":
-          stats.innerHTML = fetchHtml.turkeyDataWorld;
-          break;
-        case "Argentina":
-          stats.innerHTML = fetchHtml.turkeyDataArgentina;
-          break;
-        case "Brazil":
-          stats.innerHTML = fetchHtml.turkeyDataBrazil;
-          break;
-        case "Canada":
-          stats.innerHTML = fetchHtml.turkeyDataCanada;
-          break;
-        case "China":
-          stats.innerHTML = fetchHtml.turkeyDataChina;
-          break;
-        case "Colombia":
-          stats.innerHTML = fetchHtml.turkeyDataColombia;
-          break;
-        case "Ecuador":
-          stats.innerHTML = fetchHtml.turkeyDataEcuador;
-          break;
-        case "Germany":
-          stats.innerHTML = fetchHtml.turkeyDataGer;
-          break;
-        case "India":
-          stats.innerHTML = fetchHtml.turkeyDataIndia;
-          break;
-        case "Mexico":
-          stats.innerHTML = fetchHtml.turkeyDataMexico;
-          break;
-        case "Russia":
-          stats.innerHTML = fetchHtml.turkeyDataRussia;
-          break;
-        case "Mexico":
-          stats.innerHTML = fetchHtml.turkeyDataMexico;
-          break;
-        case "Spain":
-          stats.innerHTML = fetchHtml.turkeyDataSpain;
-          break;
-        case "Uk":
-          stats.innerHTML = fetchHtml.turkeyDataUk;
-          break;
-        case "Usa":
-          stats.innerHTML = fetchHtml.turkeyDataUsa;
-          break;
-        default:
-          if (language == "eng") {
-            alert("Choose a location");
-          } else if (language == "esp") {
-            alert("Elige una ubicación");
-          }
+      if (selectedCountry != "---") {
+        const turkeyData = `turkeyData${selectedCountry}`;
+        stats.innerHTML = fetchHtml[turkeyData];
+      } else if (language == "eng") {
+        alert("Choose a location");
+        stats.innerHTML = "Choose a location";
+      } else if (language == "spa") {
+        alert("Elige una ubicación");
+        stats.innerHTML = "Elige una ubicación";
       }
     }
 
     function fish() {
       orangeBtn = "fish";
       let selectedCountry = document.getElementById("countrylist").value;
-      switch (selectedCountry) {
-        case "World":
-          stats.innerHTML = fetchHtml.fishDataWorld;
-          break;
-        case "Argentina":
-          stats.innerHTML = fetchHtml.fishDataArgentina;
-          break;
-        case "Brazil":
-          stats.innerHTML = fetchHtml.fishDataBrazil;
-          break;
-        case "Canada":
-          stats.innerHTML = fetchHtml.fishDataCanada;
-          break;
-        case "China":
-          stats.innerHTML = fetchHtml.fishDataChina;
-          break;
-        case "Colombia":
-          stats.innerHTML = fetchHtml.fishDataColombia;
-          break;
-        case "Ecuador":
-          stats.innerHTML = fetchHtml.fishDataEcuador;
-          break;
-        case "Germany":
-          stats.innerHTML = fetchHtml.fishDataGer;
-          break;
-        case "India":
-          stats.innerHTML = fetchHtml.fishDataIndia;
-          break;
-        case "Mexico":
-          stats.innerHTML = fetchHtml.fishDataMexico;
-          break;
-        case "Russia":
-          stats.innerHTML = fetchHtml.fishDataRussia;
-          break;
-        case "Mexico":
-          stats.innerHTML = fetchHtml.fishDataMexico;
-          break;
-        case "Spain":
-          stats.innerHTML = fetchHtml.fishDataSpain;
-          break;
-        case "Uk":
-          stats.innerHTML = fetchHtml.fishDataUk;
-          break;
-        case "Usa":
-          stats.innerHTML = fetchHtml.fishDataUsa;
-          break;
-        default:
-          if (language == "eng") {
-            alert("Choose a location");
-          } else if (language == "esp") {
-            alert("Elige una ubicación");
-          }
+      if (selectedCountry != "---") {
+        const fishData = `fishData${selectedCountry}`;
+        stats.innerHTML = fetchHtml[fishData];
+      } else if (language == "eng") {
+        alert("Choose a location");
+        stats.innerHTML = "Choose a location";
+      } else if (language == "spa") {
+        alert("Elige una ubicación");
+        stats.innerHTML = "Elige una ubicación";
       }
     }
+
     //Event Listeners for Animal stats per country:
     $("#cowbtn").on("click", function () {
       cows(), orangeButtons();
@@ -1555,6 +1637,7 @@ fetchData().then(([data, fetchHtml]) => {
     $("#countrylist").on("change", function () {
       getSelectedCountry();
       orangeButtons();
+      pbtPopup();
     });
 
     ////Collapsible Footer Our World in Data Embeded Charts
@@ -1586,49 +1669,93 @@ fetchData().then(([data, fetchHtml]) => {
     //PBT PopUp-----------------------------------------------
     let hasShownPopup = false;
     let pbtPopup = () => {
-      let pbt = document.createElement("div");
+      if (!hasShownPopup) {
+        let pbt = document.createElement("div");
 
-      if (language == "eng") {
-        pbt.innerHTML = `
-                <div class="pbt-popup-container"><button class="pbt-close-btn">x</button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp.gif" alt="Sign the Plant Based Treaty"></a></div>
-              `;
-      } else if (language == "spa") {
-        pbt.innerHTML = `
-                <div class="pbt-popup-container"><button class="pbt-close-btn">x</button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp_spa.gif" alt="Firma el Plant Based Treaty"></a></div>
-              `;
-      }
-      pbt.classList.add("pbt-popup");
-
-      const imgPBT = pbt.querySelector("img");
-      imgPBT.onload = function () {
-        if (!hasShownPopup) {
-          setTimeout(pbtDisplayPopup, 1000);
+        if (language == "eng") {
+          pbt.innerHTML = `
+                  <div class="pbt-popup-container"><button class="pbt-close-btn"><img src="images/x.png"></button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp.gif" alt="Sign the Plant Based Treaty"></a></div>
+                `;
+        } else if (language == "spa") {
+          pbt.innerHTML = `
+                  <div class="pbt-popup-container"><button class="pbt-close-btn"><img src="images/x.png"></button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp_spa.gif" alt="Firma el Plant Based Treaty"></a></div>
+                `;
         }
-      };
-      function pbtDisplayPopup() {
-        console.log("popup triggerred");
+        pbt.classList.add("pbt-popup");
 
-        hasShownPopup = true;
-        console.log(hasShownPopup);
-        // Close button functionality
-        pbt
-          .querySelector(".pbt-close-btn")
-          .addEventListener("click", function () {
+        const imgPBT = pbt.querySelector("img");
+        imgPBT.onload = function () {
+          pbtDisplayPopup();
+        };
+        function pbtDisplayPopup() {
+          // console.log("popup triggerred");
+          hasShownPopup = true;
+          // console.log(hasShownPopup);
+
+          // Close button functionality
+          pbt
+            .querySelector(".pbt-close-btn")
+            .addEventListener("click", function () {
+              document.body.removeChild(pbt);
+            });
+
+          // Detect all clicks on the document
+          document.addEventListener("click", function (event) {
+            // If user clicks inside the element, do nothing
+            if (event.target.closest(".pbt-popup-container")) return;
+            // If user clicks outside the element, hide it!
             document.body.removeChild(pbt);
           });
 
-        // Detect all clicks on the document
-        document.addEventListener("click", function (event) {
-          // If user clicks inside the element, do nothing
-          if (event.target.closest(".pbt-popup-container")) return;
-          // If user clicks outside the element, hide it!
-          document.body.removeChild(pbt);
-        });
-
-        document.body.appendChild(pbt); // Append the element to the body
+          document.body.appendChild(pbt); // Append the element to the body
+        }
       }
     };
-    setTimeout(pbtPopup, 60000);
+
+    // let pbtPopup = () => {
+    //   let pbt = document.createElement("div");
+
+    //   if (language == "eng") {
+    //     pbt.innerHTML = `
+    //             <div class="pbt-popup-container"><button class="pbt-close-btn">x</button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp.gif" alt="Sign the Plant Based Treaty"></a></div>
+    //           `;
+    //   } else if (language == "spa") {
+    //     pbt.innerHTML = `
+    //             <div class="pbt-popup-container"><button class="pbt-close-btn">x</button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp_spa.gif" alt="Firma el Plant Based Treaty"></a></div>
+    //           `;
+    //   }
+    //   pbt.classList.add("pbt-popup");
+
+    //   const imgPBT = pbt.querySelector("img");
+    //   imgPBT.onload = function () {
+    //     if (!hasShownPopup) {
+    //       setTimeout(pbtDisplayPopup, 1000);
+    //     }
+    //   };
+    //   function pbtDisplayPopup() {
+    //     // console.log("popup triggerred");
+
+    //     hasShownPopup = true;
+    //     // console.log(hasShownPopup);
+    //     // Close button functionality
+    //     pbt
+    //       .querySelector(".pbt-close-btn")
+    //       .addEventListener("click", function () {
+    //         document.body.removeChild(pbt);
+    //       });
+
+    //     // Detect all clicks on the document
+    //     document.addEventListener("click", function (event) {
+    //       // If user clicks inside the element, do nothing
+    //       if (event.target.closest(".pbt-popup-container")) return;
+    //       // If user clicks outside the element, hide it!
+    //       document.body.removeChild(pbt);
+    //     });
+
+    //     document.body.appendChild(pbt); // Append the element to the body
+    //   }
+    // };
+    // setTimeout(pbtPopup, 60000);
   }
 
   indexStuff();
