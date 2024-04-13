@@ -403,6 +403,15 @@ async function fetchData() {
     // console.log("Americas Fish:",americasData[
     // "Fish and seafood | 00002960 || Production | 005511 || tonnes"].toLocaleString());
 
+    let noData = {
+      yearly: "No data on this 😔",
+      monthly: "No data on this 😔",
+      daily: "No data on this 😔",
+      hourly: "No data on this 😔",
+      perMinute: "No data on this 😔",
+      perSecond: "No data on this 😔",
+    };
+
     let fetchHtml = {
       /*Population*/
       Population2020: 7840952880,
@@ -413,25 +422,29 @@ async function fetchData() {
       /*COWS*/
       cowsData: {
         formatCowsData: function (cattle) {
-          return {
-            yearly: Number(cattle).toLocaleString(),
-            monthly: (cattle / 12).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            daily: (cattle / 365).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            hourly: (cattle / (365 * 24)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perMinute: (cattle / (365 * 24 * 60)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perSecond: (cattle / (365 * 24 * 60 * 60)).toLocaleString(
-              undefined,
-              { maximumFractionDigits: 2 }
-            ),
-          };
+          if (cattle) {
+            return {
+              yearly: Number(cattle).toLocaleString(),
+              monthly: (cattle / 12).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              daily: (cattle / 365).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              hourly: (cattle / (365 * 24)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perMinute: (cattle / (365 * 24 * 60)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perSecond: (cattle / (365 * 24 * 60 * 60)).toLocaleString(
+                undefined,
+                { maximumFractionDigits: 2 }
+              ),
+            };
+          } else if (cattle == 0) {
+            return noData;
+          }
         },
 
         buildCowsDataHTML: function (country, cowsData) {
@@ -452,24 +465,31 @@ async function fetchData() {
       /*PIGS*/
       pigsData: {
         formatPigsData: function (pigs) {
-          return {
-            yearly: Number(pigs).toLocaleString(),
-            monthly: (pigs / 12).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            daily: (pigs / 365).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            hourly: (pigs / (365 * 24)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perMinute: (pigs / (365 * 24 * 60)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perSecond: (pigs / (365 * 24 * 60 * 60)).toLocaleString(undefined, {
-              maximumFractionDigits: 2,
-            }),
-          };
+          if (pigs) {
+            return {
+              yearly: Number(pigs).toLocaleString(),
+              monthly: (pigs / 12).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              daily: (pigs / 365).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              hourly: (pigs / (365 * 24)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perMinute: (pigs / (365 * 24 * 60)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perSecond: (pigs / (365 * 24 * 60 * 60)).toLocaleString(
+                undefined,
+                {
+                  maximumFractionDigits: 2,
+                }
+              ),
+            };
+          } else if (pigs == 0) {
+            return noData;
+          }
         },
 
         buildPigsDataHTML: function (country, pigsData) {
@@ -490,27 +510,31 @@ async function fetchData() {
       /*SHEEP*/
       sheepData: {
         formatSheepData: function (sheep) {
-          return {
-            yearly: Number(sheep).toLocaleString(),
-            monthly: (sheep / 12).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            daily: (sheep / 365).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            hourly: (sheep / (365 * 24)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perMinute: (sheep / (365 * 24 * 60)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perSecond: (sheep / (365 * 24 * 60 * 60)).toLocaleString(
-              undefined,
-              {
-                maximumFractionDigits: 2,
-              }
-            ),
-          };
+          if (sheep) {
+            return {
+              yearly: Number(sheep).toLocaleString(),
+              monthly: (sheep / 12).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              daily: (sheep / 365).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              hourly: (sheep / (365 * 24)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perMinute: (sheep / (365 * 24 * 60)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perSecond: (sheep / (365 * 24 * 60 * 60)).toLocaleString(
+                undefined,
+                {
+                  maximumFractionDigits: 2,
+                }
+              ),
+            };
+          } else if (sheep == 0) {
+            return noData;
+          }
         },
 
         buildSheepDataHTML: function (country, sheepData) {
@@ -531,27 +555,31 @@ async function fetchData() {
       /*CHICKEN*/
       chickenData: {
         formatChickenData: function (chicken) {
-          return {
-            yearly: Number(chicken).toLocaleString(),
-            monthly: (chicken / 12).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            daily: (chicken / 365).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            hourly: (chicken / (365 * 24)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perMinute: (chicken / (365 * 24 * 60)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perSecond: (chicken / (365 * 24 * 60 * 60)).toLocaleString(
-              undefined,
-              {
-                maximumFractionDigits: 2,
-              }
-            ),
-          };
+          if (chicken) {
+            return {
+              yearly: Number(chicken).toLocaleString(),
+              monthly: (chicken / 12).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              daily: (chicken / 365).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              hourly: (chicken / (365 * 24)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perMinute: (chicken / (365 * 24 * 60)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perSecond: (chicken / (365 * 24 * 60 * 60)).toLocaleString(
+                undefined,
+                {
+                  maximumFractionDigits: 2,
+                }
+              ),
+            };
+          } else if (chicken == 0) {
+            return noData;
+          }
         },
 
         buildChickenDataHTML: function (country, chickenData) {
@@ -573,27 +601,31 @@ async function fetchData() {
       /*TURKEY*/
       turkeyData: {
         formatTurkeyData: function (turkey) {
-          return {
-            yearly: Number(turkey).toLocaleString(),
-            monthly: (turkey / 12).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            daily: (turkey / 365).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            hourly: (turkey / (365 * 24)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perMinute: (turkey / (365 * 24 * 60)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perSecond: (turkey / (365 * 24 * 60 * 60)).toLocaleString(
-              undefined,
-              {
-                maximumFractionDigits: 2,
-              }
-            ),
-          };
+          if (turkey) {
+            return {
+              yearly: Number(turkey).toLocaleString(),
+              monthly: (turkey / 12).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              daily: (turkey / 365).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              hourly: (turkey / (365 * 24)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perMinute: (turkey / (365 * 24 * 60)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perSecond: (turkey / (365 * 24 * 60 * 60)).toLocaleString(
+                undefined,
+                {
+                  maximumFractionDigits: 2,
+                }
+              ),
+            };
+          } else if (turkey == 0) {
+            return noData;
+          }
         },
 
         buildTurkeyDataHTML: function (country, turkeyData) {
@@ -615,26 +647,30 @@ async function fetchData() {
       /*FISH*/
       fishData: {
         formatFishData: function (fishTonnes) {
-          return {
-            yearly: Number(fishTonnes).toLocaleString(),
-            monthly: (fishTonnes / 12).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            daily: (fishTonnes / 365).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            hourly: (fishTonnes / (365 * 24)).toLocaleString(undefined, {
-              maximumFractionDigits: 0,
-            }),
-            perMinute: (fishTonnes / (365 * 24 * 60)).toLocaleString(
-              undefined,
-              { maximumFractionDigits: 0 }
-            ),
-            perSecond: (fishTonnes / (365 * 24 * 60 * 60)).toLocaleString(
-              undefined,
-              { maximumFractionDigits: 2 }
-            ),
-          };
+          if (fishTonnes) {
+            return {
+              yearly: Number(fishTonnes).toLocaleString(),
+              monthly: (fishTonnes / 12).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              daily: (fishTonnes / 365).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              hourly: (fishTonnes / (365 * 24)).toLocaleString(undefined, {
+                maximumFractionDigits: 0,
+              }),
+              perMinute: (fishTonnes / (365 * 24 * 60)).toLocaleString(
+                undefined,
+                { maximumFractionDigits: 0 }
+              ),
+              perSecond: (fishTonnes / (365 * 24 * 60 * 60)).toLocaleString(
+                undefined,
+                { maximumFractionDigits: 2 }
+              ),
+            };
+          } else if (fishTonnes == 0) {
+            return noData;
+          }
         },
 
         buildFishDataHTML: function (country, fishTonnesData) {
