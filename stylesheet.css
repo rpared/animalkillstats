@@ -576,6 +576,7 @@ margin: 0 auto;
 #footer-brands img{
   margin: 0 16px;
   padding: 4px 0;
+  cursor: pointer;
 }
 
 #footer-brands a:hover{
