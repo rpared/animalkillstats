@@ -563,16 +563,37 @@ fn {
   vertical-align: 0.5em;
 }
 
-#plantbasedtreaty {
-  margin-bottom: 14px;
+#footer-brands{
+border-top: 1px solid #a7a7a7;
+max-width: 600px;
+margin: 0 auto;
+}
+#footer-brands p{
+  margin: 0 auto;
+  font-style: italic;
+  font-size: small;
+}
+#footer-brands img{
+  margin: 0 16px;
+  padding: 4px 0;
 }
 
+#footer-brands a:hover{
+  opacity: 0.7;
+}
+
+#footer-brands a:active{
+  opacity: 0.4;
+}
+
+
 footer {
+  padding-top: 4px;
   border-top: 1px solid #a7a7a7;
   font-size: 0.7em;
   line-height: 1.2em;
   /* background-color: #ffffff7a; */
-  margin: auto;
+  margin: 16px auto;
   max-width: 600px;
   align-content: center;
 }
