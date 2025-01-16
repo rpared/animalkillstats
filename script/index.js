@@ -1712,50 +1712,12 @@ fetchData().then(([data, fetchHtml]) => {
       }
     };
 
-    // let pbtPopup = () => {
-    //   let pbt = document.createElement("div");
+    // Background Watermark Img animation
+      setTimeout(function() {
+        document.querySelector('.backgroundimg').classList.add('fadeIn');
+      }, 6000); // Delay in milliseconds (6 seconds)
+      console.log('background function triggered');
 
-    //   if (language == "eng") {
-    //     pbt.innerHTML = `
-    //             <div class="pbt-popup-container"><button class="pbt-close-btn">x</button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp.gif" alt="Sign the Plant Based Treaty"></a></div>
-    //           `;
-    //   } else if (language == "spa") {
-    //     pbt.innerHTML = `
-    //             <div class="pbt-popup-container"><button class="pbt-close-btn">x</button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp_spa.gif" alt="Firma el Plant Based Treaty"></a></div>
-    //           `;
-    //   }
-    //   pbt.classList.add("pbt-popup");
-
-    //   const imgPBT = pbt.querySelector("img");
-    //   imgPBT.onload = function () {
-    //     if (!hasShownPopup) {
-    //       setTimeout(pbtDisplayPopup, 1000);
-    //     }
-    //   };
-    //   function pbtDisplayPopup() {
-    //     // console.log("popup triggerred");
-
-    //     hasShownPopup = true;
-    //     // console.log(hasShownPopup);
-    //     // Close button functionality
-    //     pbt
-    //       .querySelector(".pbt-close-btn")
-    //       .addEventListener("click", function () {
-    //         document.body.removeChild(pbt);
-    //       });
-
-    //     // Detect all clicks on the document
-    //     document.addEventListener("click", function (event) {
-    //       // If user clicks inside the element, do nothing
-    //       if (event.target.closest(".pbt-popup-container")) return;
-    //       // If user clicks outside the element, hide it!
-    //       document.body.removeChild(pbt);
-    //     });
-
-    //     document.body.appendChild(pbt); // Append the element to the body
-    //   }
-    // };
-    // setTimeout(pbtPopup, 60000);
   }
 
   indexStuff();

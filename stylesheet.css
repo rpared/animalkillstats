@@ -84,31 +84,26 @@ body {
   margin-left: auto;
   margin-right: auto;
   justify-self: center;
-  /* opacity: 0;
-    transition: visibility 0s 3s, opacity 3s linear;
-    transition-delay: 1s; */
-  animation: fadeIn 3s forwards;
-  -webkit-animation: fadeIn 3s forwards;
-  animation-delay: 1s;
   z-index: -2;
-  opacity: 1;
+  opacity: 0;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+.backgroundimg.fadeIn {
+  animation: fadeInOut 5s forwards; /* Total duration: 5s (2s visible + 3s fade in/out) */
 }
 
-@-webkit-keyframes fadeIn {
+@keyframes fadeInOut {
   0% {
-    opacity: 1;
+    opacity: 0;
+  }
+  25% {
+    opacity: 1; /* Fully visible after 1s */
+  }
+  75% {
+    opacity: 2; /* Stay fully visible for 1s */
   }
   100% {
-    opacity: 0;
+    opacity: 0; /* Fade out */
   }
 }
 
