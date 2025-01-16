@@ -1712,13 +1712,13 @@ fetchData().then(([data, fetchHtml]) => {
       }
     };
 
-    // Background Watermark Img animation
+    // Background Watermark Img animation triggered on click of collapsible buttons
+    $('#collapse1, #collapse2-LandChart, #collapse2-LandChartCapita, #collapse2-SeaChart, #collapse2-SeaChartCapita, #collapse2-TotalCapita').on('click', function() {
       setTimeout(function() {
         document.querySelector('.backgroundimg').classList.add('fadeIn');
-      }, 6000); // Delay in milliseconds (6 seconds)
-      console.log('background function triggered');
-
-  }
+      }, 1000); // Delay in milliseconds (6 seconds)
+    });
+  };
 
   indexStuff();
 });
