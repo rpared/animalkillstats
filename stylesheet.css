@@ -565,11 +565,12 @@ margin: 0 auto;
 }
 #footer-brands p{
   margin: 0 auto;
+  padding-bottom: 5px;
   font-style: italic;
   font-size: small;
 }
 #footer-brands img{
-  margin: 0 16px;
+  margin: 5px 16px 0;
   padding: 4px 0;
   cursor: pointer;
 }
