@@ -1,6 +1,5 @@
 User-agent: *
 Disallow: /script/
-Disallow: /images/
 Disallow: /stylesheet.css
 Disallow: /index_copy.html
 
