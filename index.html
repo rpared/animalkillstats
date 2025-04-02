@@ -20,7 +20,7 @@
       "author": {
         "@type": "Person",
         "name": "Roger Paredes",
-        "url": "https://roger.costra.ec"
+        "url": "https://rogerparedes.com"
       },
       "publisher": {
         "@type": "Organization",
@@ -94,9 +94,11 @@
     <div id="brand"><img src="images/AnimalKill-Brand.png" alt="Animal Kill Stats"></div>
     <article itemscope itemtype="http://schema.org/Article" class="introtext">
         <meta itemprop="datePublished" content="2023-01-23 09:30:00 -0700 -0700">
-        <meta itemprop="dateModified" content="2025-02-21 21:30:00 -0700 -0700">
+        <meta itemprop="dateModified" content="2025-04-01 21:30:00 -0700 -0700">
         <h1>Statistics on animal slaughter for food by species, worldwide and by country.</h1>
-         <br> <span>Does not include hunting, incidental death, dairy or egg production.</span>
+        <h2 class="intro">A quick tool to visualize the magnitude of the killing of animals.</h2>
+
+          <span>Does not include hunting, incidental death, dairy or egg production.</span>
     </article>
 </header>
     <div class="mainblock">
@@ -226,7 +228,7 @@
     
     <div class="countrydropdown" >
         <form name="countryform">
-            <label for="countrylist">Choose a location: </label>
+            <label for="countrylist"> <div class="small-arrow">➔</div>  Choose a location: </label>
             <select name="countrylist" id="countrylist">
                 <!-- onchange="getSelectedCountry(), orangeButtons()" -->
                 <option selected disabled>---</option>
@@ -573,7 +575,15 @@
         <div id="data-el">Select Animal</div>
         <br><br>
     </div>
-
+</main>
+<section class="text-article-wrapper">
+    <article >
+        <div class="articleheading"> <span class="arrow">➔</span>
+        <h2 class="articleh2">How many animals are killed each year worldwide?</h2>
+        </div>
+        <p class="text-article">Every year, billions of animals are killed worldwide for meat production, with estimates exceeding <strong>80 billion land animals</strong> slaughtered annually. This includes cattle, pigs, chickens, sheep, and goats, with poultry accounting for the vast majority. Industrial-scale livestock slaughtering is driven by the growing global demand for meat, dairy, and other animal-based products. However, this figure does not include sea animals, such as fish and shellfish, which are measured by weight rather than individual numbers. Experts estimate that trillions of marine animals are caught and killed each year through commercial fishing and aquaculture, raising concerns about overfishing, bycatch, and ocean biodiversity loss. The impact of factory farming, animal agriculture, and meat consumption extends beyond ethical concerns, influencing climate change, deforestation, and water usage. As sustainability and ethical food choices gain traction, discussions around alternative proteins and plant-based diets are reshaping the future of food production.</p>
+    </article>
+</section>
     <section id="footer-brands">
         <p>Don't miss out on these:</p>
        <a href="https://plantbasedtreaty.org/" target="_blank"> <img src="images/EndorsePlantBasedTreaty_horizontal.png" width="210px" alt="Endorse The Plant Based Treaty!"></a>
@@ -581,7 +591,7 @@
     </section>
 
     <footer>
-    <p> <strong>Sources:</strong>  <br>
+     <strong>Sources:</strong> (click on arrows)  <br>
         --(The stats are the latest available as of January 2025)-- <br>
         <fn>1</fn>Land animals data is 2022 by <a href="https://ourworldindata.org/grapher/animals-slaughtered-for-meat?tab=table&time=2020..latest" target="_blank">ourworldindata.org</a> (UN - FAO). <button class="collapse-footer"> <img
         width="10px" class="collapse-footer-button" src="images/CollapseButtonA.png" alt=""></button><br>
@@ -603,18 +613,67 @@
         
         
         World Population 1965 - 2022 is by <a href="https://www.worldometers.info/world-population/world-population-by-year/" target="_blank">worldometers.info</a><br>
-        <div class="about"> <a itemprop="author" name="Roger Paredes" href="https://roger.costra.ec" target="_blank" > - Roger Paredes 2025 -</a></div></p>
+
+
+        <hr>
+        <button id="priv-btn" class="collapse-footer" ><strong>Privacy</strong> <img
+            width="10px" class="collapse-footer-button" src="images/CollapseButtonA.png" alt="">
+        </button>
+        <div>
+          
+          <p id="privacy">
+            
+            Effective Date: April 02, 2025 <br>
+
+            This Privacy Policy explains how animalkillstats.com collects, uses, and protects your information when you visit the website.
+            <br>
+            1. Information Collected
+            Personal information is not collected directly. However, Google Analytics are used to gather anonymous data about website traffic and user behavior.
+            Google Analytics may collect information such as:
+            Your IP address (anonymized where applicable)
+            Browser type and device information
+            Pages visited and time spent on the site
+            Referring websites and links clicked
+            <br>
+            2. How This Information Is Used
+            The data collected via Google Analytics helps to:
+            Understand website traffic and improve user experience
+            Monitor and analyze website performance
+            Identify trends and enhance content
+            <br>
+            3. Cookies and Tracking Technologies
+            Google Analytics uses cookies to track interactions on this site. You can manage or disable cookies through your browser settings. To opt out of Google Analytics tracking, you can install the Google Analytics Opt-out Browser Add-on: https://tools.google.com/dlpage/gaoptout.
+            <br>
+            4. Third-Party Sharing
+            We do not sell, trade, or share your personal data. However, Google may process the collected data under its own privacy policies. Learn more here: https://policies.google.com/privacy.
+            <br>
+            5. Your Rights & Choices
+            You can disable cookies in your browser settings.
+            You can opt out of Google Analytics tracking as described above.
+            <br>
+            6. Updates to This Privacy Policy
+            This policy may be updated from time to time. Changes will be posted on this page with an updated Effective Date.
+            <br>
+            7. Contact
+            If you have any questions about this Privacy Policy, please contact at paredes.roger@gmail.com.
+          </p>
+        </div>
+        <br>
+        <hr>
+        <div class="about"> <a itemprop="author" name="Roger Paredes" href="https://rogerparedes.com" target="_blank" > - Roger Paredes 2025 -</a>
+        </div>
+
     </footer>
 
     
     
-</main>
+
 
     
-
+<!-- 
     <div class="backgroundwrapper">
     <img class="backgroundimg" src="images/Animals-background.png" alt="Animals">
-    </div>
+    </div> -->
 </div>
 </body>
 
