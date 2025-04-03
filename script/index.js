@@ -1729,6 +1729,15 @@ fetchData().then(([data, fetchHtml]) => {
     });
   };
 
+  $("#priv-btn").on("click", function () {
+    let privacy = document.getElementById("privacy");
+    if (privacy.style.display === "none" || privacy.style.display === "") {
+      privacy.style.display = "block";
+    } else {
+      privacy.style.display = "none";
+    }
+  });
+
   indexStuff();
 });
 // export { indexStuff };
