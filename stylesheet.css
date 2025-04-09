@@ -598,7 +598,7 @@ h2 {
 .articleh2 {
   font-size: 1.8em;
   margin: 0.1em auto;
-  padding: 0.2em 0;
+  padding: 0.2em;
   border: none;
   max-width: none;
   line-height: 1.2em;
