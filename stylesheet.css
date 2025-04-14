@@ -49,11 +49,16 @@ body {
 }
 /* Header */
 header h1 {
-
   font-size: 1.8em;
-
   line-height: 1.2em;
 }
+
+@media screen and (max-width: 550px) {
+  header h1 {
+    font-size: 1.3em;
+  }
+
+  }
 .intro{
   font-size: 1.1em;
   color: rgb(217, 129, 53);
@@ -133,9 +138,10 @@ header p {
   max-width: 300px;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 399px) {
   #brand img {
-    max-width: 240px;
+    max-width: 250px;
+    margin-bottom: 0;
   }
 }
 
