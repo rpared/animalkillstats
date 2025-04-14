@@ -47,7 +47,13 @@ body {
     width: 100%;
   }
 }
+/* Header */
+header h1 {
 
+  font-size: 1.8em;
+
+  line-height: 1.2em;
+}
 .intro{
   font-size: 1.1em;
   color: rgb(217, 129, 53);
@@ -55,6 +61,12 @@ body {
   line-height: 1.2em;
   margin-bottom: 0;
   padding-bottom: 0;
+}
+
+header p {
+  margin: 2px auto 0;
+  padding: 0;
+  font-size: 1em;
 }
 
 /* #upperline{
@@ -605,6 +617,12 @@ h2 {
   text-align: left;
 }
 
+article strong{
+  font-size: 1.2em;
+  margin: 0 auto;
+  padding: 0;
+}
+
 em {
   font-weight: 600;
   color: rgb(217, 129, 53);
@@ -928,12 +946,12 @@ hr {
 }
 
 
- .animalbuttons{
+ /* .animalbuttons{
   animation: appear 0.2s linear ;
 }  
 .small-arrow{
   animation: appear 1.2s linear;
-} 
+}  */
 
 
 @keyframes slideFromRigth {
