@@ -74,6 +74,20 @@ header h1 {
   padding-bottom: 0;
 }
 
+header a {
+  text-decoration: none;
+  color: rgb(217, 129, 53); 
+}
+header a:hover {
+  opacity: 0.6;
+}
+header .small-arrow {
+  color: rgb(217, 129, 53);
+  font-size: 1em; 
+  vertical-align: middle; 
+  display: inline;
+}
+
 header p {
   margin: 2px auto 0;
   padding: 0;
