@@ -1,6 +1,8 @@
 User-agent: *
 Disallow: /script/
 Disallow: /stylesheet.css
+Disallow: /suggestedstyles.css
+Disallow: /index.html
 Disallow: /index_copy.html
 
 Sitemap: https://animalkillstats.com/sitemap.xml

@@ -1,0 +1,95 @@
+.suggested-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1000px;
+
+}
+.videocard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 200px;
+  margin: 10px;
+  background-color: rgb(217, 129, 53);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  justify-content: center;
+}
+
+
+.videocard a {
+margin: auto;
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+}
+.videocard a:hover {
+  text-decoration: none;
+  color: #d4d4d4;
+}
+
+.videocard:hover {
+  transform: scale(1.03);
+  transition: transform 0.2s;
+  
+}
+.videocard img {
+  width: 100%; /* Ensures the image scales to the card's width */
+  height: auto; /* Maintains the aspect ratio of the image */
+  display: block; /* Removes any extra spacing below the image */
+}
+
+.second-article{
+  background-color: #cbcbcb7f;
+  max-width: 100%;
+  margin: 30px auto 40px;
+  padding: 40px 0;
+
+}
+
+.videocard span {
+  font-size: 1rem;
+}
+
+.second-article h2{
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.second-article p{
+  max-width: 820px;
+  padding: 10px 20px 0;
+}
+
+.how-to .videocard {
+  max-width: 250px;
+}
+
+
+@media screen and (max-width: 545px){
+    .suggested-section {
+        padding: 20px 0;
+    }
+    .videocard {
+        width: 100%;
+        max-width: 150px;
+        height: auto;
+    }
+
+    .how-to .videocard {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+    }
+    .second-article p{
+
+      padding: 0 6px;
+    }
+
+    
+}
