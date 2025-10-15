@@ -57,11 +57,13 @@ body {
 header h1 {
   font-size: 1.8em;
   line-height: 1.2em;
+  margin: 0 10px 1.5rem;
 }
 
 @media screen and (max-width: 550px) {
   header h1 {
     font-size: 1.3em;
+
   }
 
   }
@@ -182,11 +184,11 @@ span {
 
 .mainblock {
   width: 100%;
-  background-color: #cbcbcb7f;
+  background-color: #eeeeee;
   padding: 0.1em 0 1em 0;
   margin-top: 1em;
   margin-bottom: 0px;
-  box-shadow: 0 -1px 3px #cbcbcb7f inset;
+  box-shadow: 0 -1px 8px #cbcbcb7f inset;
 }
 .mainblockinfo {
   max-width: 440px;
