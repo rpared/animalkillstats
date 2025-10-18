@@ -1,39 +1,105 @@
 // Animal Stats per country
 
+// Helper: fetch OWID metadata JSON, then find and fetch the actual data (direct array or CSV URL)
+async function fetchOwIDData(metadataUrl, localFallbackUrl = null) {
+  // simple CSV parser (handles basic CSV without complex quoting). OWID CSVs are usually regular.
+  function parseCSV(text) {
+    const lines = text.split(/\r?\n/).filter(Boolean);
+    if (lines.length === 0) return [];
+    const headers = lines[0].split(',');
+    return lines.slice(1).map(line => {
+      const cols = line.split(',');
+      const obj = {};
+      for (let i = 0; i < headers.length; i++) {
+        obj[headers[i]] = cols[i] === undefined ? '' : cols[i];
+      }
+      return obj;
+    });
+  }
+
+  async function tryFetchCsv(csvUrl) {
+    try {
+      const r = await fetch(csvUrl);
+      if (!r.ok) throw new Error('CSV fetch failed ' + r.status);
+      const txt = await r.text();
+      return parseCSV(txt);
+    } catch (err) {
+      console.warn('CSV fetch/parse failed for', csvUrl, err);
+      throw err;
+    }
+  }
+
+  try {
+    const metaResp = await fetch(metadataUrl);
+    if (!metaResp.ok) throw new Error('Metadata fetch failed ' + metaResp.status);
+    const meta = await metaResp.json();
+
+    // If metadata directly contains a data array
+    if (Array.isArray(meta.data)) return meta.data;
+    if (Array.isArray(meta.values)) return meta.values;
+
+    // Try common metadata fields for a CSV or data URL
+    const candidates = [];
+    if (meta.csv_url) candidates.push(meta.csv_url);
+    if (meta.data_url) candidates.push(meta.data_url);
+    if (meta.resources && Array.isArray(meta.resources)) {
+      meta.resources.forEach(r => {
+        if (r.path && r.path.endsWith('.csv')) candidates.push(r.path);
+      });
+    }
+    // Also check for strings that include '.csv'
+    for (const v of Object.values(meta)) {
+      if (typeof v === 'string' && v.includes('.csv')) candidates.push(v);
+    }
+
+    // Normalize candidate URLs (some are relative)
+    const resolved = candidates.map(u => {
+      try {
+        return new URL(u, metadataUrl).toString();
+      } catch (e) {
+        return u;
+      }
+    });
+
+    for (const csvUrl of resolved) {
+      try {
+        const parsed = await tryFetchCsv(csvUrl);
+        console.info('Loaded OWID CSV from', csvUrl);
+        return parsed;
+      } catch (err) {
+        // try next
+      }
+    }
+
+    throw new Error('No usable data found in metadata');
+  } catch (err) {
+    console.warn('fetchOwIDData error for', metadataUrl, err);
+    if (localFallbackUrl) {
+      try {
+        const r2 = await fetch(localFallbackUrl);
+        if (!r2.ok) throw new Error('Local fallback fetch failed ' + r2.status);
+        const j = await r2.json();
+        console.info('Using local fallback data for', localFallbackUrl);
+        return j;
+      } catch (err2) {
+        console.error('Local fallback also failed', err2);
+        throw err2;
+      }
+    }
+    throw err;
+  }
+}
+
 async function fetchData() {
   try {
-    const [response1, response2, response3, response4] = await Promise.all([
-      fetch("./script/LandAnimals2022.json"),
-      fetch("./script/Fish2021.json"),
-      fetch("./script/FishKilogramsPerCapita2021.json"),
-      fetch("./script/LandAnimalsKgPerCapita2021.json"),
+    const [data, dataFish, dataFishPerCapita, dataAnimalsPerCapita] = await Promise.all([
+      fetchOwIDData('https://ourworldindata.org/grapher/animals-slaughtered-for-meat.metadata.json?v=1&csvType=full&useColumnShortNames=false', './script/LandAnimals2022.json'),
+      fetchOwIDData('https://ourworldindata.org/grapher/fish-seafood-production.metadata.json?v=1&csvType=full&useColumnShortNames=false', './script/Fish2021.json'),
+      fetchOwIDData('https://ourworldindata.org/grapher/fish-and-seafood-consumption-per-capita.metadata.json?v=1&csvType=full&useColumnShortNames=false', './script/FishKilogramsPerCapita2021.json'),
+      fetchOwIDData('https://ourworldindata.org/grapher/per-capita-meat-consumption-by-type-kilograms-per-year.metadata.json?v=1&csvType=full&useColumnShortNames=false', './script/LandAnimalsKgPerCapita2021.json'),
     ]);
 
-    if (!response1.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    if (!response2.ok) {
-      throw new Error(
-        `HTTP error for second file! status: ${response2.status}`
-      );
-    }
-    if (!response3.ok) {
-      throw new Error(
-        `HTTP error for second file! status: ${response2.status}`
-      );
-    }
-    if (!response4.ok) {
-      throw new Error(
-        `HTTP error for second file! status: ${response2.status}`
-      );
-    }
-    const [data, dataFish, dataFishPerCapita, dataAnimalsPerCapita] =
-      await Promise.all([
-        response1.json(),
-        response2.json(),
-        response3.json(),
-        response4.json(),
-      ]); // Parse the JSON response
+    // data variables already resolved via fetchOwIDData above
     //Testing
     // const argentinaData = data.find(
     //   (item) => item.Entity === "Argentina" && item.Year === "2022"
@@ -414,9 +480,10 @@ async function fetchData() {
 
     let fetchHtml = {
       /*Population*/
-      Population2020: 7840952880,
-      Population2021: 7909295151,
-      Population2022: 7975105156,
+  Population2020: 7840952880,
+  Population2021: 7909295151,
+  Population2022: 7975105156,
+  Population2023: 8091734930,
 
       //Functions to format HTML data per country:
       /*COWS*/

@@ -234,7 +234,7 @@ fetchData().then(([data, fetchHtml]) => {
         chart5 = "total";
         toggleBtnCapita.innerText = fetchHtml.toggleBtnTextAnimals;
         toggleLegend5.innerHTML = fetchHtml.toggleLegend5TotalsText;
-        updateTotalKg2020Legend();
+        updateTotalKg2022Legend();
       } else if (collapseCapitaChart == true) {
         capitaChartWrapper.style.display = "none";
         collapseCapitaChart = false;
@@ -256,7 +256,7 @@ fetchData().then(([data, fetchHtml]) => {
         chart5 = "total";
         toggleBtnCapita.innerText = fetchHtml.toggleBtnTextAnimals;
         toggleLegend5.innerHTML = fetchHtml.toggleLegend5TotalsText;
-        updateTotalKg2020Legend();
+        updateTotalKg2022Legend();
       }
       // console.log("Toggle chart " + chart5);
     }

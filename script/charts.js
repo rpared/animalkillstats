@@ -25,7 +25,7 @@ var labelCattle,
   labelPoultry,
   labelOthers,
   labelSeaAnimals;
-var labelKgPerPerson2021;
+var labelKgPerPerson2022;
 const labelTranslation = () => {
   if (language === "eng") {
     labelLandAnimals = "Land Animals";
@@ -48,7 +48,7 @@ const labelTranslation = () => {
     labelPoultry = "Poultry";
     labelOthers = "Others";
     labelSeaAnimals = "Sea Animals";
-    labelKgPerPerson2021 = "Kg. per person (2021)";
+    labelKgPerPerson2022 = "Kg. per person (2022)";
   } else if (language === "spa") {
     labelLandAnimals = "Animales Terrestres";
     labelHumanPopulation = "Población Humana";
@@ -70,7 +70,7 @@ const labelTranslation = () => {
     labelPoultry = "Aves de corral";
     labelOthers = "Otros";
     labelSeaAnimals = "Animales marinos";
-    labelKgPerPerson2021 = "Kg. por persona (2021)";
+    labelKgPerPerson2022 = "Kg. por persona (2022)";
   }
 };
 labelTranslation();
@@ -93,14 +93,15 @@ new Chart(ctx, {
       "2010",
       "2015",
       "2020",
+      "2023",
     ],
     datasets: [
       {
         label: labelLandAnimals,
         data: [
-          9405060265, 12461186834, 14992696357, 20272205738, 23830823327,
-          29610097333, 36719323350, 43381119444, 50442274485, 59854961069,
-          67474706595, 74275780097,
+          9897535704, 12797532472, 15373965744, 20751944056, 24415591792,
+          30420393928, 38125152936, 45235087568, 52595882072, 62452022840,
+          70335822240, 79648590224, 84016708952,
         ],
         borderWidth: 2,
         borderColor: "rgba(217, 129, 53, 0.9)",
@@ -110,9 +111,9 @@ new Chart(ctx, {
       {
         label: labelHumanPopulation,
         data: [
-          3339583597, 3700437046, 4079480606, 4458003514, 4870921740,
-          5327231061, 5744212979, 6143493823, 6541907027, 6956823603,
-          7379797139, 7840952880,
+          3334533703, 3694683794, 4070735277, 4447606236, 4868943465,
+          5327803110, 5758878982, 6171702993, 6586970132, 7021732148,
+          7470491872, 7887001292, 8091734930,
         ],
         borderWidth: 2,
         borderColor: "rgba(100, 100, 100, 0.9)",
@@ -133,18 +134,19 @@ const ctxLandAnimalsPerPerson = document.getElementById(
   "LandAnimalsPerPersonChart"
 );
 let LandAnimalsPerPersonArray = [
-  9405060265 / 3339583597,
-  12461186834 / 3700437046,
-  14992696357 / 4079480606,
-  20272205738 / 4458003514,
-  23830823327 / 4870921740,
-  29610097333 / 5327231061,
-  36719323350 / 5744212979,
-  43381119444 / 6143493823,
-  50442274485 / 6541907027,
-  59854961069 / 6956823603,
-  67474706595 / 7379797139,
-  74275780097 / 7840952880,
+  9897535704 / 3334533703,
+  12797532472 / 3694683794,
+  15373965744 / 4070735277,
+  20751944056 / 4447606236,
+  24415591792 / 4868943465,
+  30420393928 / 5327803110,
+  38125152936 / 5758878982,
+  45235087568 / 6171702993,
+  52595882072 / 6586970132,
+  62452022840 / 7021732148,
+  70335822240 / 7470491872,
+  79648590224 / 7887001292,
+  84016708952 / 8091734930,
 ];
 
 LandAnimalsPerPersonArray = LandAnimalsPerPersonArray.map(function (
@@ -169,6 +171,7 @@ new Chart(ctxLandAnimalsPerPerson, {
       "2010",
       "2015",
       "2020",
+      "2023",
     ],
     datasets: [
       {
@@ -207,6 +210,7 @@ new Chart(ctxFish, {
       "2010",
       "2015",
       "2020",
+      "2022",
     ],
     datasets: [
       {
@@ -214,7 +218,8 @@ new Chart(ctxFish, {
         data: [
           49206392000, 64587352000, 64495600000, 70873936000, 85344640000,
           96847704000, 115577856000, 124331952000, 134890976000, 143832096000,
-          162916064000, 176592620000,
+          162916064000, 176592620000, 179369000000,
+
         ],
         borderWidth: 2,
         borderColor: "rgba(217, 129, 53, 0.9)",
@@ -226,7 +231,7 @@ new Chart(ctxFish, {
         data: [
           3339583597, 3700437046, 4079480606, 4458003514, 4870921740,
           5327231061, 5744212979, 6143493823, 6541907027, 6956823603,
-          7379797139, 7840952880,
+          7379797139, 7840952880, 8021407192,
         ],
         borderWidth: 2,
         borderColor: "rgba(100, 100, 100, 0.9)",
@@ -248,7 +253,7 @@ const ctxSeaAnimalsPerPerson = document.getElementById(
 );
 let SeaAnimalsPerPersonArray = [
   9.87, 10.73, 11.56, 11.37, 12.41, 13.39, 14.87, 15.67, 16.71, 18.27, 19.7,
-  20.25,
+  20.11, 20.05
 ];
 SeaAnimalsPerPersonArray = SeaAnimalsPerPersonArray.map(function (
   each_element
@@ -272,6 +277,7 @@ new Chart(ctxSeaAnimalsPerPerson, {
       "2010",
       "2015",
       "2020",
+      "2022",
     ],
     datasets: [
       {
@@ -416,7 +422,7 @@ function capitaChart() {
 
   let totalMeatKgEl = document.getElementById("capitaTotal");
   var totalMeatKg = meatKg.reduce((partialSum, a) => partialSum + a, 0);
-  // console.log("***Total World Meat KG in 2021", totalMeatKg);
+  // console.log("***Total World Meat KG in 2022", totalMeatKg);
   totalMeatKgEl.textContent = totalMeatKg.toLocaleString();
 
   new Chart(ctxCapita, {
@@ -425,7 +431,7 @@ function capitaChart() {
       labels: labelAnimalsArray,
       datasets: [
         {
-          label: labelKgPerPerson2021,
+          label: labelKgPerPerson2022,
           data: meatKg,
           borderWidth: 2,
           borderColor: "rgba(217, 129, 53, 0.9)",
@@ -451,32 +457,32 @@ function capitaChart() {
 
 //Per Capita Total World Chart with toggle function
 
-//For the Total Kg. per capita Sum from 1965 to 2020:
+//For the Total Kg. per capita Sum from 1965 to 2022:
 var cattlePerCapita = [
-  9.84, 10.66, 10.98, 10.48, 10.3, 10.2, 9.47, 9.37, 9.23, 9.23, 8.79, 8.98,
+  9.84, 10.66, 10.98, 10.48, 10.3, 10.2, 9.47, 9.37, 9.23, 9.23, 8.79, 8.98, 9.33
 ];
 var pigsPerCapita = [
   9.2, 9.41, 10.12, 11.71, 12.21, 12.86, 13.26, 13.89, 14.13, 15.35, 15.02,
-  14.45,
+  14.45, 15.12
 ];
 var sheepPerCapita = [
-  1.79, 1.76, 1.6, 1.57, 1.59, 1.72, 1.73, 1.77, 1.83, 1.76, 1.96, 1.96,
+  1.79, 1.76, 1.6, 1.57, 1.59, 1.72, 1.73, 1.77, 1.83, 1.76, 1.96, 1.96, 2.01
 ];
 var poultryPerCapita = [
-  3.24, 4.01, 4.52, 5.69, 6.24, 7.54, 9.23, 10.76, 11.93, 13.8, 15.02, 16.21,
+  3.24, 4.01, 4.52, 5.69, 6.24, 7.54, 9.23, 10.76, 11.93, 13.8, 15.02, 16.21, 16.88
 ];
 var OthersPerCapita = [
-  0.81, 0.82, 0.8, 0.77, 0.74, 0.66, 0.75, 0.75, 0.77, 0.79, 0.83, 0.66,
+  0.81, 0.82, 0.8, 0.77, 0.74, 0.66, 0.75, 0.75, 0.77, 0.79, 0.83, 0.66, 0.78
 ];
 var seaAnimalsPerCapita = [
   9.87, 10.73, 11.56, 11.37, 12.41, 13.39, 14.87, 15.67, 16.71, 18.27, 19.7,
-  20.25,
+  20.11, 20.05
 ];
 
 var totalKgPerCapita = [];
 
 // Iterate through the arrays using a for loop
-for (var i = 0; i < 12; i++) {
+for (var i = 0; i < 13; i++) {
   // Sum the values at the current index (i) of all arrays
   var sum =
     cattlePerCapita[i] +
@@ -488,13 +494,13 @@ for (var i = 0; i < 12; i++) {
   // Push the sum into the totalKgPerCapita array
   totalKgPerCapita.push(sum);
 }
-function updateTotalKg2020Legend() {
-  let totalKg2020 = document.getElementById("totalKg2020");
-  totalKg2020.textContent = totalKgPerCapita.slice(-1) + " Kg.";
+function updateTotalKg2022Legend() {
+  let totalKg2022 = document.getElementById("totalKg2022");
+  totalKg2022.textContent = totalKgPerCapita.slice(-1) + " Kg.";
 }
 
 function chart5Toggle() {
-  let yearsTill2020 = [
+  let yearsTill2022 = [
     "1965",
     "1970",
     "1975",
@@ -507,6 +513,7 @@ function chart5Toggle() {
     "2010",
     "2015",
     "2020",
+    "2022"
   ];
 
   if (chart5 == "total") {
@@ -520,7 +527,7 @@ function chart5Toggle() {
     new Chart(ctxCapitaYearly, {
       type: "line",
       data: {
-        labels: yearsTill2020,
+        labels: yearsTill2022,
         datasets: [
           {
             label: labelTotalKgPerPerson,
@@ -553,7 +560,7 @@ function chart5Toggle() {
     new Chart(ctxCapitaYearlyAnimal, {
       type: "line",
       data: {
-        labels: yearsTill2020,
+        labels: yearsTill2022,
         datasets: [
           {
             label: labelCattle,
