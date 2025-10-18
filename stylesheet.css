@@ -66,7 +66,7 @@ header h1 {
   }
 
 .two-cols{
-  margin: 0.5rem auto;
+  margin: 1rem auto;
   display :flex;
   flex-direction: row;
   justify-content: center;
@@ -90,19 +90,27 @@ header h1 {
   line-height: 1.2em;
   margin-bottom: 0;
   padding-bottom: 0;
+  padding-right: 10px;
   max-width: 400px;
   width: 100%;
 }
 
 @media screen and (max-width: 550px) {
   .intro-image {
-    display: none;
+    max-width: 90px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    
   }
 .text-left{
-  text-align: center;
+  font-size: 0.8em;
+  text-align: left;
 }
 
 }
+
+
 header a {
   text-decoration: none;
   color: rgb(217, 129, 53); 
@@ -119,7 +127,7 @@ header .small-arrow {
 
 header p {
   margin: 2px auto 0;
-  padding: 0;
+  padding: 0 10px;
   font-size: 1em;
 }
 
@@ -204,14 +212,13 @@ header p {
 }
 
 .h2-span {
-  margin-top: 0.8em;
-  margin-left: 0.4em;
-  margin-bottom: -0.4em;
-  padding-top: 0;
+  display: block;
+  margin: 0.25em 0 0 0.6em;
   font-size: 0.7em;
   text-align: left;
-
+  line-height: 1.15em;
   max-width: 500px;
+  color: #666;
 }
 
 .mainblock {
@@ -805,9 +812,10 @@ text-align: center;
 
   div.big-number > span {
     text-align: left;
+    display: block;
     margin-top: 0;
     padding-top: 0;
-    margin-left: 6rem;
+    margin-left: 5rem;
 
   }
 
@@ -817,6 +825,10 @@ text-align: center;
   
 }
 
+.centered-title {
+  text-align: center;
+  margin:0.8em auto -0.4em;
+}
 
 
 fn {

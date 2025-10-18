@@ -73,7 +73,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- <script src="script/google-sheets-to-json.js" defer></script> -->
     <!-- <script src="script/animalstatspercountry.js" defer></script> -->
-    <script src="script/animalstatspercountry2022.js" defer></script>
+    <script src="script/animalstatspercountry-API.js" defer></script>
     <script src="script/index.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script src="script/charts.js" defer></script>
@@ -98,8 +98,8 @@
     <article itemscope itemtype="http://schema.org/Article" class="introtext">
         <meta itemprop="datePublished" content="2023-01-23 09:30:00 -0700 -0700">
         <meta itemprop="dateModified" content="2025-04-04 21:30:00 -0700 -0700">
-        <h1>Do you know how many animals <br> are killed each year worldwide?</h1>
-        <p>Short answer, over <strong>84 billion</strong> animals are killed each year worldwide (land animals). <a href="#data-el" style = "font-size: medium;">read more<span class="small-arrow">➔</span></a></p>
+        <h1>Do you know how many <b>animals</b> <br> are <b>killed</b> each year worldwide?</h1>
+        <p>Short answer, over <strong>84 billion</strong> animals are killed each year worldwide (land animals). <br> <a href="#data-el" style = "font-size: medium;"> read more<span class="small-arrow">➔</span></a></p>
         <div class="two-cols">
             <img class="intro-image" src="images/chart.webp" alt="graph chart">
             <div class="text-left">
@@ -162,7 +162,7 @@
     <div class="chart-container" >
         <canvas id="LandAnimalsChart"></canvas>
     </div>
-    <p class="legend">The yearly total is the sum of cattle, pigs, sheep, chicken, turkey, goat and duck slaughter. About <span>81 billion</span> in 2022.</p>
+    <p class="legend">The yearly total is the sum of cattle, pigs, sheep, chicken, turkey, goat and duck slaughter. About <span>84 billion</span> in 2023.</p>
     </div>
 
 <!-- Land Animals per Capita -->
@@ -176,7 +176,7 @@
     <div class="chart-container" >
         <canvas id="LandAnimalsPerPersonChart"></canvas>
     </div>
-    <p id="landAnimalsPerCapitaLegend" class="legend">Land animals divided by world population. About <span>10.3</span> land animals were slaughtered <strong>per person</strong> in 2022.</p>
+    <p id="landAnimalsPerCapitaLegend" class="legend">Land animals divided by world population. About <span>10.5</span> land animals were slaughtered <strong>per person</strong> in 2023.</p>
     </div>
 
 <!-- Sea Animal Kg -->
@@ -190,7 +190,7 @@
     <div class="chart-container" >
         <canvas id="SeaAnimalsChart"></canvas>
     </div>
-    <p id="seaAnimalsLegend" class="legend">Sea animals caught and farmed <strong>measured in kilograms</strong>. In 2021 about <span> 176 </span> billion Kg.</p>
+    <p id="seaAnimalsLegend" class="legend">Sea animals caught and farmed <strong>measured in kilograms</strong>. In 2022 about <span> 179 </span> billion Kg.</p>
   
     </div>
 <!-- Sea Animal Kg per Capita -->
@@ -204,7 +204,7 @@
     <div class="chart-container" >
         <canvas id="SeaAnimalsPerPersonChart"></canvas>
     </div>
-    <p id="seaAnimalsPerCapitaLegend" class="legend"> <fn>3</fn> Average sea animal Kilograms per person. In 2021 about <span>20 </span> Kg. of sea animals <strong>per person</strong>.</p>
+    <p id="seaAnimalsPerCapitaLegend" class="legend"> <fn>3</fn> Average sea animal Kilograms per person. In 2022 about <span>20.1 </span> Kg. of sea animals <strong>per person</strong>.</p>
 
     </div>
 
@@ -221,7 +221,7 @@
     <div class="chart-container" >
         <canvas id="capitaYearly"></canvas>
     </div>
-        <p id="togglelegend5" class="legend"> <fn>3,4</fn> Total animal kilograms (land + sea animals) consumed per person yearly <span id="totalKg2020"></span> in <strong>2020</strong>.</p>
+        <p id="togglelegend5" class="legend"> <fn>3,4</fn> Total animal kilograms (land + sea animals) consumed per person yearly <span id="totalKg2022"></span> in <strong>2022</strong>.</p>
     
     <div class="collapseline"></div>
     </div>
@@ -600,7 +600,8 @@
         <div class="articleheading"> <span class="arrow">➔</span> </div>
         <h2 class="articleh2">How many animals are killed each <em>day</em> worldwide? <span>(land animals)</span></h2>
         <div class="big-number">
-            <h2 class="articleh2"> <span class="arrow-responsive">➔</span> <strong>230 </strong> million</h2>    
+            <h2 class="articleh2"> <span class="arrow-responsive">➔</span> <strong>230 </strong></h2> 
+            <h3 class="articleh2">million</h3>     
             <span>2023 estimate*</span>
         </div>
 </div>
@@ -610,7 +611,8 @@
     <div class="articleheading"> <span class="arrow">➔</span> </div>
     <h2 class="articleh2">How many animals are killed each <em>minute</em> worldwide? <span>(land animals)</span></h2>
     <div class="big-number">
-        <h2 class="articleh2"> <span class="arrow-responsive">➔</span> <strong>159 </strong> thousand</h2>    
+        <h2 class="articleh2"> <span class="arrow-responsive">➔</span> <strong>159 </strong> </h2>   
+        <h3 class="articleh2">thousand</h3> 
         <span>2023 estimate*</span>
     </div>
 </div>
@@ -620,10 +622,12 @@
     <div class="articleheading"> <span class="arrow">➔</span> </div>
     <h2 class="articleh2">How many animals are killed each <em>second</em> worldwide? <span>(land animals)</span></h2>
     <div class="big-number">
-        <h2 class="articleh2"> <span class="arrow-responsive">➔</span> <strong>  2660</strong></h2>    
-        <span>2023 estimate*</span>
+        <h2 class="articleh2"> <span class="arrow-responsive">➔</span> <strong>  2660</strong></h2>
+
+        <span style="margin-left: 2.5rem;">2023 estimate*</span>
     </div>
 </div>
+
 
 <span>* Rounded rough estimates</span>
 </section>
@@ -636,21 +640,21 @@
 
     <footer>
      <strong>Sources:</strong> (click on arrows)  <br>
-        --(The stats are the latest available as of January 2025)-- <br>
-        <fn>1</fn>Land animals data is 2022 by <a href="https://ourworldindata.org/grapher/animals-slaughtered-for-meat?tab=table&time=2020..latest" target="_blank">ourworldindata.org</a> (UN - FAO). <button class="collapse-footer"> <img
+        --(The stats are the latest available as of October 2025)-- <br>
+        <fn>1</fn>Land animals data is 2023 by <a href="https://ourworldindata.org/grapher/animals-slaughtered-for-meat?tab=table&time=2020..latest" target="_blank">ourworldindata.org</a> (UN - FAO). <button class="collapse-footer"> <img
         width="10px" class="collapse-footer-button" src="images/CollapseButtonA.png" alt=""></button><br>
         <iframe id="ourWorldInData1-table" class="footer-embedded-element" src="https://ourworldindata.org/grapher/animals-slaughtered-for-meat?tab=table&time=2020..latest" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
         <br>
-        <fn>2</fn>Fish and seafood data is 2021 by <a href="https://ourworldindata.org/grapher/fish-seafood-production?tab=table" target="_blank">ourworldindata.org</a> (UN - FAO). 
+        <fn>2</fn>Fish and seafood data is 2022 by <a href="https://ourworldindata.org/grapher/fish-seafood-production?tab=table" target="_blank">ourworldindata.org</a> (UN - FAO). 
         Fish and seafood production is measured in Tonnes as the sum of seafood from wild catch and fish farming (aquaculture). <button class="collapse-footer"> <img
             width="10px" class="collapse-footer-button" src="images/CollapseButtonA.png" alt=""></button><br>
         <iframe id="ourWorldInData2-table" class="footer-embedded-element" src="https://ourworldindata.org/grapher/fish-seafood-production?tab=table" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
         <br>
-        <fn>3</fn>Fish and seafood consumed per capita is 2021 by <a href="https://ourworldindata.org/grapher/fish-and-seafood-consumption-per-capita?tab=table" target="_blank">ourworldindata.org</a> (UN - FAO). <button class="collapse-footer"> <img
+        <fn>3</fn>Fish and seafood consumed per capita is 2022 by <a href="https://ourworldindata.org/grapher/fish-and-seafood-consumption-per-capita?tab=table" target="_blank">ourworldindata.org</a> (UN - FAO). <button class="collapse-footer"> <img
             width="10px" class="collapse-footer-button" src="images/CollapseButtonA.png" alt=""></button><br>
             <iframe id="ourWorldInData3-table" class="footer-embedded-element" src="https://ourworldindata.org/grapher/fish-and-seafood-consumption-per-capita?tab=table" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
         <br>
-        <fn>4</fn>Animals consumed per capita is 2021 by <a href="https://ourworldindata.org/grapher/per-capita-meat-consumption-by-type-kilograms-per-year?tab=table" target="_blank">ourworldindata.org</a> (UN - FAO). <button class="collapse-footer"> <img
+        <fn>4</fn>Animals consumed per capita is 2022 by <a href="https://ourworldindata.org/grapher/per-capita-meat-consumption-by-type-kilograms-per-year?tab=table" target="_blank">ourworldindata.org</a> (UN - FAO). <button class="collapse-footer"> <img
             width="10px" class="collapse-footer-button" src="images/CollapseButtonA.png" alt=""></button><br>
             <iframe id="ourWorldInData4-table" class="footer-embedded-element" src="https://ourworldindata.org/grapher/per-capita-meat-consumption-by-type-kilograms-per-year?tab=table" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
         <br>

@@ -1,42 +1,218 @@
 // Animal Stats per country
 
+// Helper: fetch OWID metadata JSON, then find and fetch the actual data (direct array or CSV URL)
+async function fetchOwIDData(metadataUrl, localFallbackUrl = null) {
+  // Robust CSV parser (handles quoted fields and commas inside quotes)
+  function parseCSV(text) {
+    // Split into lines, preserve empty lines for safety
+    const lines = text.split(/\r?\n/);
+    if (lines.length === 0) return [];
+
+    // Parse a CSV line into fields (handles quotes)
+    function parseLine(line) {
+      const fields = [];
+      let field = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          if (inQuotes && line[i + 1] === '"') {
+            // escaped quote
+            field += '"';
+            i++; // skip next quote
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === ',' && !inQuotes) {
+          fields.push(field);
+          field = '';
+        } else {
+          field += ch;
+        }
+      }
+      fields.push(field);
+      return fields;
+    }
+
+    // find first non-empty line to be header
+    let headerLineIndex = 0;
+    while (headerLineIndex < lines.length && lines[headerLineIndex].trim() === '') headerLineIndex++;
+    if (headerLineIndex >= lines.length) return [];
+
+    const headers = parseLine(lines[headerLineIndex]);
+    const records = [];
+    for (let i = headerLineIndex + 1; i < lines.length; i++) {
+      if (lines[i].trim() === '') continue;
+      const cols = parseLine(lines[i]);
+      const obj = {};
+      for (let j = 0; j < headers.length; j++) {
+        const key = headers[j] || `col${j}`;
+        obj[key] = cols[j] === undefined ? '' : cols[j];
+      }
+      records.push(obj);
+    }
+
+    // Normalize header names so code using Entity/Year still works
+    // Find mapping from lowercase header -> canonical name
+    const normalizeKey = (k) => {
+      if (!k) return k;
+      const kk = k.trim().toLowerCase();
+      if (['entity', 'country', 'country name', 'location'].includes(kk)) return 'Entity';
+      if (['year', 'time', 'date'].includes(kk)) return 'Year';
+      return k; // keep original
+    };
+
+    // If headers need normalization, produce mapped records
+    const first = records[0];
+    if (first) {
+      const headerMap = {};
+      for (const h of Object.keys(first)) headerMap[h] = normalizeKey(h);
+      // if any header was changed, remap all objects
+      const anyChanged = Object.keys(headerMap).some(k => headerMap[k] !== k);
+      if (anyChanged) {
+        return records.map(rec => {
+          const out = {};
+          for (const [orig, mapped] of Object.entries(headerMap)) {
+            out[mapped] = rec[orig];
+          }
+          return out;
+        });
+      }
+    }
+
+    return records;
+  }
+
+  async function tryFetchCsv(csvUrl) {
+    try {
+      const r = await fetch(csvUrl);
+      if (!r.ok) throw new Error('CSV fetch failed ' + r.status);
+      const txt = await r.text();
+      return parseCSV(txt);
+    } catch (err) {
+      console.warn('CSV fetch/parse failed for', csvUrl, err);
+      throw err;
+    }
+  }
+
+  try {
+    // If caller passed a CSV URL directly, skip metadata discovery and parse CSV
+    if (typeof metadataUrl === 'string' && metadataUrl.toLowerCase().includes('.csv')) {
+      return await tryFetchCsv(metadataUrl);
+    }
+    const metaResp = await fetch(metadataUrl);
+    if (!metaResp.ok) throw new Error('Metadata fetch failed ' + metaResp.status);
+    const meta = await metaResp.json();
+
+    // If metadata directly contains a data array
+    if (Array.isArray(meta.data)) return meta.data;
+    if (Array.isArray(meta.values)) return meta.values;
+
+    // If metadata contains structured data (columns/rows)
+    // e.g. meta.data = { columns: [{name: 'Entity'}, ...], rows: [[...],[...]] }
+    if (meta.data && typeof meta.data === 'object') {
+      const d = meta.data;
+      if (Array.isArray(d.columns) && Array.isArray(d.rows)) {
+        const headers = d.columns.map(c => (c && c.name) ? c.name : String(c));
+        return d.rows.map(row => {
+          const obj = {};
+          for (let i = 0; i < headers.length; i++) obj[headers[i]] = row[i] === undefined ? '' : row[i];
+          return obj;
+        });
+      }
+      // If meta.data is an object of arrays (columnName -> array of values)
+      const keys = Object.keys(d);
+      if (keys.length > 0) {
+        const isColumnArrays = keys.every(k => Array.isArray(d[k]));
+        if (isColumnArrays) {
+          const len = d[keys[0]].length;
+          const records = [];
+          for (let i = 0; i < len; i++) {
+            const obj = {};
+            for (const k of keys) obj[k] = d[k][i];
+            records.push(obj);
+          }
+          return records;
+        }
+      }
+    }
+
+    // Try common metadata fields for a CSV or data URL
+    const candidates = [];
+    if (meta.csv_url) candidates.push(meta.csv_url);
+    if (meta.data_url) candidates.push(meta.data_url);
+    if (meta.resources && Array.isArray(meta.resources)) {
+      meta.resources.forEach(r => {
+        if (r.path && r.path.endsWith('.csv')) candidates.push(r.path);
+      });
+    }
+    // Also check for strings that include '.csv'
+    for (const v of Object.values(meta)) {
+      if (typeof v === 'string' && v.includes('.csv')) candidates.push(v);
+    }
+
+    // Normalize candidate URLs (some are relative)
+    const resolved = candidates.map(u => {
+      try {
+        return new URL(u, metadataUrl).toString();
+      } catch (e) {
+        return u;
+      }
+    });
+
+    for (const csvUrl of resolved) {
+      try {
+        const parsed = await tryFetchCsv(csvUrl);
+        console.info('Loaded OWID CSV from', csvUrl);
+        // quick validation: ensure parsed records contain Entity/Year or log helpful info
+        if (parsed.length > 0) {
+          const keys = Object.keys(parsed[0]);
+          const hasEntity = keys.some(k => k.toLowerCase() === 'entity' || k.toLowerCase() === 'country' || k.toLowerCase() === 'location');
+          const hasYear = keys.some(k => k.toLowerCase() === 'year' || k.toLowerCase() === 'time' || k.toLowerCase() === 'date');
+          if (!hasEntity || !hasYear) {
+            console.warn('OWID CSV parsed but does not contain Entity/Year headers. Keys found:', keys.slice(0,10));
+          }
+        } else {
+          console.warn('OWID CSV parsed but returned 0 records for', csvUrl);
+        }
+        return parsed;
+      } catch (err) {
+        // try next
+      }
+    }
+
+    throw new Error('No usable data found in metadata');
+  } catch (err) {
+    console.warn('fetchOwIDData error for', metadataUrl, err);
+    if (localFallbackUrl) {
+      try {
+        const r2 = await fetch(localFallbackUrl);
+        if (!r2.ok) throw new Error('Local fallback fetch failed ' + r2.status);
+        const j = await r2.json();
+        console.info('Using local fallback data for', localFallbackUrl);
+        return j;
+      } catch (err2) {
+        console.error('Local fallback also failed', err2);
+        throw err2;
+      }
+    }
+    throw err;
+  }
+}
+
 async function fetchData() {
   try {
-    const [response1, response2, response3, response4] = await Promise.all([
-      fetch("./script/LandAnimals2022.json"),
-      fetch("./script/Fish2021.json"),
-      fetch("./script/FishKilogramsPerCapita2021.json"),
-      fetch("./script/LandAnimalsKgPerCapita2021.json"),
+    const [data, dataFish, dataFishPerCapita, dataAnimalsPerCapita] = await Promise.all([
+      fetchOwIDData('https://ourworldindata.org/grapher/animals-slaughtered-for-meat.csv?v=1&csvType=full&useColumnShortNames=false'),
+      fetchOwIDData('https://ourworldindata.org/grapher/fish-seafood-production.csv?v=1&csvType=full&useColumnShortNames=false'),
+      fetchOwIDData('https://ourworldindata.org/grapher/fish-and-seafood-consumption-per-capita.csv?v=1&csvType=full&useColumnShortNames=false'),
+      fetchOwIDData('https://ourworldindata.org/grapher/per-capita-meat-consumption-by-type-kilograms-per-year.csv?v=1&csvType=full&useColumnShortNames=false'),
     ]);
 
-    if (!response1.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    if (!response2.ok) {
-      throw new Error(
-        `HTTP error for second file! status: ${response2.status}`
-      );
-    }
-    if (!response3.ok) {
-      throw new Error(
-        `HTTP error for second file! status: ${response2.status}`
-      );
-    }
-    if (!response4.ok) {
-      throw new Error(
-        `HTTP error for second file! status: ${response2.status}`
-      );
-    }
-    const [data, dataFish, dataFishPerCapita, dataAnimalsPerCapita] =
-      await Promise.all([
-        response1.json(),
-        response2.json(),
-        response3.json(),
-        response4.json(),
-      ]); // Parse the JSON response
+    // data variables already resolved via fetchOwIDData above
     //Testing
     // const argentinaData = data.find(
-    //   (item) => item.Entity === "Argentina" && item.Year === "2022"
+    //   (item) => item.Entity === "Argentina" && item.Year === "2023"
     // ); // Find Argentina data
     // // const goatCountArg= ["Meat, goat | 00001017 || Producing or slaughtered animals | 005320 || animals"]
     // console.log(
@@ -48,362 +224,362 @@ async function fetchData() {
     //Assigning each Country data from the new Json file
 
     const worldData = {
-      ...data.find((item) => item.Entity === "World" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "World" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "World" && item.Year === "2021"
+        (item) => item.Entity === "World" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "World" && item.Year === "2021"
+        (item) => item.Entity === "World" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "World" && item.Year === "2021"
+        (item) => item.Entity === "World" && item.Year === "2022"
       ),
       // Find World data
     };
     const argentinaData = {
       ...data.find(
-        (item) => item.Entity === "Argentina" && item.Year === "2022"
+        (item) => item.Entity === "Argentina" && item.Year === "2023"
       ),
       ...dataFish.find(
-        (item) => item.Entity === "Argentina" && item.Year === "2021"
+        (item) => item.Entity === "Argentina" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Argentina" && item.Year === "2021"
+        (item) => item.Entity === "Argentina" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Argentina" && item.Year === "2021"
+        (item) => item.Entity === "Argentina" && item.Year === "2022"
       ),
     }; // Find Argentina data
 
     const australiaData = {
       ...data.find(
-        (item) => item.Entity === "Australia" && item.Year === "2022"
+        (item) => item.Entity === "Australia" && item.Year === "2023"
       ),
       ...dataFish.find(
-        (item) => item.Entity === "Australia" && item.Year === "2021"
+        (item) => item.Entity === "Australia" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Australia" && item.Year === "2021"
+        (item) => item.Entity === "Australia" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Australia" && item.Year === "2021"
+        (item) => item.Entity === "Australia" && item.Year === "2022"
       ),
     };
 
     const brazilData = {
-      ...data.find((item) => item.Entity === "Brazil" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "Brazil" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "Brazil" && item.Year === "2021"
+        (item) => item.Entity === "Brazil" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Brazil" && item.Year === "2021"
+        (item) => item.Entity === "Brazil" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Brazil" && item.Year === "2021"
+        (item) => item.Entity === "Brazil" && item.Year === "2022"
       ),
     };
 
     const canadaData = {
-      ...data.find((item) => item.Entity === "Canada" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "Canada" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "Canada" && item.Year === "2021"
+        (item) => item.Entity === "Canada" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Canada" && item.Year === "2021"
+        (item) => item.Entity === "Canada" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Canada" && item.Year === "2021"
+        (item) => item.Entity === "Canada" && item.Year === "2022"
       ),
     };
 
     const chinaData = {
-      ...data.find((item) => item.Entity === "China" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "China" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "China" && item.Year === "2021"
+        (item) => item.Entity === "China" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "China" && item.Year === "2021"
+        (item) => item.Entity === "China" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "China" && item.Year === "2021"
+        (item) => item.Entity === "China" && item.Year === "2022"
+      ),
+    };
+
+    const chileData = {
+      ...data.find((item) => item.Entity === "Chile" && item.Year === "2023"),
+      ...dataFish.find(
+        (item) => item.Entity === "Chile" && item.Year === "2022"
+      ),
+      ...dataFishPerCapita.find(
+        (item) => item.Entity === "Chile" && item.Year === "2022"
+      ),
+      ...dataAnimalsPerCapita.find(
+        (item) => item.Entity === "Chile" && item.Year === "2022"
       ),
     };
 
     const colombiaData = {
       ...data.find(
+        (item) => item.Entity === "Colombia" && item.Year === "2023"
+      ),
+      ...dataFish.find(
         (item) => item.Entity === "Colombia" && item.Year === "2022"
       ),
-      ...dataFish.find(
-        (item) => item.Entity === "Colombia" && item.Year === "2021"
-      ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Colombia" && item.Year === "2021"
+        (item) => item.Entity === "Colombia" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Colombia" && item.Year === "2021"
-      ),
-    };
-
-    const chileData = {
-      ...data.find((item) => item.Entity === "Chile" && item.Year === "2022"),
-      ...dataFish.find(
-        (item) => item.Entity === "Chile" && item.Year === "2021"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Chile" && item.Year === "2021"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Chile" && item.Year === "2021"
+        (item) => item.Entity === "Colombia" && item.Year === "2022"
       ),
     };
 
     const ecuadorData = {
-      ...data.find((item) => item.Entity === "Ecuador" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "Ecuador" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "Ecuador" && item.Year === "2021"
+        (item) => item.Entity === "Ecuador" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Ecuador" && item.Year === "2021"
+        (item) => item.Entity === "Ecuador" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Ecuador" && item.Year === "2021"
+        (item) => item.Entity === "Ecuador" && item.Year === "2022"
       ),
     };
 
     const franceData = {
-      ...data.find((item) => item.Entity === "France" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "France" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "France" && item.Year === "2021"
+        (item) => item.Entity === "France" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "France" && item.Year === "2021"
+        (item) => item.Entity === "France" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "France" && item.Year === "2021"
+        (item) => item.Entity === "France" && item.Year === "2022"
       ),
     };
 
     const germanyData = {
-      ...data.find((item) => item.Entity === "Germany" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "Germany" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "Germany" && item.Year === "2021"
+        (item) => item.Entity === "Germany" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Germany" && item.Year === "2021"
+        (item) => item.Entity === "Germany" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Germany" && item.Year === "2021"
+        (item) => item.Entity === "Germany" && item.Year === "2022"
       ),
     };
 
     const indiaData = {
-      ...data.find((item) => item.Entity === "India" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "India" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "India" && item.Year === "2021"
+        (item) => item.Entity === "India" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "India" && item.Year === "2021"
+        (item) => item.Entity === "India" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "India" && item.Year === "2021"
+        (item) => item.Entity === "India" && item.Year === "2022"
       ),
     };
 
     const italyData = {
-      ...data.find((item) => item.Entity === "Italy" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "Italy" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "Italy" && item.Year === "2021"
+        (item) => item.Entity === "Italy" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Italy" && item.Year === "2021"
+        (item) => item.Entity === "Italy" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Italy" && item.Year === "2021"
+        (item) => item.Entity === "Italy" && item.Year === "2022"
       ),
     };
 
     const iranData = {
-      ...data.find((item) => item.Entity === "Iran" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "Iran" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "Iran" && item.Year === "2021"
+        (item) => item.Entity === "Iran" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Iran" && item.Year === "2021"
+        (item) => item.Entity === "Iran" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Iran" && item.Year === "2021"
+        (item) => item.Entity === "Iran" && item.Year === "2022"
       ),
     };
 
     const japanData = {
-      ...data.find((item) => item.Entity === "Japan" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "Japan" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "Japan" && item.Year === "2021"
+        (item) => item.Entity === "Japan" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Japan" && item.Year === "2021"
+        (item) => item.Entity === "Japan" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Japan" && item.Year === "2021"
+        (item) => item.Entity === "Japan" && item.Year === "2022"
       ),
     };
 
     const mexicoData = {
-      ...data.find((item) => item.Entity === "Mexico" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "Mexico" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "Mexico" && item.Year === "2021"
+        (item) => item.Entity === "Mexico" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Mexico" && item.Year === "2021"
+        (item) => item.Entity === "Mexico" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Mexico" && item.Year === "2021"
+        (item) => item.Entity === "Mexico" && item.Year === "2022"
       ),
     };
 
     const russiaData = {
-      ...data.find((item) => item.Entity === "Russia" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "Russia" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "Russia" && item.Year === "2021"
+        (item) => item.Entity === "Russia" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Russia" && item.Year === "2021"
+        (item) => item.Entity === "Russia" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Russia" && item.Year === "2021"
+        (item) => item.Entity === "Russia" && item.Year === "2022"
       ),
     };
 
     const spainData = {
-      ...data.find((item) => item.Entity === "Spain" && item.Year === "2022"),
+      ...data.find((item) => item.Entity === "Spain" && item.Year === "2023"),
       ...dataFish.find(
-        (item) => item.Entity === "Spain" && item.Year === "2021"
+        (item) => item.Entity === "Spain" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Spain" && item.Year === "2021"
+        (item) => item.Entity === "Spain" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Spain" && item.Year === "2021"
+        (item) => item.Entity === "Spain" && item.Year === "2022"
       ),
     };
 
     const southAfricaData = {
       ...data.find(
-        (item) => item.Entity === "South Africa" && item.Year === "2022"
+        (item) => item.Entity === "South Africa" && item.Year === "2023"
       ),
       ...dataFish.find(
-        (item) => item.Entity === "South Africa" && item.Year === "2021"
+        (item) => item.Entity === "South Africa" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "South Africa" && item.Year === "2021"
+        (item) => item.Entity === "South Africa" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "South Africa" && item.Year === "2021"
+        (item) => item.Entity === "South Africa" && item.Year === "2022"
       ),
     };
 
     const ukData = {
       ...data.find(
-        (item) => item.Entity === "United Kingdom" && item.Year === "2022"
+        (item) => item.Entity === "United Kingdom" && item.Year === "2023"
       ),
       ...dataFish.find(
-        (item) => item.Entity === "United Kingdom" && item.Year === "2021"
+        (item) => item.Entity === "United Kingdom" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "United Kingdom" && item.Year === "2021"
+        (item) => item.Entity === "United Kingdom" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "United Kingdom" && item.Year === "2021"
+        (item) => item.Entity === "United Kingdom" && item.Year === "2022"
       ),
     };
 
     const usaData = {
       ...data.find(
-        (item) => item.Entity === "United States" && item.Year === "2022"
+        (item) => item.Entity === "United States" && item.Year === "2023"
       ),
       ...dataFish.find(
-        (item) => item.Entity === "United States" && item.Year === "2021"
+        (item) => item.Entity === "United States" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "United States" && item.Year === "2021"
+        (item) => item.Entity === "United States" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "United States" && item.Year === "2021"
+        (item) => item.Entity === "United States" && item.Year === "2022"
       ),
     };
 
     //Continents
     const africaData = {
-      ...data.find((item) => item.Year === "2022" && item.Entity === "Africa"),
+      ...data.find((item) => item.Year === "2023" && item.Entity === "Africa"),
       ...dataFish.find(
-        (item) => item.Entity === "Africa" && item.Year === "2021"
+        (item) => item.Entity === "Africa" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Africa" && item.Year === "2021"
+        (item) => item.Entity === "Africa" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Africa" && item.Year === "2021"
+        (item) => item.Entity === "Africa" && item.Year === "2022"
       ),
     };
 
     const asiaData = {
-      ...data.find((item) => item.Year === "2022" && item.Entity === "Asia"),
+      ...data.find((item) => item.Year === "2023" && item.Entity === "Asia"),
       ...dataFish.find(
-        (item) => item.Entity === "Asia" && item.Year === "2021"
+        (item) => item.Entity === "Asia" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Asia" && item.Year === "2021"
+        (item) => item.Entity === "Asia" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Asia" && item.Year === "2021"
+        (item) => item.Entity === "Asia" && item.Year === "2022"
       ),
     };
 
     const americasData = {
       ...data.find(
-        (item) => item.Year === "2022" && item.Entity === "Americas (FAO)"
+        (item) => item.Year === "2023" && item.Entity === "Americas (FAO)"
       ),
       ...dataFish.find(
-        (item) => item.Entity === "Americas (FAO)" && item.Year === "2021"
+        (item) => item.Entity === "Americas (FAO)" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Americas (FAO)" && item.Year === "2021"
+        (item) => item.Entity === "Americas (FAO)" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Americas (FAO)" && item.Year === "2021"
+        (item) => item.Entity === "Americas (FAO)" && item.Year === "2022"
       ),
     };
 
     const europeData = {
-      ...data.find((item) => item.Year === "2022" && item.Entity === "Europe"),
+      ...data.find((item) => item.Year === "2023" && item.Entity === "Europe"),
       ...dataFish.find(
-        (item) => item.Entity === "Europe" && item.Year === "2021"
+        (item) => item.Entity === "Europe" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Europe" && item.Year === "2021"
+        (item) => item.Entity === "Europe" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Europe" && item.Year === "2021"
+        (item) => item.Entity === "Europe" && item.Year === "2022"
       ),
     };
 
     const oceaniaData = {
-      ...data.find((item) => item.Year === "2022" && item.Entity === "Oceania"),
+      ...data.find((item) => item.Year === "2023" && item.Entity === "Oceania"),
       ...dataFish.find(
-        (item) => item.Entity === "Oceania" && item.Year === "2021"
+        (item) => item.Entity === "Oceania" && item.Year === "2022"
       ),
       ...dataFishPerCapita.find(
-        (item) => item.Entity === "Oceania" && item.Year === "2021"
+        (item) => item.Entity === "Oceania" && item.Year === "2022"
       ),
       ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Oceania" && item.Year === "2021"
+        (item) => item.Entity === "Oceania" && item.Year === "2022"
       ),
     };
 
-    // console.log("World Fish:",worldData[
-    //     "Fish and seafood | 00002960 || Production | 005511 || tonnes"].toLocaleString());
+    // console.log("Americas Fish:",americasData[
+    // "Fish and seafood | 00002960 || Production | 005511 || tonnes"].toLocaleString());
 
-    let noData = {
+  let noData = {
       yearly: "No hay datos de esto 😔",
       monthly: "No hay datos de esto 😔",
       daily: "No hay datos de esto 😔",
@@ -414,10 +590,12 @@ async function fetchData() {
 
     let fetchHtml = {
       /*Population*/
-      Population2020: 7840952880,
-      Population2021: 7909295151,
-      Population2022: 7975105156,
+  Population2020: 7840952880,
+  Population2021: 7909295151,
+  Population2022: 7975105156,
+  Population2023: 8091734930,
 
+      //Functions to format HTML data per country:
       /*COWS*/
       cowsData: {
         formatCowsData: function (cattle) {
@@ -490,6 +668,7 @@ async function fetchData() {
             return noData;
           }
         },
+
         buildPigsDataHTML: function (country, pigsData) {
           const formattedData = fetchHtml.pigsData.formatPigsData(pigsData);
           return `
@@ -630,7 +809,7 @@ async function fetchData() {
           const formattedData =
             fetchHtml.turkeyData.formatTurkeyData(turkeyData);
           return `
-          <p>Pavos en ${country}<fn>1</fn><br></p>
+         <p>Pavos en ${country}<fn>1</fn><br></p>
           <ul class="list">
             <li>Al año: </li> <div>${formattedData.yearly}</div>
             <li>Al mes: </li> <div>${formattedData.monthly}</div>
@@ -642,7 +821,7 @@ async function fetchData() {
         `;
         },
       },
-      //Function to format HTML fish data per country
+      /*FISH*/
       fishData: {
         formatFishData: function (fishTonnes) {
           if (fishTonnes) {
@@ -677,9 +856,9 @@ async function fetchData() {
           return `
           <p>Animales marinos en ${country}<br> (medido en Toneladas)<fn>2</fn></p>
           <ul class="list">
-            <li>Anual: </li> <div>${formattedData.yearly}</div>
-            <li>Mensual: </li> <div>${formattedData.monthly}</div>
-            <li>Diario: </li> <div>${formattedData.daily}</div>
+            <li>Al año: </li> <div>${formattedData.yearly}</div>
+            <li>Al mes: </li> <div>${formattedData.monthly}</div>
+            <li>A diario: </li> <div>${formattedData.daily}</div>
             <li>Por hora: </li> <div>${formattedData.hourly}</div>
             <li>Por minuto: </li> <div>${formattedData.perMinute}</div>
             <li>Por segundo: </li> <div>${formattedData.perSecond}</div>
@@ -688,18 +867,18 @@ async function fetchData() {
         },
       },
 
-      capitaMeatKgText: `<h2>Kilogramos consumidos per capita - 2021</h2>
+     capitaMeatKgText: `<h2 class="centered-title">Kilogramos consumidos per cápita - 2022</h2>
         <div class="chart-container" >
         <canvas id="capitaAnimals"></canvas>
         </div>
-        <p class="legend" ><span id="capitaTotal"></span> kg. de animales fueron consumidos por persona en 2021<span id="countryname"></span><fn> 3,4</fn>.</p>`,
+        <p class="legend" ><span id="capitaTotal"></span> kg. de animales fueron consumidos por persona en 2022<span id="countryname"></span><fn> 3,4</fn>.</p>`,
 
       toggleLegend5AnimalsText: `<fn>3,4</fn> Kilogramos de animales consumidos por persona al año. La suma totaliza el Gráfico de Totales.`,
 
       toggleBtnTextTotal: "Ver Totales",
       toggleBtnTextAnimals: "Ver por Animales",
 
-      toggleLegend5TotalsText: `<fn>3,4</fn>Kilogramos totales de animales (terrestres + marinos) consumidos por persona, <span id="totalKg2020"></span> en <strong>2020</strong>.`,
+      toggleLegend5TotalsText: `<fn>3,4</fn>Kilogramos totales de animales (terrestres + marinos) consumidos por persona, <span id="totalKg2022"></span> en <strong>2022</strong>.`,
     };
 
     /////HTML Formatted inside fetchHtml object
@@ -771,6 +950,7 @@ async function fetchData() {
             ]
           );
       });
+       //console.log("World land animals", fetchHtml.landAnimalsWorld);
 
       /*ANIMALS FORMATTED IN HTML*/
       //////COWS > to retrieve use: fetchHtml.cowsDataWorld
@@ -873,7 +1053,7 @@ async function fetchData() {
       countries.forEach((country) => {
         fetchHtml[`cowsKgPerCapita${country.code}`] = Number(
           country.data[
-            "Meat, beef | 00002731 || Food available for consumption | 0645pc || kilograms per year per capita"
+            "Meat, beef and buffalo | 00002731 || Food available for consumption | 0645pc || kilograms per year per capita"
           ]
         );
         fetchHtml[`pigsKgPerCapita${country.code}`] = Number(
