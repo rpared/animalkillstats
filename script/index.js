@@ -181,9 +181,15 @@ fetchData().then(([data, fetchHtml]) => {
         collapseArrowBtnChart2.style.rotate = "0deg";
       }
     }
-    $("#landanimalschart-wrapper p span").text(
-      (fetchHtml.landAnimalsWorld / 1000000000).toFixed(1) + " billion"
-    );
+    // show "billion" in English or "mil millones" in Spanish
+    (function () {
+      const landAnimalsBillion = (Number(fetchHtml.landAnimalsWorld) / 1e9) || 0;
+      const langAttr = $("body").attr("lang");
+      const label = (typeof language !== "undefined" && language === "spa") || langAttr === "es"
+        ? " mil millones"
+        : " billion";
+      $("#landanimalschart-wrapper p span").text(landAnimalsBillion.toFixed(1) + label);
+    })();
     $("#landAnimalsPerCapitaLegend span").text(
       (fetchHtml.landAnimalsWorld / fetchHtml.Population2022).toFixed(1)
     );
