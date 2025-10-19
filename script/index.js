@@ -1677,15 +1677,15 @@ fetchData().then(([data, fetchHtml]) => {
     //PBT PopUp-----------------------------------------------
     let hasShownPopup = false;
     let pbtPopup = (selectedCountry) => {
-      if (!hasShownPopup) {
+      // Helper to create and show the popup for the current selectedCountry/language
+      function createAndShowPbt() {
         let pbt = document.createElement("div");
 
-      if (selectedCountry == "Canada" && language == "eng") {
-        pbt.innerHTML = `
+        if (selectedCountry == "Canada" && language == "eng") {
+          pbt.innerHTML = `
                 <div class="pbt-popup-container"><button class="pbt-close-btn"><img src="images/x.png"></button><a href="https://animaljustice.ca/get-involved" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/AJustice_PopUp.png" alt="Get Involved with Animal Justice"></a></div>
                 `;
-
-      }else if (language == "eng") {
+        } else if (language == "eng") {
           pbt.innerHTML = `
                   <div class="pbt-popup-container"><button class="pbt-close-btn"><img src="images/x.png"></button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp.gif" alt="Sign the Plant Based Treaty"></a></div>
                 `;
@@ -1693,37 +1693,54 @@ fetchData().then(([data, fetchHtml]) => {
           pbt.innerHTML = `
                   <div class="pbt-popup-container"><button class="pbt-close-btn"><img src="images/x.png"></button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp_spa.gif" alt="Firma el Plant Based Treaty"></a></div>
                 `;
+        } else {
+          // default fallback content (English)
+          pbt.innerHTML = `
+                  <div class="pbt-popup-container"><button class="pbt-close-btn"><img src="images/x.png"></button><a href="https://plantbasedtreaty.org/" target="_blanc"><img style="border-radius:16px; box-shadow: 0 0 10px #000" src="images/PBT_PopUp.gif" alt="Sign the Plant Based Treaty"></a></div>
+                `;
         }
+
         pbt.classList.add("pbt-popup");
 
         const imgPBT = pbt.querySelector("img");
         imgPBT.onload = function () {
           pbtDisplayPopup();
         };
+
         function pbtDisplayPopup() {
-          // console.log("popup triggerred");
+          // mark as shown for non-Canada flows (keeps the "show once" behavior)
           hasShownPopup = true;
-          // console.log(hasShownPopup);
 
           // Close button functionality
-      pbt.querySelector(".pbt-close-btn").addEventListener("click", function () {
-        document.body.removeChild(pbt);
-        document.removeEventListener("click", handleDocumentClick);
-      });
+          pbt.querySelector(".pbt-close-btn").addEventListener("click", function () {
+            if (document.body.contains(pbt)) document.body.removeChild(pbt);
+            document.removeEventListener("click", handleDocumentClick);
+          });
 
-      // Detect all clicks on the document
-      function handleDocumentClick(event) {
-        // If user clicks inside the element, do nothing
-        if (event.target.closest(".pbt-popup-container")) return;
-        // If user clicks outside the element, hide it!
-        document.body.removeChild(pbt);
-        document.removeEventListener("click", handleDocumentClick);
-      }
+          // Detect all clicks on the document
+          function handleDocumentClick(event) {
+            // If user clicks inside the element, do nothing
+            if (event.target.closest(".pbt-popup-container")) return;
+            // If user clicks outside the element, hide it!
+            if (document.body.contains(pbt)) document.body.removeChild(pbt);
+            document.removeEventListener("click", handleDocumentClick);
+          }
 
-      document.addEventListener("click", handleDocumentClick);
+          document.addEventListener("click", handleDocumentClick);
 
           document.body.appendChild(pbt); // Append the element to the body
         }
+      }
+
+      // If user selected Canada in English, always show the popup (bypass hasShownPopup).
+      if (selectedCountry == "Canada" && language == "eng") {
+        createAndShowPbt();
+        return;
+      }
+
+      // Otherwise keep the existing "show once" behavior
+      if (!hasShownPopup) {
+        createAndShowPbt();
       }
     };
 
