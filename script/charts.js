@@ -340,6 +340,18 @@ fetchData().then(([data, fetchHtml]) => {
     ];
   });
 
+  // Debug: log meatData for inspection
+  try {
+    console.log('AKS debug: meatData sample');
+    countries.forEach((country) => {
+      const key = `meatKgCapita${country}`;
+      const arr = meatData[key];
+      console.log(key, arr, arr ? arr.map(x => ({v: x, t: typeof x})) : null);
+    });
+  } catch (e) {
+    console.warn('AKS debug meatData failed', e);
+  }
+
   processMeatData(meatData); // Pass meat data object to the processing function
 });
 var worldMeatKgCapita,

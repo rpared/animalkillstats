@@ -86,8 +86,12 @@ async function fetchOwIDData(metadataUrl, localFallbackUrl = null) {
   async function tryFetchCsv(csvUrl) {
     try {
       const r = await fetch(csvUrl);
-      if (!r.ok) throw new Error('CSV fetch failed ' + r.status);
+      // Treat 200 OK and 304 Not Modified (cached) as usable responses
+      if (!r.ok && r.status !== 304) throw new Error('CSV fetch failed ' + r.status);
       const txt = await r.text();
+      if (!txt || txt.trim() === '') {
+        console.warn('CSV fetch returned empty body (status ' + r.status + ') for', csvUrl);
+      }
       return parseCSV(txt);
     } catch (err) {
       console.warn('CSV fetch/parse failed for', csvUrl, err);
@@ -209,6 +213,82 @@ async function fetchData() {
       fetchOwIDData('https://ourworldindata.org/grapher/per-capita-meat-consumption-by-type-kilograms-per-year.csv?v=1&csvType=full&useColumnShortNames=false'),
     ]);
 
+    // safe numeric conversion: returns finite number or 0
+    const toNum = (v) => {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : 0;
+    };
+
+    // Helper to find a metric value in a parsed record.
+    // Accepts explicit long-key candidates and fallback substrings to search keys.
+    function findMetric(record, longKeys = [], substrings = []) {
+      if (!record || typeof record !== 'object') return undefined;
+      for (const k of longKeys) {
+        if (Object.prototype.hasOwnProperty.call(record, k) && record[k] !== '') return record[k];
+      }
+      const keys = Object.keys(record);
+      // Prefer keys that explicitly indicate per-capita / kilograms, but only
+      // when the caller's substrings or longKeys suggest a per-capita lookup.
+      const perCapitaIndicators = ['0645pc', 'kilograms', 'kilogram', 'kg per capita', 'per capita'];
+      const callerWantsPerCapita = (
+        substrings.some(s => perCapitaIndicators.some(pi => s.toLowerCase().includes(pi))) ||
+        longKeys.some(k => perCapitaIndicators.some(pi => k.toLowerCase().includes(pi)))
+      );
+      if (callerWantsPerCapita) {
+        const prioritySubs = perCapitaIndicators;
+        for (const p of prioritySubs) {
+          const found = keys.find((kk) => kk.toLowerCase().includes(p));
+          if (found && record[found] !== '') return record[found];
+        }
+      }
+      // Fallback: search using provided substrings in order.
+      // If multiple keys match a substring prefer the most plausible numeric value
+      // (per-capita values are small numbers, totals are very large).
+      for (const sub of substrings) {
+        const matches = keys.filter((kk) => kk.toLowerCase().includes(sub.toLowerCase()));
+        if (matches.length === 0) continue;
+        // Map matches to numeric values where possible
+        const mapped = matches.map((k) => {
+          const raw = record[k];
+          const n = Number(raw);
+          return { key: k, raw, n, ok: Number.isFinite(n) };
+        });
+        if (callerWantsPerCapita) {
+          // Prefer finite numbers under a reasonable per-capita threshold (1000 kg)
+          const plausible = mapped.filter(m => m.ok && Math.abs(m.n) < 1000);
+          if (plausible.length > 0) {
+            // choose the one with smallest absolute value (most likely per-capita)
+            plausible.sort((a,b) => Math.abs(a.n) - Math.abs(b.n));
+            return record[plausible[0].key];
+          }
+          // Otherwise choose the smallest finite number if any
+          const finite = mapped.filter(m => m.ok);
+          if (finite.length > 0) {
+            finite.sort((a,b) => Math.abs(a.n) - Math.abs(b.n));
+            return record[finite[0].key];
+          }
+        } else {
+          // Caller likely wants totals/production: prefer large numeric values (e.g., tonnes/total counts)
+          const large = mapped.filter(m => m.ok && Math.abs(m.n) >= 1000);
+          if (large.length > 0) {
+            // choose the largest absolute value (most likely total/production)
+            large.sort((a,b) => Math.abs(b.n) - Math.abs(a.n));
+            return record[large[0].key];
+          }
+          // Fallback: choose the largest finite number if any
+          const finite = mapped.filter(m => m.ok);
+          if (finite.length > 0) {
+            finite.sort((a,b) => Math.abs(b.n) - Math.abs(a.n));
+            return record[finite[0].key];
+          }
+        }
+        // If nothing numeric, return first non-empty textual match
+        const textual = mapped.find(m => m.raw !== '');
+        if (textual) return record[textual.key];
+      }
+      return undefined;
+    }
+
     // data variables already resolved via fetchOwIDData above
     //Testing
     // const argentinaData = data.find(
@@ -224,356 +304,185 @@ async function fetchData() {
     //Assigning each Country data from the new Json file
 
     const worldData = {
-      ...data.find((item) => item.Entity === "World" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "World" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "World" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "World" && item.Year === "2022"
-      ),
-      // Find World data
+      ...(data.find((item) => item.Entity === "World" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "World" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "World" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "World" && item.Year === "2022") || {}),
     };
     const argentinaData = {
-      ...data.find(
-        (item) => item.Entity === "Argentina" && item.Year === "2023"
-      ),
-      ...dataFish.find(
-        (item) => item.Entity === "Argentina" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Argentina" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Argentina" && item.Year === "2022"
-      ),
-    }; // Find Argentina data
+      ...(data.find((item) => item.Entity === "Argentina" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Argentina" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Argentina" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Argentina" && item.Year === "2022") || {}),
+    };
 
     const australiaData = {
-      ...data.find(
-        (item) => item.Entity === "Australia" && item.Year === "2023"
-      ),
-      ...dataFish.find(
-        (item) => item.Entity === "Australia" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Australia" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Australia" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Australia" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Australia" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Australia" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Australia" && item.Year === "2022") || {}),
     };
 
     const brazilData = {
-      ...data.find((item) => item.Entity === "Brazil" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Brazil" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Brazil" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Brazil" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Brazil" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Brazil" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Brazil" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Brazil" && item.Year === "2022") || {}),
     };
 
     const canadaData = {
-      ...data.find((item) => item.Entity === "Canada" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Canada" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Canada" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Canada" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Canada" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Canada" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Canada" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Canada" && item.Year === "2022") || {}),
     };
 
     const chinaData = {
-      ...data.find((item) => item.Entity === "China" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "China" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "China" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "China" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "China" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "China" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "China" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "China" && item.Year === "2022") || {}),
     };
 
     const chileData = {
-      ...data.find((item) => item.Entity === "Chile" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Chile" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Chile" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Chile" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Chile" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Chile" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Chile" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Chile" && item.Year === "2022") || {}),
     };
 
     const colombiaData = {
-      ...data.find(
-        (item) => item.Entity === "Colombia" && item.Year === "2023"
-      ),
-      ...dataFish.find(
-        (item) => item.Entity === "Colombia" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Colombia" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Colombia" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Colombia" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Colombia" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Colombia" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Colombia" && item.Year === "2022") || {}),
     };
 
     const ecuadorData = {
-      ...data.find((item) => item.Entity === "Ecuador" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Ecuador" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Ecuador" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Ecuador" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Ecuador" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Ecuador" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Ecuador" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Ecuador" && item.Year === "2022") || {}),
     };
 
     const franceData = {
-      ...data.find((item) => item.Entity === "France" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "France" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "France" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "France" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "France" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "France" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "France" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "France" && item.Year === "2022") || {}),
     };
 
     const germanyData = {
-      ...data.find((item) => item.Entity === "Germany" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Germany" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Germany" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Germany" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Germany" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Germany" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Germany" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Germany" && item.Year === "2022") || {}),
     };
 
     const indiaData = {
-      ...data.find((item) => item.Entity === "India" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "India" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "India" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "India" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "India" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "India" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "India" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "India" && item.Year === "2022") || {}),
     };
 
     const italyData = {
-      ...data.find((item) => item.Entity === "Italy" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Italy" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Italy" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Italy" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Italy" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Italy" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Italy" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Italy" && item.Year === "2022") || {}),
     };
 
     const iranData = {
-      ...data.find((item) => item.Entity === "Iran" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Iran" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Iran" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Iran" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Iran" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Iran" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Iran" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Iran" && item.Year === "2022") || {}),
     };
 
     const japanData = {
-      ...data.find((item) => item.Entity === "Japan" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Japan" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Japan" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Japan" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Japan" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Japan" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Japan" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Japan" && item.Year === "2022") || {}),
     };
 
     const mexicoData = {
-      ...data.find((item) => item.Entity === "Mexico" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Mexico" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Mexico" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Mexico" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Mexico" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Mexico" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Mexico" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Mexico" && item.Year === "2022") || {}),
     };
 
     const russiaData = {
-      ...data.find((item) => item.Entity === "Russia" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Russia" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Russia" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Russia" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Russia" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Russia" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Russia" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Russia" && item.Year === "2022") || {}),
     };
 
     const spainData = {
-      ...data.find((item) => item.Entity === "Spain" && item.Year === "2023"),
-      ...dataFish.find(
-        (item) => item.Entity === "Spain" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Spain" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Spain" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "Spain" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "Spain" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Spain" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Spain" && item.Year === "2022") || {}),
     };
 
     const southAfricaData = {
-      ...data.find(
-        (item) => item.Entity === "South Africa" && item.Year === "2023"
-      ),
-      ...dataFish.find(
-        (item) => item.Entity === "South Africa" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "South Africa" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "South Africa" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "South Africa" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "South Africa" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "South Africa" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "South Africa" && item.Year === "2022") || {}),
     };
 
     const ukData = {
-      ...data.find(
-        (item) => item.Entity === "United Kingdom" && item.Year === "2023"
-      ),
-      ...dataFish.find(
-        (item) => item.Entity === "United Kingdom" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "United Kingdom" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "United Kingdom" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "United Kingdom" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "United Kingdom" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "United Kingdom" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "United Kingdom" && item.Year === "2022") || {}),
     };
 
     const usaData = {
-      ...data.find(
-        (item) => item.Entity === "United States" && item.Year === "2023"
-      ),
-      ...dataFish.find(
-        (item) => item.Entity === "United States" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "United States" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "United States" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Entity === "United States" && item.Year === "2023") || {}),
+      ...(dataFish.find((item) => item.Entity === "United States" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "United States" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "United States" && item.Year === "2022") || {}),
     };
 
     //Continents
     const africaData = {
-      ...data.find((item) => item.Year === "2023" && item.Entity === "Africa"),
-      ...dataFish.find(
-        (item) => item.Entity === "Africa" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Africa" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Africa" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Year === "2023" && item.Entity === "Africa") || {}),
+      ...(dataFish.find((item) => item.Entity === "Africa" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Africa" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Africa" && item.Year === "2022") || {}),
     };
 
     const asiaData = {
-      ...data.find((item) => item.Year === "2023" && item.Entity === "Asia"),
-      ...dataFish.find(
-        (item) => item.Entity === "Asia" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Asia" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Asia" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Year === "2023" && item.Entity === "Asia") || {}),
+      ...(dataFish.find((item) => item.Entity === "Asia" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Asia" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Asia" && item.Year === "2022") || {}),
     };
 
     const americasData = {
-      ...data.find(
-        (item) => item.Year === "2023" && item.Entity === "Americas (FAO)"
-      ),
-      ...dataFish.find(
-        (item) => item.Entity === "Americas (FAO)" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Americas (FAO)" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Americas (FAO)" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Year === "2023" && item.Entity === "Americas (FAO)") || {}),
+      ...(dataFish.find((item) => item.Entity === "Americas (FAO)" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Americas (FAO)" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Americas (FAO)" && item.Year === "2022") || {}),
     };
 
     const europeData = {
-      ...data.find((item) => item.Year === "2023" && item.Entity === "Europe"),
-      ...dataFish.find(
-        (item) => item.Entity === "Europe" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Europe" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Europe" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Year === "2023" && item.Entity === "Europe") || {}),
+      ...(dataFish.find((item) => item.Entity === "Europe" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Europe" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Europe" && item.Year === "2022") || {}),
     };
 
     const oceaniaData = {
-      ...data.find((item) => item.Year === "2023" && item.Entity === "Oceania"),
-      ...dataFish.find(
-        (item) => item.Entity === "Oceania" && item.Year === "2022"
-      ),
-      ...dataFishPerCapita.find(
-        (item) => item.Entity === "Oceania" && item.Year === "2022"
-      ),
-      ...dataAnimalsPerCapita.find(
-        (item) => item.Entity === "Oceania" && item.Year === "2022"
-      ),
+      ...(data.find((item) => item.Year === "2023" && item.Entity === "Oceania") || {}),
+      ...(dataFish.find((item) => item.Entity === "Oceania" && item.Year === "2022") || {}),
+      ...(dataFishPerCapita.find((item) => item.Entity === "Oceania" && item.Year === "2022") || {}),
+      ...(dataAnimalsPerCapita.find((item) => item.Entity === "Oceania" && item.Year === "2022") || {}),
     };
 
     // console.log("Americas Fish:",americasData[
@@ -599,29 +508,18 @@ async function fetchData() {
       /*COWS*/
       cowsData: {
         formatCowsData: function (cattle) {
-          if (cattle) {
+          const v = toNum(cattle);
+          if (v > 0) {
             return {
-              yearly: Number(cattle).toLocaleString(),
-              monthly: (cattle / 12).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              daily: (cattle / 365).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              hourly: (cattle / (365 * 24)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perMinute: (cattle / (365 * 24 * 60)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perSecond: (cattle / (365 * 24 * 60 * 60)).toLocaleString(
-                undefined,
-                { maximumFractionDigits: 2 }
-              ),
+              yearly: v.toLocaleString(),
+              monthly: (v / 12).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              daily: (v / 365).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              hourly: (v / (365 * 24)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perMinute: (v / (365 * 24 * 60)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perSecond: (v / (365 * 24 * 60 * 60)).toLocaleString(undefined, { maximumFractionDigits: 2 }),
             };
-          } else if (cattle == 0) {
-            return noData;
           }
+          return noData;
         },
 
         buildCowsDataHTML: function (country, cowsData) {
@@ -642,31 +540,18 @@ async function fetchData() {
       /*PIGS*/
       pigsData: {
         formatPigsData: function (pigs) {
-          if (pigs) {
+          const v = toNum(pigs);
+          if (v > 0) {
             return {
-              yearly: Number(pigs).toLocaleString(),
-              monthly: (pigs / 12).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              daily: (pigs / 365).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              hourly: (pigs / (365 * 24)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perMinute: (pigs / (365 * 24 * 60)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perSecond: (pigs / (365 * 24 * 60 * 60)).toLocaleString(
-                undefined,
-                {
-                  maximumFractionDigits: 2,
-                }
-              ),
+              yearly: v.toLocaleString(),
+              monthly: (v / 12).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              daily: (v / 365).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              hourly: (v / (365 * 24)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perMinute: (v / (365 * 24 * 60)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perSecond: (v / (365 * 24 * 60 * 60)).toLocaleString(undefined, { maximumFractionDigits: 2 }),
             };
-          } else if (pigs == 0) {
-            return noData;
           }
+          return noData;
         },
 
         buildPigsDataHTML: function (country, pigsData) {
@@ -687,31 +572,18 @@ async function fetchData() {
       /*SHEEP*/
       sheepData: {
         formatSheepData: function (sheep) {
-          if (sheep) {
+          const v = toNum(sheep);
+          if (v > 0) {
             return {
-              yearly: Number(sheep).toLocaleString(),
-              monthly: (sheep / 12).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              daily: (sheep / 365).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              hourly: (sheep / (365 * 24)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perMinute: (sheep / (365 * 24 * 60)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perSecond: (sheep / (365 * 24 * 60 * 60)).toLocaleString(
-                undefined,
-                {
-                  maximumFractionDigits: 2,
-                }
-              ),
+              yearly: v.toLocaleString(),
+              monthly: (v / 12).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              daily: (v / 365).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              hourly: (v / (365 * 24)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perMinute: (v / (365 * 24 * 60)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perSecond: (v / (365 * 24 * 60 * 60)).toLocaleString(undefined, { maximumFractionDigits: 2 }),
             };
-          } else if (sheep == 0) {
-            return noData;
           }
+          return noData;
         },
 
         buildSheepDataHTML: function (country, sheepData) {
@@ -732,31 +604,18 @@ async function fetchData() {
       /*CHICKEN*/
       chickenData: {
         formatChickenData: function (chicken) {
-          if (chicken) {
+          const v = toNum(chicken);
+          if (v > 0) {
             return {
-              yearly: Number(chicken).toLocaleString(),
-              monthly: (chicken / 12).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              daily: (chicken / 365).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              hourly: (chicken / (365 * 24)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perMinute: (chicken / (365 * 24 * 60)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perSecond: (chicken / (365 * 24 * 60 * 60)).toLocaleString(
-                undefined,
-                {
-                  maximumFractionDigits: 2,
-                }
-              ),
+              yearly: v.toLocaleString(),
+              monthly: (v / 12).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              daily: (v / 365).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              hourly: (v / (365 * 24)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perMinute: (v / (365 * 24 * 60)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perSecond: (v / (365 * 24 * 60 * 60)).toLocaleString(undefined, { maximumFractionDigits: 2 }),
             };
-          } else if (chicken == 0) {
-            return noData;
           }
+          return noData;
         },
 
         buildChickenDataHTML: function (country, chickenData) {
@@ -778,31 +637,18 @@ async function fetchData() {
       /*TURKEY*/
       turkeyData: {
         formatTurkeyData: function (turkey) {
-          if (turkey) {
+          const v = toNum(turkey);
+          if (v > 0) {
             return {
-              yearly: Number(turkey).toLocaleString(),
-              monthly: (turkey / 12).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              daily: (turkey / 365).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              hourly: (turkey / (365 * 24)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perMinute: (turkey / (365 * 24 * 60)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perSecond: (turkey / (365 * 24 * 60 * 60)).toLocaleString(
-                undefined,
-                {
-                  maximumFractionDigits: 2,
-                }
-              ),
+              yearly: v.toLocaleString(),
+              monthly: (v / 12).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              daily: (v / 365).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              hourly: (v / (365 * 24)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perMinute: (v / (365 * 24 * 60)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perSecond: (v / (365 * 24 * 60 * 60)).toLocaleString(undefined, { maximumFractionDigits: 2 }),
             };
-          } else if (turkey == 0) {
-            return noData;
           }
+          return noData;
         },
 
         buildTurkeyDataHTML: function (country, turkeyData) {
@@ -824,30 +670,18 @@ async function fetchData() {
       /*FISH*/
       fishData: {
         formatFishData: function (fishTonnes) {
-          if (fishTonnes) {
+          const v = toNum(fishTonnes);
+          if (v > 0) {
             return {
-              yearly: Number(fishTonnes).toLocaleString(),
-              monthly: (fishTonnes / 12).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              daily: (fishTonnes / 365).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              hourly: (fishTonnes / (365 * 24)).toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-              }),
-              perMinute: (fishTonnes / (365 * 24 * 60)).toLocaleString(
-                undefined,
-                { maximumFractionDigits: 0 }
-              ),
-              perSecond: (fishTonnes / (365 * 24 * 60 * 60)).toLocaleString(
-                undefined,
-                { maximumFractionDigits: 2 }
-              ),
+              yearly: v.toLocaleString(),
+              monthly: (v / 12).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              daily: (v / 365).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              hourly: (v / (365 * 24)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perMinute: (v / (365 * 24 * 60)).toLocaleString(undefined, { maximumFractionDigits: 0 }),
+              perSecond: (v / (365 * 24 * 60 * 60)).toLocaleString(undefined, { maximumFractionDigits: 2 }),
             };
-          } else if (fishTonnes == 0) {
-            return noData;
           }
+          return noData;
         },
 
         buildFishDataHTML: function (country, fishTonnesData) {
@@ -913,180 +747,165 @@ async function fetchData() {
 
       /*LAND ANIMALS TOTAL > to retrieve use: fetchHtml.landAnimalsCountry */
       countries.forEach((country) => {
-        fetchHtml[`landAnimals${country.code}`] =
-          Number(
-            country.data[
-              "Meat of cattle with the bone, fresh or chilled | 00000867 || Producing or slaughtered animals | 005320 || animals"
-            ]
-          ) +
-          Number(
-            country.data[
-              "Meat, pig | 00001035 || Producing or slaughtered animals | 005320 || animals"
-            ]
-          ) +
-          Number(
-            country.data[
-              "Meat, lamb and mutton | 00000977 || Producing or slaughtered animals | 005320 || animals"
-            ]
-          ) +
-          Number(
-            country.data[
-              "Meat, chicken | 00001058 || Producing or slaughtered animals | 005321 || animals"
-            ]
-          ) +
-          Number(
-            country.data[
-              "Meat, turkey | 00001080 || Producing or slaughtered animals | 005321 || animals"
-            ]
-          ) +
-          Number(
-            country.data[
-              "Meat, goat | 00001017 || Producing or slaughtered animals | 005320 || animals"
-            ]
-          ) +
-          Number(
-            country.data[
-              "Meat, duck | 00001069 || Producing or slaughtered animals | 005321 || animals"
-            ]
-          );
+        const cattle = toNum(findMetric(country.data, [
+          "Meat of cattle with the bone, fresh or chilled | 00000867 || Producing or slaughtered animals | 005320 || animals"
+        ], ['cattle', 'beef']));
+        const pigs = toNum(findMetric(country.data, [
+          "Meat, pig | 00001035 || Producing or slaughtered animals | 005320 || animals"
+        ], ['pig', 'pigs']));
+        const sheep = toNum(findMetric(country.data, [
+          "Meat, lamb and mutton | 00000977 || Producing or slaughtered animals | 005320 || animals"
+        ], ['sheep', 'lamb', 'mutton']));
+        const chicken = toNum(findMetric(country.data, [
+          "Meat, chicken | 00001058 || Producing or slaughtered animals | 005321 || animals"
+        ], ['chicken']));
+        const turkey = toNum(findMetric(country.data, [
+          "Meat, turkey | 00001080 || Producing or slaughtered animals | 005321 || animals"
+        ], ['turkey']));
+        const goat = toNum(findMetric(country.data, [
+          "Meat, goat | 00001017 || Producing or slaughtered animals | 005320 || animals"
+        ], ['goat']));
+        const duck = toNum(findMetric(country.data, [
+          "Meat, duck | 00001069 || Producing or slaughtered animals | 005321 || animals"
+        ], ['duck']));
+
+        fetchHtml[`landAnimals${country.code}`] = cattle + pigs + sheep + chicken + turkey + goat + duck;
       });
        //console.log("World land animals", fetchHtml.landAnimalsWorld);
 
       /*ANIMALS FORMATTED IN HTML*/
       //////COWS > to retrieve use: fetchHtml.cowsDataWorld
       countries.forEach((country) => {
-        fetchHtml[`cowsData${country.code}`] =
-          fetchHtml.cowsData.buildCowsDataHTML(
-            country.name,
-            country.data[
-              "Meat of cattle with the bone, fresh or chilled | 00000867 || Producing or slaughtered animals | 005320 || animals"
-            ]
-          );
-        fetchHtml[`cowsTotal${country.code}`] =
-          country.data[
-            "Meat of cattle with the bone, fresh or chilled | 00000867 || Producing or slaughtered animals | 005320 || animals"
-          ];
+        const cattleVal = findMetric(country.data, [
+          "Meat of cattle with the bone, fresh or chilled | 00000867 || Producing or slaughtered animals | 005320 || animals"
+        ], ['cattle', 'beef']);
+        fetchHtml[`cowsData${country.code}`] = fetchHtml.cowsData.buildCowsDataHTML(country.name, cattleVal);
+        fetchHtml[`cowsTotal${country.code}`] = toNum(cattleVal);
       });
       //////PIGS > to retrieve use: fetchHtml.pigsDataWorld
       countries.forEach((country) => {
-        fetchHtml[`pigsData${country.code}`] =
-          fetchHtml.pigsData.buildPigsDataHTML(
-            country.name,
-            country.data[
-              "Meat, pig | 00001035 || Producing or slaughtered animals | 005320 || animals"
-            ]
-          );
-        fetchHtml[`pigsTotal${country.code}`] =
-          country.data[
-            "Meat, pig | 00001035 || Producing or slaughtered animals | 005320 || animals"
-          ];
+        const pigsVal = findMetric(country.data, [
+          "Meat, pig | 00001035 || Producing or slaughtered animals | 005320 || animals"
+        ], ['pig', 'pigs']);
+        fetchHtml[`pigsData${country.code}`] = fetchHtml.pigsData.buildPigsDataHTML(country.name, pigsVal);
+        fetchHtml[`pigsTotal${country.code}`] = toNum(pigsVal);
       });
       //////SHEEP > to retrieve use: fetchHtml.sheepDataWorld
       countries.forEach((country) => {
-        fetchHtml[`sheepData${country.code}`] =
-          fetchHtml.sheepData.buildSheepDataHTML(
-            country.name,
-            country.data[
-              "Meat, lamb and mutton | 00000977 || Producing or slaughtered animals | 005320 || animals"
-            ]
-          );
-        fetchHtml[`sheepTotal${country.code}`] =
-          country.data[
-            "Meat, lamb and mutton | 00000977 || Producing or slaughtered animals | 005320 || animals"
-          ];
+        const sheepVal = findMetric(country.data, [
+          "Meat, lamb and mutton | 00000977 || Producing or slaughtered animals | 005320 || animals"
+        ], ['sheep', 'lamb', 'mutton']);
+        fetchHtml[`sheepData${country.code}`] = fetchHtml.sheepData.buildSheepDataHTML(country.name, sheepVal);
+        fetchHtml[`sheepTotal${country.code}`] = toNum(sheepVal);
       });
       //////CHICKEN > to retrieve use: fetchHtml.chickenDataWorld
       countries.forEach((country) => {
-        fetchHtml[`chickenData${country.code}`] =
-          fetchHtml.chickenData.buildChickenDataHTML(
-            country.name,
-            country.data[
-              "Meat, chicken | 00001058 || Producing or slaughtered animals | 005321 || animals"
-            ]
-          );
-        fetchHtml[`chickenTotal${country.code}`] =
-          country.data[
-            "Meat, chicken | 00001058 || Producing or slaughtered animals | 005321 || animals"
-          ];
+        const chickenVal = findMetric(country.data, [
+          "Meat, chicken | 00001058 || Producing or slaughtered animals | 005321 || animals"
+        ], ['chicken']);
+        fetchHtml[`chickenData${country.code}`] = fetchHtml.chickenData.buildChickenDataHTML(country.name, chickenVal);
+        fetchHtml[`chickenTotal${country.code}`] = toNum(chickenVal);
       });
       //////TURKEY > to retrieve use: fetchHtml.turkeyDataWorld
       countries.forEach((country) => {
-        fetchHtml[`turkeyData${country.code}`] =
-          fetchHtml.turkeyData.buildTurkeyDataHTML(
-            country.name,
-            country.data[
-              "Meat, turkey | 00001080 || Producing or slaughtered animals | 005321 || animals"
-            ]
-          );
-        fetchHtml[`turkeyTotal${country.code}`] =
-          country.data[
-            "Meat, turkey | 00001080 || Producing or slaughtered animals | 005321 || animals"
-          ];
+        const turkeyVal = findMetric(country.data, [
+          "Meat, turkey | 00001080 || Producing or slaughtered animals | 005321 || animals"
+        ], ['turkey']);
+        fetchHtml[`turkeyData${country.code}`] = fetchHtml.turkeyData.buildTurkeyDataHTML(country.name, turkeyVal);
+        fetchHtml[`turkeyTotal${country.code}`] = toNum(turkeyVal);
       });
       //////FISH > to retrieve use: fetchHtml.fishDataWorld
       countries.forEach((country) => {
-        fetchHtml[`fishData${country.code}`] =
-          fetchHtml.fishData.buildFishDataHTML(
-            country.name,
-
-            country.data[
-              "Fish and seafood | 00002960 || Production | 005511 || tonnes"
-            ]
-          );
-        fetchHtml[`fishTotal${country.code}`] =
-          country.data[
-            "Fish and seafood | 00002960 || Production | 005511 || tonnes"
-          ];
+        const fishVal = findMetric(country.data, [
+          "Fish and seafood | 00002960 || Production | 005511 || tonnes"
+        ], ['fish', 'seafood']);
+        fetchHtml[`fishData${country.code}`] = fetchHtml.fishData.buildFishDataHTML(country.name, fishVal);
+        fetchHtml[`fishTotal${country.code}`] = toNum(fishVal);
       });
       /*FISH KG PER CAPITA*/
-      //to retrieve: fethcHtml.fishKgPerCapitaWorld
+      //to retrieve: fetchHtml.fishKgPerCapitaWorld
       countries.forEach((country) => {
-        fetchHtml[`fishKgPerCapita${country.code}`] = Number(
-          country.data[
-            "Fish and seafood | 00002960 || Food available for consumption | 0645pc || kilograms per year per capita"
-          ]
-        );
+        const fishKg = findMetric(country.data, [
+          "Fish and seafood | 00002960 || Food available for consumption | 0645pc || kilograms per year per capita"
+        ], ['0645pc', 'kilograms', 'kilogram', 'kg per capita', 'fish', 'seafood']);
+        fetchHtml[`fishKgPerCapita${country.code}`] = toNum(fishKg);
       });
 
       /*LAND ANIMALS KG PER CAPITA*/
       //to retrieve: fetchHtml."animal"KgPerCapita"country.code"
       countries.forEach((country) => {
-        fetchHtml[`cowsKgPerCapita${country.code}`] = Number(
-          country.data[
-            "Meat, beef and buffalo | 00002731 || Food available for consumption | 0645pc || kilograms per year per capita"
-          ]
-        );
-        fetchHtml[`pigsKgPerCapita${country.code}`] = Number(
-          country.data[
-            "Meat, pig | 00002733 || Food available for consumption | 0645pc || kilograms per year per capita"
-          ]
-        );
-        fetchHtml[`sheepKgPerCapita${country.code}`] = Number(
-          country.data[
-            "Meat, sheep and goat | 00002732 || Food available for consumption | 0645pc || kilograms per year per capita"
-          ]
-        );
-        fetchHtml[`poultryKgPerCapita${country.code}`] = Number(
-          country.data[
-            "Meat, poultry | 00002734 || Food available for consumption | 0645pc || kilograms per year per capita"
-          ]
-        );
-        fetchHtml[`othersKgPerCapita${country.code}`] = Number(
-          country.data[
-            "Meat, Other | 00002735 || Food available for consumption | 0645pc || kilograms per year per capita"
-          ]
-        );
+        const cowsKg = findMetric(country.data, [
+          "Meat, beef and buffalo | 00002731 || Food available for consumption | 0645pc || kilograms per year per capita"
+        ], ['0645pc', 'kilograms', 'kilogram', 'kg per capita', 'beef', 'cattle']);
+        const pigsKg = findMetric(country.data, [
+          "Meat, pig | 00002733 || Food available for consumption | 0645pc || kilograms per year per capita"
+        ], ['0645pc', 'kilograms', 'kilogram', 'kg per capita', 'pig', 'pigs']);
+        const sheepKg = findMetric(country.data, [
+          "Meat, sheep and goat | 00002732 || Food available for consumption | 0645pc || kilograms per year per capita"
+        ], ['0645pc', 'kilograms', 'kilogram', 'kg per capita', 'sheep', 'goat', 'mutton']);
+        const poultryKg = findMetric(country.data, [
+          "Meat, poultry | 00002734 || Food available for consumption | 0645pc || kilograms per year per capita"
+        ], ['0645pc', 'kilograms', 'kilogram', 'kg per capita', 'poultry', 'chicken']);
+        const othersKg = findMetric(country.data, [
+          "Meat, Other | 00002735 || Food available for consumption | 0645pc || kilograms per year per capita"
+        ], ['0645pc', 'kilograms', 'kilogram', 'kg per capita', 'other']);
+
+        fetchHtml[`cowsKgPerCapita${country.code}`] = toNum(cowsKg);
+        fetchHtml[`pigsKgPerCapita${country.code}`] = toNum(pigsKg);
+        fetchHtml[`sheepKgPerCapita${country.code}`] = toNum(sheepKg);
+        fetchHtml[`poultryKgPerCapita${country.code}`] = toNum(poultryKg);
+        fetchHtml[`othersKgPerCapita${country.code}`] = toNum(othersKg);
       });
     }
 
     assignAnimalData();
 
+    // Debug: explicitly check presence of the OWID metric keys in worldData
+    try {
+      const targets = [
+        "Meat of cattle with the bone, fresh or chilled | 00000867 || Producing or slaughtered animals | 005320 || animals",
+        "Meat, pig | 00001035 || Producing or slaughtered animals | 005320 || animals",
+        "Meat, lamb and mutton | 00000977 || Producing or slaughtered animals | 005320 || animals",
+        "Meat, chicken | 00001058 || Producing or slaughtered animals | 005321 || animals",
+        "Meat, turkey | 00001080 || Producing or slaughtered animals | 005321 || animals",
+        "Fish and seafood | 00002960 || Production | 005511 || tonnes",
+      ];
+      const presence = targets.map((t) => ({
+        key: t,
+        present: Object.prototype.hasOwnProperty.call(worldData, t),
+        value: worldData[t],
+      }));
+      console.log("AKS debug: target presence", presence);
+      console.log("AKS debug: worldData keys length", Object.keys(worldData).length);
+      console.log(
+        "AKS debug: sample worldData",
+        Object.fromEntries(
+          Object.keys(worldData)
+            .slice(0, 50)
+            .map((k) => [k, worldData[k]])
+        )
+      );
+      console.log("AKS debug: fetchHtml sample", {
+        landAnimalsWorld: fetchHtml.landAnimalsWorld,
+        cowsTotalWorld: fetchHtml.cowsTotalWorld,
+        pigsTotalWorld: fetchHtml.pigsTotalWorld,
+        sheepTotalWorld: fetchHtml.sheepTotalWorld,
+        chickenTotalWorld: fetchHtml.chickenTotalWorld,
+        turkeyTotalWorld: fetchHtml.turkeyTotalWorld,
+        fishTotalWorld: fetchHtml.fishTotalWorld,
+      });
+    } catch (e) {
+      console.warn("AKS debug failed", e);
+    }
+
     return [data, fetchHtml]; // Return the parsed data and the object holding the html elements
   } catch (error) {
     console.error("Error fetching data:", error);
+    throw error;
   }
 }
 
-fetchData();
+// Expose the fetch promise so other scripts can await or inspect it
+window.AKS_dataPromise = fetchData();
 
 // export { fetchData };

@@ -5,7 +5,11 @@ console.log("*** Developed by Roger Paredes ***"),
   console.log(
     "If you find errors feel free to write to roger@apocalypsisopus.com, thank you :)"
   );
-fetchData().then(([data, fetchHtml]) => {
+// Use the shared promise exposed by the API module to avoid duplicate fetches
+if (window.AKS_dataPromise) {
+  window.AKS_dataPromise.catch(e => console.error('fetch failed', e));
+}
+window.AKS_dataPromise.then(([data, fetchHtml]) => {
   //   // Testing the fetched data
   //   console.log("World Cattle 2nd file:", data.Worldwide.Cattle);
   //   console.log("Cattle Argentina", fetchHtml.cowsDataArgentina);
@@ -1747,8 +1751,9 @@ fetchData().then(([data, fetchHtml]) => {
     // Background Watermark Img animation triggered on click of collapsible buttons
     $('#collapse1, #collapse2-LandChart, #collapse2-LandChartCapita, #collapse2-SeaChart, #collapse2-SeaChartCapita, #collapse2-TotalCapita').on('click', function() {
       setTimeout(function() {
-        document.querySelector('.backgroundimg').classList.add('fadeIn');
-      }, 1000); // Delay in milliseconds (6 seconds)
+        const bg = document.querySelector('.backgroundimg');
+        if (bg && bg.classList) bg.classList.add('fadeIn');
+      }, 1000);
     });
   };
 
